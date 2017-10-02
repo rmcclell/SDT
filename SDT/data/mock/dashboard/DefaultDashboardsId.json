@@ -1,0 +1,11 @@
+﻿{
+    "response" : {
+        "numFound" : 1,
+        "start" : 0,
+        "docs" : [{
+                "id" : "cats"
+            }
+        ]
+    },
+    "success" : true
+}

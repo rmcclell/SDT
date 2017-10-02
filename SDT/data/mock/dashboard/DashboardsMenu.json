@@ -1,0 +1,96 @@
+﻿[{
+        "text" : "Dashboards",
+        "id" : "Dashboards",
+        "parentId" : "root",
+        "allowDrop" : false,
+        "allowDrag" : false,
+        "leaf" : false,
+        "qtip" : "Dashboards",
+        "iconCls" : "x-icon icon-tabs",
+        "children" : [{
+                "text" : "Tasks",
+                "id" : "Tasks",
+                "parentId" : "Dashboards",
+                "leaf" : false,
+                "qtip" : "Tasks",
+                "iconCls" : "x-icon icon-tabs",
+                "children" : [{
+                        "text" : "Tasks 1",
+                        "id" : "Tasks 1",
+                        "parentId" : "Tasks",
+                        "qtip" : "Tasks 1",
+                        "leaf" : true,
+                        "iconCls" : "x-icon icon-server_chart"
+                    }, {
+                        "text" : "Tasks 2",
+                        "id" : "Tasks 2",
+                        "parentId" : "Tasks",
+                        "qtip" : "Tasks 2",
+                        "leaf" : true,
+                        "iconCls" : "x-icon icon-server_chart"
+                    }
+                ]
+            }, {
+                "text" : "Orders",
+                "id" : "Orders",
+                "parentId" : "Dashboards",
+                "leaf" : false,
+                "qtip" : "Orders",
+                "iconCls" : "x-icon icon-tabs",
+                "children" : [{
+                        "text" : "Orders 1",
+                        "id" : "Orders 1",
+                        "parentId" : "Orders",
+                        "qtip" : "Orders 1",
+                        "leaf" : true,
+                        "iconCls" : "x-icon icon-server_chart"
+                    }, {
+                        "text" : "Orders 2",
+                        "id" : "Orders 2",
+                        "parentId" : "Orders",
+                        "qtip" : "Orders 2",
+                        "leaf" : true,
+                        "iconCls" : "x-icon icon-server_chart"
+                    }
+                ]
+            }, {
+                "text" : "Reports",
+                "id" : "Reports",
+                "parentId" : "Dashboards",
+                "qtip" : "Reports",
+                "leaf" : false,
+                "iconCls" : "x-icon icon-tabs",
+                "children" : [{
+                        "text" : "Reports 1",
+                        "id" : "Reports 1",
+                        "parentId" : "Reports",
+                        "qtip" : "Reports 1",
+                        "leaf" : true,
+                        "href" : "http://www.google.com",
+                        "hrefTarget" : "_blank",
+                        "iconCls" : "x-icon icon-application_link"
+                    }, {
+                        "text" : "Reports 2",
+                        "id" : "Reports 2",
+                        "parentId" : "Reports",
+                        "qtip" : "Reports 2",
+                        "leaf" : true,
+                        "href" : "http://www.yahoo.com",
+                        "hrefTarget" : "_blank",
+                        "iconCls" : "x-icon icon-application_link"
+                    }
+                ]
+            }
+        ]
+    }, {
+        "text" : "Home",
+        "id" : "Home",
+        "parentId" : "root",
+        "qtip" : "Home",
+        "leaf" : false,
+        "allowDrop" : false,
+        "allowDrag" : false,
+        "children" : [],
+        "iconCls" : "x-icon icon-tabs"
+    }
+]

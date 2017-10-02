@@ -1,0 +1,158 @@
+﻿Ext.define('SDT.controller.dashboardAdmin.DashboardWizardController', {
+    extend: 'Ext.app.Controller',
+    uses: [
+        'SDT.util.DateUtils'
+    ],
+    views: [],
+    models: [
+        'dashboardAdmin.DashboardsModel'
+    ],
+    stores: [
+        'dashboardAdmin.DashboardsStore',
+        'dashboardAdmin.FieldStore'
+    ],
+    init: function () {
+        var me = this;
+        me.control({
+            'userCriteriaActions, filtersActions, chartsActions, seriesActions': {
+                deleteItem: me.deleteItem
+            },
+            'addEditChartForm field[name="title"], addEditCriteriaSelectionForm field[name="name"], addEditChartForm addEditFiltersForm field[name="fieldName"], details field[name="title"]': {
+                afterrender: me.setFieldFocus
+            },
+            'filtersGrid, previewGrid, chartsGrid, criteriaSelectionGrid, seriesGrid': {
+                destroy: me.resetGridStore
+            },
+            'wizard': {
+                beforeclose: me.returnToDashboardsGrid,
+                finish: me.finishWizard
+            },
+            'addEditIndependentChartForm button#applyBtn, addEditSeriesForm button#applyBtn, addEditConnectedChartForm button#applyBtn, addEditFiltersForm button#applyBtn, addEditUserCriteriaForm button#applyBtn': {
+                beforerender: me.setApplyButtonText
+            }
+        });
+    },
+    refs: [{
+        ref: 'dashboardsGrid',
+        selector: 'dashboardsGrid'
+    }, {
+        ref: 'previewGrid',
+        selector: 'previewGrid'
+    }],
+
+    setApplyButtonText: function (button) {
+        var type = button.up('form').type;
+        if (type === 'Add') {
+            button.text = 'Add';
+        } else if (type === 'Edit') {
+            button.text = 'Save';
+        } else {
+            button.text = 'Apply';
+        }
+    },
+
+    setFieldFocus: function (field) {
+        field.focus(true, 500);
+    },
+
+    deleteItem: function (column, record, eventName, actionItem, grid, rowIndex) {
+        grid.getStore().removeAt(rowIndex);
+    },
+
+    resetGridStore: function (grid) {
+        var store = grid.getStore();
+        store.clearListeners('datachanged');
+        store.removeAll();
+        store.loadData([]);
+    },
+
+    finishWizard: function (panel, data) {
+        var me = this,
+            dataObj = (data.detailsCard.type !== 'Independent') ? { query: {}} : {},
+            store = me.getDashboardAdminDashboardsStoreStore(),
+            dashboard,
+            proxy = store.getProxy(),
+            callbackFn;
+
+        Ext.Object.each(data, function (card, cardValue) {
+            Ext.Object.each(cardValue, function (field, fieldValue) {
+                fieldValue = (Ext.isFunction(fieldValue.charAt) && (fieldValue.charAt(0) === '{' || fieldValue.charAt(0) === '[')) ? Ext.decode(fieldValue) : fieldValue; //Only decode json data
+                if (field === 'criteria' || field === 'facet' || field === 'filters' || field === 'sorting' || field === 'criteriaGrouping' || field === 'filterGroupingType') {
+                    if (data.detailsCard.type !== 'Independent') {
+                        dataObj.query[field] = fieldValue;
+                    }
+                } else {
+                    dataObj[field] = fieldValue;
+                }
+            });
+        });
+
+        dataObj.title = Ext.String.trim(dataObj.title);
+        dataObj.description = Ext.String.trim(dataObj.description);
+
+        dataObj.active = (dataObj.active === null || dataObj.active === undefined) ? false : dataObj.active; //Unchecked checked checked boxes posting null instead of false
+
+        dashboard = Ext.create('SDT.model.dashboardAdmin.DashboardsModel', dataObj);
+
+        dashboard.phantom = (panel.type === 'Edit') ? false : true;
+
+        callbackFn = function (record, operation) {
+            if (operation.success) {
+
+                foundRecord = store.getById(record.data.id);
+
+                //Same record already exists for Edit conditions new add will not hit this
+                if (foundRecord) {
+                    foundRecord.beginEdit();
+                    foundRecord.set(dataObj); //Replace old values with new
+                    foundRecord.endEdit();
+                    foundRecord.commit();
+                } else {
+                    record.data.query = Ext.decode(record.data.query.slice(0, record.data.query.length)); //Change query data from serialized string back object
+                    store.add(dashboard);
+                }
+                panel.close();
+            }
+        };
+
+        dashboard.setProxy(proxy);
+
+        dashboard.save({
+            callback: callbackFn
+        });
+
+    },
+
+    initStores: function () {
+        //Inititializes stores for wizard if preloading store is required
+
+        var me = this,
+            dashboardAdminFieldStore = me.getDashboardAdminFieldStoreStore();
+
+        //Clear listeners that are dynamically created (only needed on memory proxy based stores, cause that is the only type that has dynamic events that I am managing)
+
+        dashboardAdminFieldStore.clearListeners('load');
+
+        //Remove previous data from stores loading on edits and showing on add operations
+
+        dashboardAdminFieldStore.removeAll();
+    },
+
+    returnToDashboardsGrid: function (panel) {
+        var me = this,
+            previewGrid = me.getPreviewGrid(),
+            dashboardAdminView = panel.up('dashboardAdminView'),
+            dashboardsGrid = me.getDashboardsGrid();
+
+        dashboardAdminView.getLayout().setActiveItem(dashboardsGrid);
+
+        //Remove previous preview grid if it was rendered cause it is dynamically added and doesnt dispose correctly
+        if (previewGrid) {
+            previewGrid.destroy();
+        }
+
+        //Init stores to clear previous values
+
+        me.initStores();
+    }
+});

@@ -1,0 +1,40 @@
+﻿Ext.define('SDT.view.dashboardAdmin.containers.fieldTypes.TextContainer', {
+    extend: 'Ext.container.Container',
+    alias: 'widget.textContainer',
+    layout: 'anchor',
+    itemId: 'fieldBox',
+    defaults: {
+        labelWidth: 70,
+        allowBlank: false,
+        anchor: '100%'
+    },
+    items: [{
+        xtype: 'operatorCombo',
+        fieldLabel: 'Operator',
+        name: 'operator',
+        value: '=',
+        labelAlign: 'left'
+    }, {
+        fieldLabel: 'Value',
+        xtype: 'tagfield',
+        queryMode: 'local',
+        displayField: 'value',
+        valueField: 'value',
+        editable: true,
+        forceSelection: false,
+        store: 'dashboardAdmin.AvailableValueStore',
+        name: 'value'
+    }, {
+        xtype: 'textfield',
+        name: 'to',
+        hidden: true,
+        allowBlank: true,
+        fieldLabel: 'To'
+    }, {
+        xtype: 'textfield',
+        name: 'from',
+        hidden: true,
+        allowBlank: true,
+        fieldLabel: 'From'
+    }]
+});

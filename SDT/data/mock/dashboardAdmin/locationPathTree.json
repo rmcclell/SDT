@@ -1,0 +1,29 @@
+﻿[{
+        "text" : "Dashboards",
+        "id" : "a8de99a0-1b59-4df5-992d-13048917c93b",
+        "parentId" : "root",
+        "allowDrop" : false,
+        "allowDrag" : false,
+        "leaf" : false,
+        "qtip" : "Dashboards",
+        "iconCls" : "x-icon icon-tabs",
+        "children" : [{
+                "text" : "Independent",
+                "id" : "Independent",
+                "dashboardId" : "Independent",
+                "parentId" : "a8de99a0-1b59-4df5-992d-13048917c93b",
+                "qtip" : "Independent",
+                "leaf" : true,
+                "iconCls" : "x-icon icon-server_chart"
+            }, {
+                "text" : "Connected",
+                "id" : "Connected",
+                "dashboardId" : "Connected",
+                "parentId" : "a8de99a0-1b59-4df5-992d-13048917c93b",
+                "qtip" : "Connected",
+                "leaf" : true,
+                "iconCls" : "x-icon icon-server_chart"
+            }
+        ]
+    }
+]

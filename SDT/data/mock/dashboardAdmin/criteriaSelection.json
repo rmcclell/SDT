@@ -1,0 +1,22 @@
+﻿[
+    {
+        "name": "orderActionType",
+        "fieldLabel": "Order Action Type",
+        "operatorType": "equals"
+    },
+    {
+        "name": "orderType",
+        "fieldLabel": "Order Type",
+        "operatorType": "equals"
+    },
+    {
+        "name": "customerNumber",
+        "fieldLabel": "Customer Number",
+        "operatorType": "equals"
+    },
+    {
+        "name": "orderStatus",
+        "fieldLabel": "Order Status",
+        "operatorType": "equals"
+    }
+]

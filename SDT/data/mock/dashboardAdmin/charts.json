@@ -1,0 +1,72 @@
+﻿[
+    {
+        "title": "Customer Commit Date (CCD)",
+        "type": "pieChart",
+        "field": "CCD",
+        "facetQuery": "&facet.query={!group=CCD label=%22Not%20Set%22}-CCD:[*%20TO%20*]&facet.query={!group=CCD label=%22Past%20Due%22}CCD:[*%20TO%20NOW/DAY-1MINUTE]&facet.query={!group=CCD label=%22Today%22}CCD:[NOW/DAY%20TO%20NOW/DAY%2B1DAY-1MINUTE]&facet.query={!group=CCD label=%221-9%20Days%22}CCD:[NOW/DAY%2B1DAY%20TO%20NOW/DAY%2B10DAY-1MINUTE]&facet.query={!group=CCD label=%2210%2B%20Days%22}CCD:[NOW/DAY%2B10DAY%20TO%20*]",
+        "chartid": "id-chart-ccddates",
+        "dataSource": "FacetQuery",
+        "facetField": "",
+        "colorMapping": null
+    },
+    {
+        "title": "Customer Request Date (CRD)",
+        "type": "pieChart",
+        "field": "CRD",
+        "facetQuery": "&facet.query={!group=CRD label=%22Past%20Due%22}CRD:[*%20TO%20NOW/DAY-1MINUTE]&facet.query={!group=CRD label=%22Today%22}CRD:[NOW/DAY%20TO%20NOW/DAY%2B1DAY-1MINUTE]&facet.query={!group=CRD label=%221-9%20Days%22}CRD:[NOW/DAY%2B1DAY%20TO%20NOW/DAY%2B10DAY-1MINUTE]&facet.query={!group=CRD label=%2210%2B%20Days%22}CRD:[NOW/DAY%2B10DAY%20TO%20*]",
+        "chartid": "id-chart-crddates",
+        "dataSource": "FacetQuery",
+        "facetField": "",
+        "colorMapping": null
+    },
+    {
+        "title": "Product Family",
+        "type": "barChart",
+        "field": "productFamilyName",
+        "facetQuery": "",
+        "chartid": "id-chart-productfamily",
+        "dataSource": "FacetField",
+        "facetField": "&facet.field=productFamilyName",
+        "colorMapping": null
+    },
+    {
+        "title": "Source System",
+        "type": "pieChart",
+        "field": "sourceSystemCode",
+        "facetQuery": "",
+        "chartid": "id-chart-sourcesystem",
+        "dataSource": "FacetField",
+        "facetField": "&facet.field=sourceSystemCode",
+        "colorMapping": null
+    },
+    {
+        "title": "Order Action Type",
+        "type": "pieChart",
+        "field": "orderActionType",
+        "facetQuery": "",
+        "chartid": "id-chart-actiontype",
+        "dataSource": "FacetField",
+        "facetField": "&facet.field=orderActionType",
+        "colorMapping": null
+    },
+    {
+        "title": "Bandwidth",
+        "type": "barChart",
+        "field": "bandwidth",
+        "facetQuery": "",
+        "chartid": "id-chart-bandwidth",
+        "dataSource": "FacetField",
+        "facetField": "&facet.field=bandwidth",
+        "colorMapping": null
+    },
+    {
+        "title": "Order Status",
+        "type": "pieChart",
+        "field": "orderStatus",
+        "facetQuery": "",
+        "chartid": "id-chart-orderstatus",
+        "dataSource": "FacetField",
+        "facetField": "&facet.field=orderStatus",
+        "colorMapping": null
+    }
+]

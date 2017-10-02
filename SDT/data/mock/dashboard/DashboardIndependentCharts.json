@@ -1,0 +1,25 @@
+﻿{
+    "success" : true,
+    "facet_counts" : [{
+            "chartid" : "386ddc6b-a996-4ce6-a56d-c2c3add4e95f",
+            "facet_counts" : {
+                "facet_queries" : {},
+                "facet_fields" : {
+                    "componentName" : [["3rd Party Cross Connect", 100], ["Colocation Connection", 311], ["Customer Provided Access", 159], ["EtherExtend Fixed (Standard Pt-Pt)", 127], ["Ethernet Private Line IOC", 54], ["Extended Demarc Access", 17], ["Hub Terminated Access", 20], ["Off-Net Segment", 400], ["Off-net Local Loop", 192], ["OnNet Dedicated Access", 557], ["Private Line IOC", 160], ["Wavelength IOC", 577]]
+                },
+                "facet_dates" : {},
+                "facet_ranges" : {}
+            }
+        }, {
+            "chartid" : "386ddc6b-a996-4ce6-a56d-c2c3add4e95e",
+            "facet_counts" : {
+                "facet_queries" : {},
+                "facet_fields" : {
+                    "billingAccountNumber" : [["0102", 1], ["0103", 3], ["0104", 1], ["1-2SGLFI", 678], ["1-2TCMSD", 43], ["123", 77], ["12334", 6], ["1234", 68], ["178915", 403], ["456789", 3], ["56456465", 60], ["ABCD", 2], ["Test", 8], ["sada", 12], ["t6ufgfhfg", 1], ["te", 5], ["test", 61]]
+                },
+                "facet_dates" : {},
+                "facet_ranges" : {}
+            }
+        }
+    ]
+}

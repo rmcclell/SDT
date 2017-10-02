@@ -1,0 +1,33 @@
+﻿Ext.define('SDT.view.dashboardAdmin.fields.DateToFromCombo', {
+    extend: 'Ext.form.field.ComboBox',
+    alias: 'widget.dateToFromCombo',
+    typeAhead: true,
+    store: [
+        ['*', '*'],
+        ['NOW', 'NOW'],
+        ['NOW/DAY-1MINUTE', 'NOW/DAY-1MINUTE'],
+        ['NOW/DAY', 'NOW/DAY'],
+        ['NOW/DAY+1DAY', 'NOW/DAY+1DAY'],
+        ['NOW/DAY+1DAY-1MINUTE', 'NOW/DAY+1DAY-1MINUTE'],
+        ['NOW/DAY+10DAY', 'NOW/DAY+10DAY'],
+        ['NOW/DAY+10DAY-1MINUTE', 'NOW/DAY+10DAY-1MINUTE'],
+        ['NOW-45DAYS', 'NOW-45DAYS'],
+        ['NOW+45DAYS', 'NOW+45DAYS'],
+        ['NOW-30DAYS', 'NOW-30DAYS'],
+        ['NOW+30DAYS', 'NOW+30DAYS'],
+        ['NOW-14DAYS', 'NOW-14DAYS'],
+        ['NOW+14DAYS', 'NOW+14DAYS'],
+        ['NOW-7DAYS', 'NOW-7DAYS'],
+        ['NOW+7DAYS', 'NOW+7DAYS'],
+        ['NOW-5DAYS', 'NOW-5DAYS'],
+        ['NOW+5DAYS', 'NOW+5DAYS'],
+        ['NOW-10DAYS', 'NOW-10DAYS'],
+        ['NOW+10DAYS', 'NOW+10DAYS'],
+        ['NOW-15DAYS', 'NOW-15DAYS'],
+        ['NOW+15DAYS', 'NOW+15DAYS'],
+        ['NOW-20DAYS', 'NOW-20DAYS'],
+        ['NOW+20DAYS', 'NOW+20DAYS']
+    ],
+    queryMode: 'local',
+    forceSelection: true
+});

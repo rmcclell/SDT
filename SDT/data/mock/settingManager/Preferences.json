@@ -1,0 +1,37 @@
+﻿Ext.define('SDT.view.settingManager.PreferencesGridView', {
+    extend: 'Ext.grid.Panel',
+    alias: 'widget.preferencesGrid',
+    store: Ext.create('Ext.data.Store', {
+        fields: ['key', 'value'],
+        proxy: 'memory'
+    }),
+    header: false,
+    autoScroll: true,
+    dockedItems: [{
+        dock: 'top',
+        xtype: 'toolbar',
+        items: [{
+            xtype: 'button',
+			iconCls: 'x-icon icon-delete',
+            text: 'Remove All'
+        }]
+    }],
+    columns: [{
+        xtype: 'actioncolumn',
+        width: 60,
+        text: 'Actions',
+        sortable: false,
+        items: [{
+            iconCls: 'x-icon icon-delete',
+            tooltip: 'Delete Preference'
+        }]
+    }, {
+        text: 'Key',
+        dataIndex: 'key',
+        flex: 1
+    }, {
+        text: 'Value',
+        dataIndex: 'value',
+        flex: 1
+    }]
+});

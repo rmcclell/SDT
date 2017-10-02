@@ -1,0 +1,76 @@
+﻿.ext-ux-wiz-Header {
+    background-color:white;
+    border-bottom:5px solid #F68A1F;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.ext-ux-wiz-Header-title {
+    font-weight: 900;
+    padding: 4px 0 0 4px;
+}
+
+.ext-ux-wiz-Header-description {
+    background-color:#F9C984;
+}
+
+.ext-ux-wiz-Header-step {
+    color:#767676;
+    text-align:right;
+    padding:2px 4px 0 0;
+}
+
+.ext-ux-wiz-Header-stepIndicator-container {
+    float:right;
+    margin-right:6px;
+    margin-top:8px;
+}
+
+.ext-ux-wiz-Header-stepIndicator {
+    margin-left:28px;
+    float:left;
+    background-image:url(../images/ext-ux-wiz-stepIndicator.png);
+    background-position:6px 0;
+    background-repeat:repeat-x;
+    height:6px;
+    width:6px;
+}
+
+.ext-ux-wiz-Header-stepIndicator-active {
+    background-position:0 0 !important;
+}
+
+/* Styling of global error indicator */
+.form-error-state {
+    font-size: 12px;
+    height: 16px;
+    line-height: 16px;
+    background: no-repeat 0 0;
+    cursor: pointer;
+}
+.form-error-state-invalid {
+    color: #C30;
+    background-image: url(../images/exclamation.gif);
+    border: 1px solid #F00;
+    padding-left: 20px;
+}
+
+.form-error-state-valid {
+    color: #090;
+    background-image: url(../images/drop-yes.png);
+    border: 1px solid transparent;
+    padding-left: 20px;
+
+}
+
+/* Error details tooltip */
+.errors-tip .error {
+    font-style: italic;
+}
+
+.ux-wizard-cardpanel .x-toolbar-footer {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    margin-top: 0;
+    padding: 0;
+}
