@@ -158,7 +158,6 @@
     <Content Include="app\store\dashboard\DashboardChartsStore.js" />
     <Content Include="app\store\dashboard\DashboardConfigStore.js" />
     <Content Include="app\store\dashboard\DashboardCriteriaFilterStore.js" />
-    <Content Include="app\store\dashboard\DashboardDefaultStore.js" />
     <Content Include="app\store\dashboard\DashboardListsStore.js" />
     <Content Include="app\store\dashboard\DashboardResultStore.js" />
     <Content Include="app\store\dashboard\DashboardSavedUserCriteriaStore.js" />

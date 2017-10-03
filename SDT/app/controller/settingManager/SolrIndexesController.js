@@ -130,7 +130,7 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
     onSolrIndexesGridShow: function (grid) {
         var store = grid.getStore();
 
-        store.loadRawData(Ext.state.Manager.get('solrIndexes'));
+        //store.loadRawData(Ext.state.Manager.get('solrIndexes'));
     },
 
     onDeletItem: function (view, colIndex, rowIndex, item, e, record, row) {

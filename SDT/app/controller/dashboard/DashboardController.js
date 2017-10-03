@@ -35,7 +35,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         'dashboard.DashboardConfigStore',
         'dashboard.DashboardCriteriaFilterStore',
         'dashboard.DashboardListsStore',
-        'dashboard.DashboardDefaultStore',
         'dashboard.DashboardChartsStore',
         'dashboard.DashboardResultStore',
         'dashboard.DashboardSelectedFilterStore'
@@ -145,11 +144,10 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
     initDashboardStores: function () {
         var me = this,
-            menuStore = me.getMenuManagementMenuTreeStoreStore(),
-            defaultDashboardStore = me.getDashboardDashboardDefaultStoreStore();
+            menuStore = me.getMenuManagementMenuTreeStoreStore();
 
         me.initMenuStore(menuStore);
-        me.initDefaultDashboardStore(defaultDashboardStore);
+        //me.initDefaultDashboardStore(defaultDashboardStore);
     },
 
     initMenuStore: function (store) {
@@ -315,20 +313,23 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         me.setupGridColumns(grid);
     },
 
-    getDefaultColumns: function (dashboardConfigStore) {
+    getDefaultColumns: function (currentDashboardRecord) {
 
         var me = this,
             records,
             store = Ext.data.StoreManager.lookup('settingManager.SolrIndexesStore'),
+            foundRecord,
             grid = Ext.ComponentQuery.query('dashboardRowResultsGrid')[0];
 
+        debugger;
+
         store.on('datachanged', function () {
-            var foundRecord = store.findRecord('name', 'Cats');
+            foundRecord = store.findRecord('id', currentDashboardRecord.get('solrIndexId')),
             records = foundRecord.solrFields().getRange();
             me.buildGridColumns(records, grid);
         }, me, { single: true });
 
-        store.loadRawData(Ext.state.Manager.get('solrIndexes'));
+        store.loadInlineData(Ext.state.Manager.get('solrIndexes'));
     },
 
     refreshDashboard: function () {
@@ -348,7 +349,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
     initDashboardConfigStore: function (store, filterParams) {
         var me = this,
-            dashboardDefaultStore = me.getDashboardDashboardDefaultStoreStore(),
             foundRecord,
             criteriaPanel = me.getDashboardCriteriaPanel();
 
@@ -364,15 +364,16 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                         if (btn === 'yes') {
                             //Restore dashboard to system default and load
                             Ext.state.Manager.set('lastDashboardId', null);
-
+                            /*
                             foundRecord = dashboardDefaultStore.first();
 
                             if (foundRecord) {
                                 me.currentDashboardId = foundRecord.getData().id; //Set the default as current dashboard
                             }
-
+                            
                             dashboardConfigStore.getProxy().extraParams = { dashboardId: me.currentDashboardId, chartid: me.getLastActiveChartId() };
                             dashboardConfigStore.load({ callback: callbackFn });
+                            */
                         }
                         //Allow user to pick another dashboard to load
                     },

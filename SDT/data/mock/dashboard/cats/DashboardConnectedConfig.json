@@ -3,6 +3,7 @@
     "id": "cats",
     "title": "Cats",
     "description": "Cats Description",
+    "solrIndexId": 1,
     "dataIndex": "http://localhost:8983/solr/cats/",
     "type": "Connected",
     "defaultDashboard": true,

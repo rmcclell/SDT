@@ -6,6 +6,5 @@ Ext.define('SDT.model.settingManager.FieldsModel', {
 		{ name: 'value' },
 		{ name: 'type' },
 		{ name: 'showInGrid', defaultValue: true, type:'boolean' }
-    ],
-    belongTo: 'SolrIndexesModel'
+    ]
 });

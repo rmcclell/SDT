@@ -13,6 +13,7 @@ Ext.define('SDT.model.dashboard.DashboardConfigModel', {
         'title',
         'description',
         { name: 'type', defualtValue: 'Connected' },
+        'solrIndexId',
         'dataIndex',
         {
             name: 'createDate',
