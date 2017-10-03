@@ -35,14 +35,6 @@ Ext.application({
 
         Ext.state.Manager.set('defaultDashboardId', 'cats');
 		
-		Ext.Ajax.request({
-			url: '/data/mock/settingManager/Profiles.json',
-			success: function(response){
-				var data = Ext.decode(response.responseText);
-				Ext.state.Manager.set('profiles', data);
-			}
-        });
-
         Ext.Ajax.request({
             url: '/data/mock/dashboard/' + Ext.state.Manager.get('defaultDashboardId') + '/DashboardConnectedConfig.json',
 			success: function(response){

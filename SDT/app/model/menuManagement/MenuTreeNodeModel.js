@@ -32,9 +32,6 @@
             read: 'GET'
         },
         api: {
-            create: '',
-            update: '',
-            destroy: '',
             read: '/data/mock/dashboardAdmin/locationPathTree.json'
         }
     }

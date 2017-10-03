@@ -328,14 +328,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             me.buildGridColumns(records, grid);
         }, me, { single: true });
 
-        Ext.Ajax.request({
-            url: '/data/mock/settingManager/SolrIndexes.json',
-            success: function (response) {
-                var data = Ext.decode(response.responseText);
-                //Ext.state.Manager.set('solrIndexes', data);
-                store.loadRawData(data);
-            }
-        });
+        store.loadRawData(Ext.state.Manager.get('solrIndexes'));
     },
 
     refreshDashboard: function () {
@@ -481,8 +474,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             }
             //dashboardsView.getEl().unmask();
         };
-        debugger;
-
+        
         //Set sent params both independent and connected charts wrap params as array
 
         //proxy.url = '/data/mock/dashboard/' + Ext.state.Manager.get('defaultDashboardId') + '/DashboardConnectedCharts.json';
