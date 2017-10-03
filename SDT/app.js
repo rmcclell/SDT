@@ -44,18 +44,6 @@ Ext.application({
         });
 
         Ext.Ajax.request({
-            url: '/data/mock/settingManager/SolrIndexes.json',
-            success: function (response) {
-                var store = Ext.StoreManager.lookup('settingManager.SolrIndexesStore');
-                var data = Ext.decode(response.responseText);
-                Ext.state.Manager.set('solrIndexes', data);
-                store.loadRawData(data);
-            }
-        });
-
-        
-
-		Ext.Ajax.request({
             url: '/data/mock/dashboard/' + Ext.state.Manager.get('defaultDashboardId') + '/DashboardConnectedConfig.json',
 			success: function(response){
 				var data = Ext.decode(response.responseText);

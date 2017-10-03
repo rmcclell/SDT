@@ -1,9 +1,14 @@
 ﻿Ext.define('SDT.view.settingManager.forms.AddEditSolrIndexesForm', {
     extend: 'Ext.form.Panel',
-	requires:['SDT.view.settingManager.grids.SolrFieldsGridView'],
+    requires: [
+        'SDT.view.settingManager.grids.SolrFieldsGridView'
+    ],
     alias: 'widget.addEditSolrIndexesForm',
-    layout: 'anchor',
+    layout: {
+        type: 'vbox'
+    },
     floating: true,
+    frame: true,
     closable: true,
     modal: true,
     type: 'Add',
@@ -16,7 +21,7 @@
     },
 	scrollable: true,
     trackResetOnLoad: true,
-    defaults: { anchor: '100%', margin: '10 5 10 5' },
+    defaults: { width: '100%', margin: 10 },
     items: [{
         xtype: 'textfield',
         fieldLabel: 'Name',
@@ -34,8 +39,8 @@
         allowBlank: false
     }, {
         xtype: 'solrFieldsGrid',
-		height: 300
-    }],
+        flex: 1
+	}],
     buttons: [{
         text: 'Add',
 		itemId: 'applyBtn',
@@ -44,7 +49,7 @@
     }, {
         text: 'Cancel',
         handler: function () {
-            this.up('window').close();
+            this.up('form').close();
         }
     }]
 });

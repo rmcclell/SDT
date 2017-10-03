@@ -1,7 +1,6 @@
 ﻿Ext.define('SDT.view.settingManager.grids.SolrFieldsGridView', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.solrFieldsGrid',
-    height: 150,
     store: Ext.create('Ext.data.Store', {
         model: 'SDT.model.settingManager.FieldsModel',
         data: [],

@@ -481,12 +481,18 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             }
             //dashboardsView.getEl().unmask();
         };
+        debugger;
 
         //Set sent params both independent and connected charts wrap params as array
 
-        proxy.url = '/data/mock/dashboard/' + Ext.state.Manager.get('defaultDashboardId') + '/DashboardConnectedCharts.json';
-
-        proxy.extraParams = { chartParms: queries };
+        //proxy.url = '/data/mock/dashboard/' + Ext.state.Manager.get('defaultDashboardId') + '/DashboardConnectedCharts.json';
+        proxy.url = chartInfo.dataIndex + 'select';
+        proxy.extraParams = {
+            q: '*:*',
+            facet: true,
+            rows: 0
+        };
+        //proxy.extraParams = { chartParms: queries };
 
         dashboardStore.load({
             scope: me,

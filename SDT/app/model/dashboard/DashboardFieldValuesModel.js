@@ -1,6 +1,8 @@
 ﻿Ext.define('SDT.model.dashboard.DashboardFieldValuesModel', {
     extend: 'Ext.data.Model',
-    requires:['SDT.model.dashboard.DashboardFieldValueModel'],
+    requires: [
+        'SDT.model.dashboard.DashboardFieldValueModel'
+    ],
 	idProperty: 'dataIndex',
     fields: [
         'dataIndex',

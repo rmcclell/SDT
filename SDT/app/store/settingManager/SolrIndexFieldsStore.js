@@ -9,6 +9,5 @@ Ext.define('SDT.store.settingManager.SolrIndexFieldsStore', {
 			record: 'field',
 			rootProperty: 'fields'
 		}
-	},
-	autoLoad: false
+	}
 });

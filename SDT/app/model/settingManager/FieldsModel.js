@@ -7,10 +7,5 @@ Ext.define('SDT.model.settingManager.FieldsModel', {
 		{ name: 'type' },
 		{ name: 'showInGrid', defaultValue: true, type:'boolean' }
     ],
-    proxy: {
-        type: 'memory',
-        reader: {
-            type: 'json'
-        }
-    }
+    belongTo: 'SolrIndexesModel'
 });

@@ -10,6 +10,7 @@
         limitParam: 'rows',
         sortParam: 'sort',
         startParam: 'start',
+        noCache: false,
         simpleSortMode: true,
         directionParam: 'direction',
         reader: {

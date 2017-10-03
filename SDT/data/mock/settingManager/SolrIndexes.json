@@ -2,8 +2,8 @@
   {
     "id": 1,
     "name": "Cats",
-    "baseUrl": "http://localhost:8983/solr/#/cats/",
-    "adminUrl": "http://localhost:8983/solr/#/cats/admin",
+    "baseUrl": "http://localhost:8983/solr/cats/",
+    "adminUrl": "http://localhost:8983/solr/cats/admin",
     "solrFields": [
       {
         "key": "id",

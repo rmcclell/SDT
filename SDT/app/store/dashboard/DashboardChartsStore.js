@@ -4,6 +4,10 @@
     model: 'SDT.model.dashboard.DashboardChartsModel',
     proxy: {
         type: 'ajax',
+        noCache: false,
+        limitParam: '',
+        startParam: '',
+        pageParam: '',
         reader: {
             type: 'json',
             rootProperty: 'facet_counts'

@@ -90,6 +90,7 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
 
     getSolrFields: function (button) {
 
+
         //<field name="weight" type="float" indexed="true" stored="true"/>
 
         /*

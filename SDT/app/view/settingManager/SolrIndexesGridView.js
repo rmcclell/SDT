@@ -37,8 +37,8 @@
     }, {
         text: 'Fields',
         dataIndex: 'solrFields',
-        renderer: function (val) {
-            return Ext.encode(val);
+        renderer: function (val, meta, record) {
+            return Ext.encode(record.solrFields());
         },
         flex: 1
     }]
