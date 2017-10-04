@@ -43,6 +43,7 @@
     }, {
         xtype: 'textarea',
         fieldLabel: 'Charts',
+        value: '[]',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         name: 'charts'
     }]

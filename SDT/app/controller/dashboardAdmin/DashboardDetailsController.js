@@ -54,7 +54,7 @@
 
         resultsPanelObj = { type: '', titlePrefix: 'Results', exportable: true, namespace: 'DashboardRowResultsGrid' };
         resultsPanel.setValue(Ext.encode(resultsPanelObj));
-        this.loadFieldStore(newValue);
+        //this.loadFieldStore(newValue);
     },
 
     loadFieldStore: function (dataIndex) {

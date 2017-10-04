@@ -78,7 +78,7 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditIndependentChartForm', {
                 forceSelection: true,
                 typeAhead: true,
                 queryMode: 'local',
-				store:'settingManager.SolrIndexesStore',
+				store: 'SolrIndexesStore',
                 displayField: 'name',
 				valueField: 'baseUrl',
 				allowBlank: false

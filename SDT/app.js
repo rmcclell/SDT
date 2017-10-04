@@ -89,6 +89,9 @@ Ext.application({
 
         Ext.state.Manager.set('solrIndexes', solrIndexes);
 
+        var store = Ext.getStore('SolrIndexesStore');
+        store.loadRawData(solrIndexes);
+
         var dashboards = [{
             "id": "cats",
             "title": "Cats",
@@ -462,7 +465,10 @@ Ext.application({
 
         Ext.state.Manager.set('dashboards', dashboards);
 
-	},
+    },
+    stores: [
+        'settingManager.SolrIndexesStore'
+    ],
     controllers: [
         //Controllers get instantiated in the order listed here.
         'dashboard.DashboardController',

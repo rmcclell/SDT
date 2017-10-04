@@ -18,11 +18,6 @@ Ext.define('SDT.controller.settingManager.SettingManagerController', {
 
     onSettingManagerMenuBtnClick: function () {
         var dialog = Ext.widget('settingManagerDialogView');
-
         dialog.show();
-
-        var provider = Ext.state.Manager.getProvider();
-        if (!Ext.isEmpty(provider.state)) {
-        }
     }
 });

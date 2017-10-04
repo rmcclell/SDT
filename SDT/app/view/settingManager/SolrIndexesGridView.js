@@ -4,7 +4,7 @@
         'SDT.view.settingManager.grids.columns.SolrIndexesActions'
     ],
     alias: 'widget.solrIndexesGrid',
-    store: 'settingManager.SolrIndexesStore',
+    store: 'SolrIndexesStore',
     header: false,
     scrollable: true,
     dockedItems: [{
@@ -38,7 +38,7 @@
         text: 'Fields',
         dataIndex: 'solrFields',
         renderer: function (val, meta, record) {
-            return Ext.encode(record.solrFields());
+            return Ext.encode(val);
         },
         flex: 1
     }]

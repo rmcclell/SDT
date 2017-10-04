@@ -6,11 +6,13 @@ Ext.define('SDT.model.settingManager.SolrIndexesModel', {
     fields: [
         'name',
         'baseUrl',
-        'adminUrl'
-    ],
+        'adminUrl',
+        'solrFields'
+    ]/*,
     associations: [{
         type: 'hasMany',
         model: 'SDT.model.settingManager.FieldsModel',
         name: 'solrFields'
     }]
+    */
 });

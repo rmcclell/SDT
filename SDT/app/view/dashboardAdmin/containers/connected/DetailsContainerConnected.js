@@ -1,8 +1,5 @@
 ﻿Ext.define('SDT.view.dashboardAdmin.containers.connected.DetailsContainerConnected', {
     extend: 'SDT.view.dashboardAdmin.containers.DetailsContainer',
-    requires: [
-        'SDT.store.settingManager.SolrIndexesStore'
-    ],
     alias: 'widget.detailsContainerConnected',
     items: [{
         xtype: 'textfield',
@@ -31,7 +28,7 @@
         forceSelection: true,
         typeAhead: true,
         queryMode: 'local',
-        store: 'settingManager.SolrIndexesStore',
+        store: 'SolrIndexesStore',
         displayField: 'name',
         valueField: 'baseUrl',
         allowBlank: false

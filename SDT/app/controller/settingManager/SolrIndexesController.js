@@ -8,7 +8,6 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
         'settingManager.SolrIndexFieldsModel'
     ],
     stores: [
-        'settingManager.SolrIndexesStore',
         'settingManager.SolrIndexFieldsStore'
     ],
     refs: [{
@@ -41,10 +40,10 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
             },
             'addEditSolrIndexesWForm button#applyBtn': {
                 click: me.onApplyButtonClick
-            },
-            'solrIndexesGrid': {
-                activate: me.onSolrIndexesGridShow
-            }
+            }//,
+            //'solrIndexesGrid': {
+            //    activate: me.onSolrIndexesGridShow
+            //}
         });
     },
 
@@ -127,11 +126,11 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
         button.up('grid').getStore().removeAll();
     },
 
-    onSolrIndexesGridShow: function (grid) {
-        var store = grid.getStore();
+    //onSolrIndexesGridShow: function (grid) {
+        //var store = grid.getStore();
 
         //store.loadRawData(Ext.state.Manager.get('solrIndexes'));
-    },
+    //},
 
     onDeletItem: function (view, colIndex, rowIndex, item, e, record, row) {
         record.store.removeAt(rowIndex);

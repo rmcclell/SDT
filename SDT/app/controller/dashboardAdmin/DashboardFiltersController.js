@@ -657,7 +657,7 @@
         var me = this,
             grid = parent.down('previewGrid'),
             filterStore = parent.down('filtersGrid').getStore(),
-            store = Ext.data.StoreManager.lookup('settingManager.SolrIndexesStore'),
+            store = Ext.getStore('SolrIndexesStore'),
             fieldStore = me.getDashboardAdminFieldStoreStore(),
             resultStore = Ext.create('SDT.store.dashboard.DashboardResultStore'),
             proxy = resultStore.getProxy(),

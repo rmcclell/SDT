@@ -280,7 +280,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         Ext.Array.each(records, function (record) {
             var obj = {};
-            record = record.getData();
+            //record = record.getData();
 
             if (record.type === 'boolean') {
                 obj.xtype = 'booleancolumn';
@@ -317,19 +317,19 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         var me = this,
             records,
-            store = Ext.data.StoreManager.lookup('settingManager.SolrIndexesStore'),
+            store = Ext.getStore('SolrIndexesStore'),
             foundRecord,
             grid = Ext.ComponentQuery.query('dashboardRowResultsGrid')[0];
 
-        debugger;
+        //debugger;
 
-        store.on('datachanged', function () {
-            foundRecord = store.findRecord('id', currentDashboardRecord.get('solrIndexId')),
-            records = foundRecord.solrFields().getRange();
-            me.buildGridColumns(records, grid);
-        }, me, { single: true });
+        //store.on('datachanged', function () {
+        foundRecord = store.getById(currentDashboardRecord.get('solrIndexId')),
+        records = foundRecord.get('solrFields');
+        me.buildGridColumns(records, grid);
+        //}, me, { single: true });
 
-        store.loadInlineData(Ext.state.Manager.get('solrIndexes'));
+        //store.load(Ext.state.Manager.get('solrIndexes'));
     },
 
     refreshDashboard: function () {
