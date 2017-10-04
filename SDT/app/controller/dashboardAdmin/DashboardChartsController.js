@@ -153,6 +153,8 @@
 
                 chart = dashboardController.buildChart(chartConfig, store);
 
+                console.log(chart);
+
                 panel = grid.up('chartsContainer').down('#chartContainer').down('#chartPreview');
 
                 panel.setTitle(title);
@@ -191,8 +193,8 @@
         }
 
         previewChartProxy.setReader({
-            type: 'array',
-            rootProperty: Ext.String.format('facet_counts.facet_fields.{0}', field)
+            type: 'json',
+            rootProperty: 'facet_counts'
         });
 
         previewChartProxy.url = 'http://localhost:8983/solr/cats/select';

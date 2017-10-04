@@ -4,6 +4,7 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditConnectedChartForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.addEditConnectedChartForm',
     modal: true,
+    frame: true,
     floating: true,
     closable: true,
     type: 'Add', //Add or Edit

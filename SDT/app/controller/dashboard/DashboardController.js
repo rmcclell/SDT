@@ -974,8 +974,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             var me = this, containsCustomColor = false, colorMapping = [], chartCreateObject = {};
 
             chartCreateObject.type = chartConfig.type;
-
-            return { xtype: chartConfig.type, width: 300, heigth: 300, store: { type: chartConfig.chartid } };
+            return { xtype: chartConfig.type, width: 300, heigth: 300, store: store };
 
             //return Ext.create('SDT.view.dashboard.chart.' + chartConfig.type, chartCreateObject);
         } else {
