@@ -5,18 +5,18 @@
     layout: 'anchor',
     items: [{
         xtype: 'dataview',
-        itemSelector: '',
+        itemSelector: 'div.thumb-wrap',
         margin: '10 5 10 5',
         anchor: '100%',
-        store: Ext.create('Ext.data.Store', {
-            id: 'saveStore',
+        emptyText: 'No data available',
+        store: {
             fields: [
                 'title',
                 'description',
                 'active',
                 'charts'
             ]
-        }),
+        },
         tpl: Ext.create('Ext.XTemplate', 
             '<tpl for=".">',
             '<h2>Summary</h2><br>',
@@ -80,7 +80,7 @@
             '<p style="padding-left:15px;" align="left"><b>User Criteria:</b></p>',
             '<table width="97%" border="1">',
             '<tr><td width="50%"><b>Field Label</b></td><td width="50%"><b>Field Name</b></td></tr>',
-            '<tpl for="userCriteriaFields">',
+            '<tpl for="userCriteriaData">',
             '<tr><td>{fieldLabel}</td><td>{name}</td></tr>',
             '</tpl>',
             '</table>',

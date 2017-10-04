@@ -51,8 +51,9 @@
         }
     },
 
+
     setFieldFocus: function (field) {
-        field.focus(true, 500);
+        //field.focus(true, 500);
     },
 
     deleteItem: function (column, record, eventName, actionItem, grid, rowIndex) {
@@ -69,9 +70,8 @@
     finishWizard: function (panel, data) {
         var me = this,
             dataObj = (data.detailsCard.type !== 'Independent') ? { query: {}} : {},
-            store = me.getDashboardAdminDashboardsStoreStore(),
+            store = Ext.getStore('DashboardConfigStore'),
             dashboard,
-            proxy = store.getProxy(),
             callbackFn;
 
         Ext.Object.each(data, function (card, cardValue) {
@@ -92,35 +92,14 @@
 
         dataObj.active = (dataObj.active === null || dataObj.active === undefined) ? false : dataObj.active; //Unchecked checked checked boxes posting null instead of false
 
-        dashboard = Ext.create('SDT.model.dashboardAdmin.DashboardsModel', dataObj);
+        if (panel.type === 'Add') {
+            dashboard = Ext.create('SDT.model.dashboardAdmin.DashboardsModel', dataObj);
+            dashboard.phantom = (panel.type === 'Edit') ? false : true;
+            store.add(dashboard);
+        }
 
-        dashboard.phantom = (panel.type === 'Edit') ? false : true;
-
-        callbackFn = function (record, operation) {
-            if (operation.success) {
-
-                foundRecord = store.getById(record.data.id);
-
-                //Same record already exists for Edit conditions new add will not hit this
-                if (foundRecord) {
-                    foundRecord.beginEdit();
-                    foundRecord.set(dataObj); //Replace old values with new
-                    foundRecord.endEdit();
-                    foundRecord.commit();
-                } else {
-                    record.data.query = Ext.decode(record.data.query.slice(0, record.data.query.length)); //Change query data from serialized string back object
-                    store.add(dashboard);
-                }
-                panel.close();
-            }
-        };
-
-        dashboard.setProxy(proxy);
-
-        dashboard.save({
-            callback: callbackFn
-        });
-
+        store.sync();
+        panel.close();
     },
 
     initStores: function () {

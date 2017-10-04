@@ -152,15 +152,15 @@
                     panel;
 
                 chart = dashboardController.buildChart(chartConfig, store);
+                chart.title = title;
 
                 console.log(chart);
 
-                panel = grid.up('chartsContainer').down('#chartContainer').down('#chartPreview');
+                panel = grid.up('chartsContainer');
 
-                panel.setTitle(title);
-                panel.removeAll();
-                panel.add(chart);
-                panel.show();
+                //panel.removeA();
+                panel.insert(1, chart);
+                //panel.show();
                 
             //}
         };
@@ -294,7 +294,7 @@
             formValues.baseCriteria = Ext.isEmpty(formValues.baseCriteria) ? [] : Ext.decode(formValues.baseCriteria);
             formValues.query = Ext.isEmpty(formValues.query) ? '' : Ext.decode(formValues.query);
             formValues.resultsPanel = Ext.isEmpty(formValues.resultsPanel) ? {} : Ext.decode(formValues.resultsPanel);
-            formValues.userCriteriaFields = Ext.isEmpty(formValues.userCriteriaFields) ? [] : Ext.decode(formValues.userCriteriaFields);
+            formValues.userCriteriaData = Ext.isEmpty(formValues.userCriteriaFields) ? [] : Ext.decode(formValues.userCriteriaFields);
 
             formValues.title = Ext.String.trim(formValues.title);
 

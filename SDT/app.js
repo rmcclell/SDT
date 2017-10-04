@@ -37,7 +37,7 @@ Ext.application({
         var profiles = [{
             "name": "Profile 1",
             "active": true,
-            "createDate": "2013-07-01T04:27:22Z",
+            "createDate": "2013-07-15T13:27:36Z",
             "modifiedDate": "2013-07-15T13:27:36Z"
         }]
 
@@ -411,7 +411,7 @@ Ext.application({
                 ]
             },
             "active": true,
-            "createDate": "2013-06-26T07:01:41Z",
+            "createDate": "2013-09-09T13:24:59Z",
             "modifiedDate": "2013-09-09T13:24:59Z",
             "query": {
                 "criteria": "",
@@ -464,10 +464,12 @@ Ext.application({
         ];
 
         Ext.state.Manager.set('dashboards', dashboards);
-
+        //store = Ext.getStore('DashboardConfigStore');
+        //store.loadRawData(dashboards);
     },
     stores: [
-        'settingManager.SolrIndexesStore'
+        'settingManager.SolrIndexesStore',
+        'dashboard.DashboardConfigStore'
     ],
     controllers: [
         //Controllers get instantiated in the order listed here.

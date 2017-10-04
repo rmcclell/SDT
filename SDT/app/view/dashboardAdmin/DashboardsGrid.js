@@ -4,13 +4,10 @@
         'SDT.util.DateUtils'
     ],
     requires: [
-        'SDT.store.dashboardAdmin.DashboardsStore',
-        'Ext.toolbar.Toolbar',
-        'Ext.form.field.Text',
         'SDT.view.dashboardAdmin.grids.columns.DashboardActions'
     ],
     alias: 'widget.dashboardsGrid',
-    store: 'dashboardAdmin.DashboardsStore',
+    store: 'DashboardConfigStore',
     loadMask: true,
     singleSelect: true,
     dockedItems: [{

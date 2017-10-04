@@ -32,7 +32,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     ],
     stores: [
         'menuManagement.MenuTreeStore',
-        'dashboard.DashboardConfigStore',
         'dashboard.DashboardCriteriaFilterStore',
         'dashboard.DashboardListsStore',
         'dashboard.DashboardChartsStore',
@@ -125,7 +124,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     reloadActiveChartData: function () {
 
         var me = this,
-            dashboardConfigStore = me.getDashboardDashboardConfigStoreStore(),
+            dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
             criteriaPanel = me.getDashboardCriteriaPanel();
 
         //me.loadDashboardConfigComps(criteriaPanel, dashboardConfigStore);
@@ -336,7 +335,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var me = this,
             callbackFn,
             criteriaPanel = me.getDashboardCriteriaPanel(),
-            dashboardConfigStore = me.getDashboardDashboardConfigStoreStore();
+            dashboardConfigStore = Ext.getStore('DashboardConfigStore');
 
         //callbackFn = function (records, operation, success) {
         //    if (success && records.length > 0) {
@@ -387,7 +386,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
     onDashboardChange: function () {
         var me = this,
-            dashboardConfigStore = me.getDashboardDashboardConfigStoreStore();
+            dashboardConfigStore = Ext.getStore('DashboardConfigStore');
 
         me.currentDashboardId = (!Ext.isEmpty(Ext.state.Manager.get('lastDashboardId'))) ?
             Ext.state.Manager.get('lastDashboardId') : Ext.state.Manager.get('defaultDashboardId'); //Set the default dashboard as current dashboard
@@ -631,7 +630,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     loadCriteriaCombos: function (chartInfo, dashboardConfig) {
 
         var me = this,
-            dashboardConfigStore = me.getDashboardDashboardConfigStoreStore(),
+            dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
             dashboardCriteriaPanel = me.getDashboardCriteriaPanel(),
             userCriteriaData = (dashboardConfig.type !== 'Independent') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData'),
             dashboardCriteriaForm = dashboardCriteriaPanel.getForm();
@@ -711,7 +710,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             viewportPanel = menu.up('viewport').down('panel'),
             dashboardsView = me.getDashboardsView(),
             criteriaPanel = me.getDashboardCriteriaPanel(),
-            dashboardConfigStore = me.getDashboardDashboardConfigStoreStore();
+            dashboardConfigStore = Ext.getStore('DashboardConfigStore');
 
         dashboardsView.on('titlechange', function () {
             //viewportPanel.getEl().unmask();
@@ -823,7 +822,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             parent = obj.up('container'),
             operatorCombo = parent.down('operatorCombo'),
             criteriaCombo = parent.down('combo'),
-            dashboardConfigStore = me.getDashboardDashboardConfigStoreStore(),
+            dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
             criteriaFilters = me.getCriteriaFilters(),
             firstConfigRecord,
             activeQuery,
@@ -974,7 +973,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             var me = this, containsCustomColor = false, colorMapping = [], chartCreateObject = {};
 
             chartCreateObject.type = chartConfig.type;
-            return { xtype: chartConfig.type, width: 300, heigth: 300, store: store };
+            return { xtype: chartConfig.type, width: 400, height: 400, store: store };
 
             //return Ext.create('SDT.view.dashboard.chart.' + chartConfig.type, chartCreateObject);
         } else {

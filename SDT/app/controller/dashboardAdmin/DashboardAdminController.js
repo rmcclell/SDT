@@ -50,7 +50,7 @@
             searchField.setValue('');
         }
 
-        grid.getStore().loadData(Ext.state.Manager.get('dashboards'));
+        //grid.getStore().loadData(Ext.state.Manager.get('dashboards'));
     },
 
     bindDashboardStoreEvents: function (grid) {
@@ -211,7 +211,7 @@
             dashboardWizard,
             dashboardAdminView = this.getDashboardAdminView(),
             dataObj = {},
-            createDtStr = Ext.Date.format(data.createDate, 'c'),
+            createDtStr = Ext.Date.format(new Date(), 'c'),
             dtStr = Ext.Date.format(new Date(), 'c');
 
         dtStr = dtStr.slice(0, dtStr.lastIndexOf('-')) + '.500Z'; //Add milliseconds to timestamp so timestamp uses strict iso 8601 ex date 2012-12-27T00:05:49.826Z
@@ -219,6 +219,10 @@
 
         data.createDate = createDtStr; //Preserve create time
         data.modifiedDate = dtStr; //Update modified date
+
+        data.userCriteriaFields = Ext.Array.pluck(record.userCriteriaFields().getRange(), 'data');
+
+        console.log(data);
 
         Ext.Object.each(data, function (item, itemValue) {
             if (item === 'query') {
@@ -244,6 +248,8 @@
         dashboardAdminView.getLayout().setActiveItem(dashboardWizard);
 
         //Load data into individual forms on each card
+
+        console.log(dataObj)
 
         Ext.Array.each(dashboardWizard.cards, function (card) {
             card.getForm().setValues(dataObj);

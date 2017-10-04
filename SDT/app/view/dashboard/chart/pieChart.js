@@ -2,7 +2,6 @@
     extend: 'Ext.chart.PolarChart',
 	alias: 'widget.pieChart',
     controller: undefined,
-	layout : 'fit',
 	theme: 'default-gradients',
 	insetPadding: 50,
 	innerPadding: 20,
@@ -10,13 +9,10 @@
 	sprites: [],
 	series: [{
 		type: 'pie',
-		angleField: 'count',
-		label: {
-			field: 'label',
-			calloutLine: {
-				length: 60,
-				width: 3
-			}
+        angleField: 'count',
+        label: {
+            field: 'label',
+            display: 'rotate'
 		},
 		highlight: true,
 		tooltip: {
@@ -24,7 +20,8 @@
 			renderer : function (tooltip, record, item) {
 				tooltip.setHtml(record.get('label') + ': ' + record.get('count') + '%');
 			}
-		},
+        }//,
+        /*
 		renderer: function(sprite, config, rendererData, index) {
 			 var color = rendererData.store.getAt(index).get('color');
 			 if(color !== 'false') {
@@ -36,6 +33,6 @@
 				   fill: '#F00'
 				 });
 		}
-	  }
+	  }*/
 	}]
 });

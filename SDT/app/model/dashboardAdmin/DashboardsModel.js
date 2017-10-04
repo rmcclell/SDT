@@ -23,6 +23,7 @@ Ext.define('SDT.model.dashboardAdmin.DashboardsModel', {
         'query',
         'resultsPanel',
         'title',
+        'userCriteriaData',
         'userCriteriaFields'
     ],
     associations: [

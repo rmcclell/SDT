@@ -5,11 +5,11 @@
     layout: 'anchor',
     items: [{
         xtype: 'dataview',
-        itemSelector: '',
+        itemSelector: 'div.thumb-wrap',
         margin: '10 5 10 5',
         anchor: '100%',
-        store: Ext.create('Ext.data.Store', {
-            id: 'saveStore',
+        emptyText: 'No data available',
+        store: {
             fields: [
                 'title',
                 'description',
@@ -19,7 +19,7 @@
                 'criteria',
                 'filters'
             ]
-        }),
+        },
         tpl: Ext.create('Ext.XTemplate', 
             '<tpl for=".">',
             '<h2>Summary</h2><br>',
