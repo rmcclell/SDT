@@ -3,11 +3,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     uses: [
         'SDT.util.DateUtils'
     ],
-    requires: [
-        'Ext.chart',
-        'Ext.chart.PolarChart',
-        'Ext.chart.theme.Muted'
-    ],
     views: [
         'dashboard.DashboardCriteriaContainer',
         'dashboard.DashboardCriteriaPanel',
@@ -324,7 +319,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         //store.on('datachanged', function () {
         foundRecord = store.getById(currentDashboardRecord.get('solrIndexId')),
-        records = foundRecord.get('solrFields');
+            records = foundRecord.get('solrFields');
         me.buildGridColumns(records, grid);
         //}, me, { single: true });
 
@@ -466,50 +461,63 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         dashboardsView.setTitle(title);
 
-        callbackFn = function (records, operation, success) {
-            if (success) {
-                me.loadCriteriaCombos(chartInfo, dashboardConfig);
-                me.loadChartData(dashboardStore, queries, chartConfig, chartInfo, resultsPanelConfig, dashboardConfig, activeQuery);
-                me.loadResultsPanel(activeQuery, resultsPanelConfig, dashboardConfig);
-            }
-            //dashboardsView.getEl().unmask();
-        };
-        
+        //callbackFn = function (records, operation, success) {
+        //if (success) {
+        me.loadCriteriaCombos(chartInfo, dashboardConfig);
+        me.loadChartData(dashboardStore, queries, chartConfig, chartInfo, resultsPanelConfig, dashboardConfig, activeQuery);
+        me.loadResultsPanel(activeQuery, resultsPanelConfig, dashboardConfig);
+        //}
+        //dashboardsView.getEl().unmask();
+        //};
+
         //Set sent params both independent and connected charts wrap params as array
 
         //proxy.url = '/data/mock/dashboard/' + Ext.state.Manager.get('defaultDashboardId') + '/DashboardConnectedCharts.json';
-        proxy.url = chartInfo.dataIndex + 'select';
-        proxy.extraParams = {
-            q: '*:*',
-            facet: true,
-            rows: 0
-        };
+        //proxy.url = chartInfo.dataIndex + 'select';
+        //proxy.extraParams = {
+        //q: '*:*',
+        //facet: true,
+        //'facet.field': 'coat',
+        //rows: 0
+        //};
         //proxy.extraParams = { chartParms: queries };
 
-        dashboardStore.load({
-            scope: me,
-            callback: callbackFn
-        });
+        //dashboardStore.load({
+        //    scope: me,
+        //    callback: callbackFn
+        //});
 
     },
     loadChartData: function (data, query, chartConfig, chartInfo, resultsPanelConfig, dashboardConfig, activeQuery) {
         var me = this,
+            store = Ext.getStore('DashboardChartsStore'),
+            proxy = store.getProxy(),
             dashboardsView = me.getDashboardsView(),
             currentContainer = dashboardsView.down('dashboardChartResultsContainer');
 
-        me.loadPanelConfig(chartConfig, currentContainer, data, dashboardConfig, chartInfo);
+        proxy.url = chartInfo.dataIndex + 'select';
+        proxy.extraParams = {
+            q: '*:*',
+            facet: true,
+            'json.nl': 'arrarr',
+            'facet.missing': true,
+            'facet.field': 'coat',
+            rows: 0
+        };
+        var callbackFn = function () {
+            me.loadPanelConfig(chartConfig, store, dashboardConfig, chartInfo);
+        };
 
+        store.load({ callback: callbackFn });
 
         //dashboardsView.getEl().unmask();
     },
 
     loadResultsPanel: function (query, resultsPanelConfig, dashboardConfig) {
         var me = this,
-            //grid = Ext.ComponentQuery.query('dashboardRowResultsGrid', currentContainer)[0],
             dashboardsView = me.getDashboardsView(),
             dashboardChartResultsContainer = dashboardsView.down('dashboardChartResultsContainer'),
-            currentContainer = dashboardChartResultsContainer.down('container'),
-            grid = currentContainer.up().up().down('dashboardRowResultsGrid'),
+            grid = dashboardsView.down('dashboardRowResultsGrid'),
             activepanel = (dashboardConfig.type !== 'Independent') ? null : Ext.ComponentQuery.query('#' + this.getLastActiveChartId() + '-panel', currentContainer)[0],
             activeChartTitle = (activepanel) ? activepanel.title + ': ' : '',
             fields,
@@ -544,13 +552,16 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         });
 
     },
-    loadPanelConfig: function (chartConfig, panel, chartDataStore, dashboardConfig, chartInfo) {
+    loadPanelConfig: function (chartConfig, chartDataStore, dashboardConfig, chartInfo) {
         var me = this,
             records,
             i,
             defaultContentObj = {},
             lastActiveChartId,
+            dashboardsView = me.getDashboardsView(),
+            panel = dashboardsView.down('dashboardChartResultsContainer'),
             val;
+
         Ext.suspendLayouts();
 
         //Remove previous charts
@@ -570,15 +581,21 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             defaultContent: []
         };
 
+        
         Ext.Array.each(records, function (record, index, allRecords) {
             var currentChartConifg = record.getData(),
-                data = (chartDataStore.getById(currentChartConifg.chartid)) ? chartDataStore.getById(currentChartConifg.chartid).getData() : { "facet_counts": { "facet_queries": {}, "facet_fields": {}, "facet_dates": {}, "facet_ranges": {} } },
+                //data = (chartDataStore.getById(currentChartConifg.chartid)) ? chartDataStore.getById(currentChartConifg.chartid).getData() : { "facet_counts": { "facet_queries": {}, "facet_fields": {}, "facet_dates": {}, "facet_ranges": {} } },
+                data = chartDataStore.first().getData(),
                 panel,
-                store = (currentChartConifg.dataSource === 'FacetQuery') ?
-                    me.buildFacetQueryStore(data.facet_counts.facet_queries, currentChartConifg.chartid, currentChartConifg.seriesData) : me.buildFacetFieldStore(data.facet_counts.facet_fields[currentChartConifg.fieldName], currentChartConifg.fieldName),
+                store = (currentChartConifg.dataSource === 'FacetQuery')
+                    ? me.buildFacetQueryStore(data.facet_queries, currentChartConifg.chartid, currentChartConifg.seriesData)
+                    : me.buildFacetFieldStore(data.facet_fields[currentChartConifg.fieldName], currentChartConifg.fieldName),
                 chart;
 
             //currentChartConifg.controller = 'SDT.controller.dashboard.DashboardController';
+
+            debugger;
+
 
             chart = me.buildChart(currentChartConifg, store);
 
@@ -587,9 +604,9 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             //chart.title = currentChartConifg.title;
 
             if (dashboardConfig.type === 'Independent' && chart.itemId === lastActiveChartId) {
-                chart.setDisabled(false);
+                chart.disabled = false;
             } else if (dashboardConfig.type === 'Independent' && chart.itemId !== lastActiveChartId) {
-                chart.setDisabled(true);
+                chart.disabled = true;
             }
 
             dashboardConfigObj.parts['portlet' + (index + 1)] = me.createPortlet(chart, dashboardConfig.type, currentChartConifg.title, lastActiveChartId);
@@ -599,7 +616,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         });
 
 
-
+        debugger;
 
         var dashboard = Ext.create('Ext.dashboard.Dashboard', dashboardConfigObj);
         //var dashboardContainer = Ext.ComponentQuery.query('#dashboardContainer')[0];
@@ -969,18 +986,21 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     buildChart: function (chartConfig, store) {
         //Becuase of extjs differences on how array and json stores keep track of totals both have to be checked
 
-        if (store.getCount() > 0 || store.getTotalCount() > 0) {
-            var me = this, containsCustomColor = false, colorMapping = [], chartCreateObject = {};
+        if (store.data.length > 0) {
+            var me = this;
 
-            chartCreateObject.type = chartConfig.type;
-            return { xtype: chartConfig.type, width: 400, height: 400, store: store };
-
-            //return Ext.create('SDT.view.dashboard.chart.' + chartConfig.type, chartCreateObject);
+            return {
+                xtype: chartConfig.type,
+                width: 400,
+                height: 400,
+                store: store
+            };
         } else {
             //TODO: move this inline create to sperate file under the dashboard charts view
-            return Ext.create('Ext.container.Container', {
+            return {
+                xtype: 'container',
                 border: false,
-                //itemId: chartConfig.chartid,
+                itemId: chartConfig.chartid,
                 layout: {
                     type: 'vbox',
                     align: 'center',
@@ -990,23 +1010,14 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                     border: false,
                     html: '<b>No data available</b>'
                 }]
-            });
+            };
         }
     },
     createPortlet: function (chart, type, title, lastActiveChartId) {
-        var tools = [],
-            activeTooltip = 'Currently Active',
-            inactiveTooltip = 'Currently Inactive, click to make this dashboard active';
+        var tools = (type !== 'Connected')
+            ? [ { type: 'pin', hidden: chart.itemId === lastActiveChartId ? false : true, tooltip: 'Currently Active' }, { type: 'unpin', hidden: true, tooltip: 'Currently Inactive, click to make this dashboard active' } ]
+            : [ ];
 
-        if (type !== 'Connected') {
-            if (chart.itemId === lastActiveChartId) {
-                tools.push({ type: 'pin', hidden: false, tooltip: activeTooltip });
-                tools.push({ type: 'unpin', hidden: true, tooltip: inactiveTooltip });
-            } else {
-                tools.push({ type: 'pin', hidden: true, tooltip: activeTooltip });
-                tools.push({ type: 'unpin', hidden: false, tooltip: inactiveTooltip });
-            }
-        }
         var c = {
             viewTemplate: {
                 title: title,
@@ -1021,24 +1032,27 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     },
 
     buildFacetFieldStore: function (data, field) {
-        return Ext.create('Ext.data.ArrayStore', {
-            fields: [
-                'label',
-                'color',
-                { name: 'count', mapping: 1 },
-                {
-                    name: 'legend', convert: function (v, record) {
-                        return Ext.String.format('{0}:{1}', record.data.label, record.data.count);
-                    }
-                },
-                {
-                    name: 'range', convert: function (v, record) {
-                        return Ext.String.format('{0}:[{1} TO {1}]', field, record.data.label);
-                    }
-                }
-            ],
-            data: (data) ? data : [] //Insure undefined doesnt get passed to store
-        });
+        var recs = [];
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i][1] > 0) {
+                recs.push({
+                    label: data[i][0],
+                    count: data[i][1],
+                    color: data[i][1],
+                    legend: Ext.String.format('{0}:{1}', data[i][1], data[i][0]),
+                    range: Ext.String.format('[{0} TO {0}]', data[i][0])
+                });
+            }
+        }
+
+        console.log(recs);
+
+        return {
+            type: 'json',
+            fields: ['label', 'count', 'legend', 'range', 'color'],
+            data: recs
+        };
     },
     buildFacetQueryStore: function (data, chartId, seriesData) {
         // OUCH!  This is some ugly code and needs to be refactored at first opportunity.

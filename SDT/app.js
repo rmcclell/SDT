@@ -421,7 +421,7 @@ Ext.application({
                 "filters": "",
                 "sorting": ""
             },
-            "charts": [],
+            "charts": [{ "title": "Coat", "dataSource": "FacetField", "fieldName": "coat", "fieldLabel": "Coat", "type": "pieChart", "facetQuery": "", "seriesData": "", "facetField": "coat", "chartid": "3d2c8ed2-aa75-4333-a8d3-6fa4a196c343" }],
             "userCriteriaFields": [
                 {
                     "fieldLabel": "Id",
