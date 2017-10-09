@@ -2,6 +2,8 @@
     extend: 'Ext.chart.PolarChart',
 	alias: 'widget.pieChart',
     theme: 'default-gradients',
+    insetPadding: 20,
+    innerPadding: 10,
 	interactions: ['rotate'],
 	series: [{
 		type: 'pie',
@@ -9,7 +11,7 @@
         label: {
             field: 'label',
             calloutLine: {
-                length: 60,
+                length: 30,
                 width: 3
                 // specifying 'color' is also possible here
             }

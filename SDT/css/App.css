@@ -100,6 +100,10 @@
 
 /*needs this sprite*/
 
+svg text.x-hide-visibility {
+    visibility: inherit !important;
+}
+
 .error-icon {
     background-image: url('../resources/icons/error.png');
     background-repeat: no-repeat;

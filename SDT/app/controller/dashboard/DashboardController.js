@@ -315,15 +315,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             foundRecord,
             grid = Ext.ComponentQuery.query('dashboardRowResultsGrid')[0];
 
-        //debugger;
-
-        //store.on('datachanged', function () {
+        
         foundRecord = store.getById(currentDashboardRecord.get('solrIndexId')),
             records = foundRecord.get('solrFields');
         me.buildGridColumns(records, grid);
-        //}, me, { single: true });
-
-        //store.load(Ext.state.Manager.get('solrIndexes'));
+        
     },
 
     refreshDashboard: function () {
@@ -596,12 +592,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
             //currentChartConifg.controller = 'SDT.controller.dashboard.DashboardController';
 
-            debugger;
-
-
             chart = me.buildChart(currentChartConifg, store);
-
-            //console.log(chartInfo);
 
             //chart.title = currentChartConifg.title;
 
@@ -616,10 +607,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
             dashboardConfigObj.defaultContent.push(defaultContentObj);
         });
-
-
-        debugger;
-
+        
         var dashboard = Ext.create('Ext.dashboard.Dashboard', dashboardConfigObj);
         //var dashboardContainer = Ext.ComponentQuery.query('#dashboardContainer')[0];
 
@@ -993,7 +981,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
             return {
                 xtype: chartConfig.type,
-                width: 300,
+                width: '100%',
                 height: 300,
                 store: store
             };
@@ -1046,8 +1034,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                 });
             }
         }
-
-        console.log(recs);
 
         return {
             type: 'json',

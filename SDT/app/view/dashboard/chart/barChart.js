@@ -3,9 +3,13 @@
     alias: 'widget.barChart',
     theme: 'default-gradients',
     flipXY: true,
+    insetPadding: 15,
     axes: [{
         type: 'category',
         position: 'left',
+        rotate: {
+            degrees: -45
+        },
         fields: ['label']
     }, {
 		type: 'numeric',
@@ -13,19 +17,20 @@
 		fields: ['count']
 	}],
 	series: [{
-		type: 'bar',
+        type: 'bar',
+        axis: 'bottom',
 		xField: 'label',
         yField: 'count',
         style: {
-            minGapWidth: 20
+            minGapWidth: 10
         },
         highlight: {
             strokeStyle: 'black',
             fillStyle: 'gold'
         },
-		label: {
-			field: 'count',
-			display: 'insideEnd',
+        label: {
+            field: 'count',
+            display: 'insideEnd',
 			renderer: function (v) {
                 return v.toFixed(1);
 			}

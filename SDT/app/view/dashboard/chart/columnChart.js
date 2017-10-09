@@ -2,6 +2,7 @@
     extend: 'Ext.chart.CartesianChart',
     alias: 'widget.columnChart',
     theme: 'default-gradients',
+    insetPadding: 15,
     axes: [{
 		type: 'numeric',
 		position: 'left',
@@ -12,11 +13,12 @@
         fields: 'label'
 	}],
 	series: {
-		type: 'bar',
-		xField: 'label',
+        type: 'bar',
+        axis: 'left',
+        xField: 'label',
         yField: 'count',
         style: {
-            minGapWidth: 20
+            minGapWidth: 10
         },
         highlight: {
             strokeStyle: 'black',
