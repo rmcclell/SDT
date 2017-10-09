@@ -2,22 +2,20 @@
     extend: 'Ext.chart.PolarChart',
 	alias: 'widget.pieChart',
     theme: 'default-gradients',
-    insetPadding: 20,
-    innerPadding: 10,
-	interactions: ['rotate'],
-	series: [{
+    insetPadding: 15,
+    innerPadding: 15,
+    interactions: ['rotate', 'itemhighlight'],
+    series: [{
 		type: 'pie',
         angleField: 'count',
+        highlight: {
+            margin: 20
+        },
         label: {
             field: 'label',
-            calloutLine: {
-                length: 30,
-                width: 3
-                // specifying 'color' is also possible here
-            }
-		},
-        highlight: true//,
-        /*
+            display: 'outside',
+            fontSize: 11
+		}/*
 
 		tooltip: {
 			trackMouse: true,

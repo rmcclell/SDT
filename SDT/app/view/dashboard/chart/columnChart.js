@@ -9,6 +9,12 @@
 		fields: 'count'
     }, {
         type: 'category',
+        label: {
+            fontSize: 11,
+            rotate: {
+                degrees: -90
+            }
+        },
         position: 'bottom',
         fields: 'label'
 	}],

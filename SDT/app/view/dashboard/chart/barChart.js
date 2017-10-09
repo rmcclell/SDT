@@ -7,14 +7,11 @@
     axes: [{
         type: 'category',
         position: 'left',
-        rotate: {
-            degrees: -45
-        },
         fields: ['label']
     }, {
 		type: 'numeric',
         position: 'bottom',
-		fields: ['count']
+        fields: ['count']
 	}],
 	series: [{
         type: 'bar',
