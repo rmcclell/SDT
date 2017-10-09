@@ -2,8 +2,6 @@
     extend: 'Ext.chart.PolarChart',
 	alias: 'widget.pieChart',
     theme: 'default-gradients',
-	insetPadding: 50,
-	innerPadding: 20,
 	interactions: ['rotate'],
 	series: [{
 		type: 'pie',

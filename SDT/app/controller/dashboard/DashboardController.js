@@ -493,15 +493,17 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             store = Ext.getStore('DashboardChartsStore'),
             proxy = store.getProxy(),
             dashboardsView = me.getDashboardsView(),
+            fieldNames = Ext.Array.unique(Ext.Array.pluck(Ext.Array.pluck(chartConfig.getRange(), 'data'), 'fieldName')).join(','),
             currentContainer = dashboardsView.down('dashboardChartResultsContainer');
 
         proxy.url = chartInfo.dataIndex + 'select';
+        
         proxy.extraParams = {
             q: '*:*',
             facet: true,
             'json.nl': 'arrarr',
             'facet.missing': true,
-            'facet.field': 'coat',
+            'facet.field': fieldNames,
             rows: 0
         };
         var callbackFn = function () {
@@ -991,8 +993,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
             return {
                 xtype: chartConfig.type,
-                width: 400,
-                height: 400,
+                width: 300,
+                height: 300,
                 store: store
             };
         } else {
@@ -1022,9 +1024,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             viewTemplate: {
                 title: title,
                 layout: 'fit',
-                closable: false,
                 items: [chart],
-                tools: tools
+                closable: false
             }
         };
 
