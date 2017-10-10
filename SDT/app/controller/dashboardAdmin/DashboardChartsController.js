@@ -5,7 +5,7 @@
     ],
     views: [
         'dashboardAdmin.cards.Charts',
-        'dashboardAdmin.forms.AddEditConnectedChartForm',
+        'dashboardAdmin.forms.AddEditChartForm',
         'dashboardAdmin.grids.ChartsGrid',
         'SDT.view.dashboardAdmin.grids.ChartUserCriteriaGrid'
     ],
@@ -23,22 +23,22 @@
             'charts': {
                 show: me.loadChartsGrid
             },
-            'dashboardConnectedWizardPanel chartsGrid button[text="Add Chart"]': {
+            'dashboardWizardPanel chartsGrid button[text="Add Chart"]': {
                 click: me.showCreateConnectedChartForm
             },
-            'dashboardConnectedWizardPanel chartsGrid': {
+            'dashboardWizardPanel chartsGrid': {
                 select: me.previewChart
             },
-            'dashboardConnectedWizardPanel chartsActions': {
+            'dashboardWizardPanel chartsActions': {
                 editItem: me.chartConnectedEditItem
             },
-            'addEditConnectedChartForm button#applyBtn': {
+            'addEditChartForm button#applyBtn': {
                 click: me.applyChartItem
             },
             'form[type="Add"] field[name="chartid"]': {
                 afterrender: me.createChartId
             },
-            'addEditConnectedChartForm field[name="dataSource"], addEditConnectedChartForm field[name="fieldName"]': {
+            'addEditChartForm field[name="dataSource"], addEditChartForm field[name="fieldName"]': {
                 change: me.updateQueryOrField
             },
             'charts field[name="facet"]': {
@@ -299,7 +299,7 @@
         }
     },
     chartConnectedEditItem: function (column, record, eventName, actionItem, grid) {
-        var formPanel = Ext.create('SDT.view.dashboardAdmin.forms.AddEditConnectedChartForm', { type: 'Edit' }),
+        var formPanel = Ext.create('SDT.view.dashboardAdmin.forms.AddEditChartForm', { type: 'Edit' }),
             rec = record.copy(record.data.chartid), // clone the record to avoid altering orignal
             seriesData = rec.getData().seriesData,
             form = formPanel.getForm();
@@ -342,6 +342,6 @@
     },
 
     showCreateConnectedChartForm: function (btn) {
-        Ext.create('SDT.view.dashboardAdmin.forms.AddEditConnectedChartForm', { type: 'Add' }).show();
+        Ext.create('SDT.view.dashboardAdmin.forms.AddEditChartForm', { type: 'Add' }).show();
     }
 });

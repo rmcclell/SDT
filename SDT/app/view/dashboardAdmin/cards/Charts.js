@@ -1,7 +1,7 @@
 ﻿Ext.define('SDT.view.dashboardAdmin.cards.Charts', {
     extend: 'Ext.ux.panel.Card',
     requires: [
-        'SDT.view.dashboardAdmin.grids.ChartsConnectedGrid'
+        'SDT.view.dashboardAdmin.grids.ChartsGrid'
     ],
     alias: 'widget.charts',
     description: 'Add Charts to visualize your filter Results.',
@@ -20,7 +20,7 @@
     items: [{
         flex: 1,
         minHeight: 180,
-        xtype: 'chartsConnectedGrid'
+        xtype: 'chartsGrid'
     }, {
         xtype: 'panel',
         hidden: true,

@@ -8,7 +8,7 @@
     init: function () {
         var me = this;
         me.control({
-            'dashboardConnectedWizardPanel save': {
+            'dashboardWizardPanel save': {
                 show: me.loadConnectedSaveData
             }
         });

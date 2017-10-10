@@ -1,6 +1,7 @@
 ﻿Ext.define('SDT.controller.dashboardAdmin.DashboardAdminController', {
     extend: 'Ext.app.Controller',
     views: [
+        'dashboardAdmin.DashboardWizardPanel',
         'dashboardAdmin.DashboardsGrid',
         'dashboardAdmin.forms.DashboardCloneForm'
     ],
@@ -21,6 +22,9 @@
             },
             'dashboardsGrid > toolbar > button[text="Refresh"]': {
                 click: me.loadDashboardGrid
+            },
+            'dashboardsGrid > toolbar > button menuitem#createConnectedDashboardBtn': {
+                click: me.createDashboard
             },
             'dashboardActions': {
                 deleteItem: me.deleteDashboard,
@@ -237,12 +241,9 @@
 
         });
 
-        dashboardWizard = Ext.create('SDT.view.dashboardAdmin.Dashboard' + record.get('type') + 'WizardPanel', { type: 'Edit' });
-
-        //dashboardWizard = Ext.create('SDT.view.dashboardAdmin.DashboardWizardPanel', { type: 'Edit' });
-
+        dashboardWizard = Ext.create('SDT.view.dashboardAdmin.DashboardWizardPanel', { type: 'Edit' });
+        
         dashboardWizard.setTitle(Ext.String.format('{0} for "{1}"', dashboardWizard.initialConfig.headConfig.title, data.title));
-
         dashboardAdminView.add(dashboardWizard);
         dashboardAdminView.getLayout().setActiveItem(dashboardWizard);
 
@@ -280,5 +281,20 @@
         } else if (newValue && newValue.length >= 1) {
             callbackFn();
         }
+    },
+    createDashboard: function (btn) {
+        var dashboardAdminView = this.getDashboardAdminView(),
+            dtStr = Ext.Date.format(new Date(), 'c'),
+            dashboardWizardPanel = Ext.create('SDT.view.dashboardAdmin.DashboardWizardPanel', { type: 'Add' }),
+            newDashboardDetailsForm = dashboardWizardPanel.down('details').getForm(),
+            modifiedDate = newDashboardDetailsForm.findField('modifiedDate'),
+            createDate = newDashboardDetailsForm.findField('createDate');
+
+        dashboardAdminView.getLayout().setActiveItem(dashboardWizardPanel);
+
+        dtStr = dtStr.slice(0, dtStr.lastIndexOf('-')) + '.500Z'; //Add milliseconds to timestamp so timestamp uses strict iso 8601 ex date 2012-12-27T00:05:49.826Z
+
+        modifiedDate.setRawValue(dtStr);
+        createDate.setRawValue(dtStr);
     }
 });

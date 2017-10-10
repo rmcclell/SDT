@@ -1,8 +1,8 @@
 ﻿//Will handled edit and add operation for chart selection section
 
-Ext.define('SDT.view.dashboardAdmin.forms.AddEditConnectedChartForm', {
+Ext.define('SDT.view.dashboardAdmin.forms.AddEditChartForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.addEditConnectedChartForm',
+    alias: 'widget.addEditChartForm',
     modal: true,
     frame: true,
     floating: true,

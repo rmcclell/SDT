@@ -22,13 +22,13 @@
             'addEditSeriesForm #applyBtn': {
                 click: me.applySeriesItem
             },
-            'addEditConnectedChartForm[type="Edit"] seriesGrid': {
+            'addEditChartForm[type="Edit"] seriesGrid': {
                 show: me.loadSeriesConnectedGrid
             },
             'addEditChartView > addEditChartForm': {
                 afterrender: me.bindSeriesDataChangedEvent
             },
-            'addEditConnectedChartForm': {
+            'addEditChartForm': {
                 afterrender: me.bindSeriesDataChangedEvent
             }
         });

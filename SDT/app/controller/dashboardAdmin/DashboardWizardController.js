@@ -27,7 +27,7 @@
                 beforeclose: me.returnToDashboardsGrid,
                 finish: me.finishWizard
             },
-            'addEditSeriesForm button#applyBtn, addEditConnectedChartForm button#applyBtn, addEditFiltersForm button#applyBtn, addEditUserCriteriaForm button#applyBtn': {
+            'addEditSeriesForm button#applyBtn, addEditChartForm button#applyBtn, addEditFiltersForm button#applyBtn, addEditUserCriteriaForm button#applyBtn': {
                 beforerender: me.setApplyButtonText
             }
         });

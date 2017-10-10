@@ -61,7 +61,7 @@
             'previewGrid': {
                 beforerender: me.bindFilterDataChangedEvent
             },
-            'dashboardConnectedWizardPanel filters, #filtersTab': {
+            'dashboardWizardPanel filters, #filtersTab': {
                 show: me.loadFiltersGrid
             },
             'filtersActions': {

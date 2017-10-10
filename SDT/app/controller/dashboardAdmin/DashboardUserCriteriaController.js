@@ -14,7 +14,7 @@
     init: function () {
         var me = this;
         me.control({
-            'dashboardConnectedWizardPanel[type="Edit"] userCriteria': {
+            'dashboardWizardPanel[type="Edit"] userCriteria': {
                 show: me.loadUserCriteriaConnectedGrid
             },
             'userCriteria field[name="userCriteriaFields"]': {

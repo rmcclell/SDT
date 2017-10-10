@@ -1,5 +1,12 @@
 ﻿Ext.define('SDT.view.dashboardAdmin.DashboardWizardPanel', {
     extend: 'Ext.ux.panel.Wizard',
+    requires: [
+        'SDT.view.dashboardAdmin.cards.Details',
+        'SDT.view.dashboardAdmin.cards.Filters',
+        'SDT.view.dashboardAdmin.cards.Charts',
+        'SDT.view.dashboardAdmin.cards.UserCriteria',
+        'SDT.view.dashboardAdmin.cards.Save'
+    ],
     alias: 'widget.dashboardWizardPanel',
     dashboardType: 'Connected',
     includeHeaderPanel: true,
@@ -24,7 +31,7 @@
             mode = me.type === 'Edit' ? 'Update' : 'Create';
         return {
             title: 'Dashboarding Design Wizard: ' + mode + ' ' + me.dashboardType + " Dashboard",
-            height: 40,
+            height: 60,
             headerPosition: 'top',
             position: 'top',
             stepText: 'Step {0} of {1}: {2}'
@@ -44,6 +51,15 @@
         };
     },
     buildCards: function () {
-        return [];
+
+        var cards = [
+            Ext.widget('details'), // first card "Details"
+            Ext.widget('filters'), // second card "Filters"
+            Ext.widget('charts'), // third card "Charts"
+            Ext.widget('userCriteria'), // fourth card "Criteria Selection"
+            Ext.widget('save') //fifth card "Save"
+        ];
+
+        return cards;
     }
 });

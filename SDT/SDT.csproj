@@ -97,7 +97,6 @@
     <Content Include="app\component\combo\ThemesCombo.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardAdminController.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardChartsController.js" />
-    <Content Include="app\controller\dashboardAdmin\DashboardConnectedWizardController.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardDetailsController.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardFiltersController.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardSaveController.js" />
@@ -188,17 +187,15 @@
     <Content Include="app\view\dashboardAdmin\containers\fieldTypes\DateContainer.js" />
     <Content Include="app\view\dashboardAdmin\containers\fieldTypes\NumericContainer.js" />
     <Content Include="app\view\dashboardAdmin\containers\fieldTypes\TextContainer.js" />
-    <Content Include="app\view\dashboardAdmin\DashboardConnectedWizardPanel.js" />
     <Content Include="app\view\dashboardAdmin\DashboardsGrid.js" />
     <Content Include="app\view\dashboardAdmin\DashboardWizardPanel.js" />
     <Content Include="app\view\dashboardAdmin\fields\ColorCombo.js" />
     <Content Include="app\view\dashboardAdmin\fields\DateToFromCombo.js" />
-    <Content Include="app\view\dashboardAdmin\forms\AddEditConnectedChartForm.js" />
+    <Content Include="app\view\dashboardAdmin\forms\AddEditChartForm.js" />
     <Content Include="app\view\dashboardAdmin\forms\AddEditFiltersForm.js" />
     <Content Include="app\view\dashboardAdmin\forms\AddEditSeriesForm.js" />
     <Content Include="app\view\dashboardAdmin\forms\AddEditUserCriteriaForm.js" />
     <Content Include="app\view\dashboardAdmin\forms\DashboardCloneForm.js" />
-    <Content Include="app\view\dashboardAdmin\grids\ChartsConnectedGrid.js" />
     <Content Include="app\view\dashboardAdmin\grids\ChartsGrid.js" />
     <Content Include="app\view\dashboardAdmin\grids\ChartUserCriteriaGrid.js" />
     <Content Include="app\view\dashboardAdmin\grids\columns\ChartsActions.js" />
