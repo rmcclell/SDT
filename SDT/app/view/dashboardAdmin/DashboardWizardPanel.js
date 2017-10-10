@@ -30,7 +30,7 @@
         var me = this,
             mode = me.type === 'Edit' ? 'Update' : 'Create';
         return {
-            title: 'Dashboarding Design Wizard: ' + mode + ' ' + me.dashboardType + " Dashboard",
+            title: 'Dashboarding Design Wizard: ' + mode + ' Dashboard',
             height: 10,
             headerPosition: 'top',
             position: 'top',

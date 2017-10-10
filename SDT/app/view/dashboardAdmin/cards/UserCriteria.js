@@ -4,7 +4,7 @@
         'SDT.view.dashboardAdmin.grids.UserCriteriaGrid'
     ],
     alias: 'widget.userCriteria',
-    title: 'Select User Criteria Options',
+    title: 'User Criteria',
     trackResetOnLoad: true,
     description: 'Select additional filtering options to appear on your dashboard. This will allow you to further refine you dashboard view.',
     itemId: 'criteriaSelectionCard',
