@@ -125,7 +125,6 @@ Ext.define('Ext.ux.panel.Card', {
                 cls: 'ext-ux-wiz-Header-description',
                 dock: 'top',
                 ui: 'header',
-                layout: 'fit',
                 border: false,
                 items: [{
                     // Fieldset in Column 1 - collapsible via toggle button

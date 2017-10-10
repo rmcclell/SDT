@@ -16,7 +16,7 @@
     },
     items: [{
         xtype: 'filtersGrid',
-        margin: '20 5 20 5',
+        margin: 5,
         collapsible: true,
         flex: 1,
         title: 'Filters',

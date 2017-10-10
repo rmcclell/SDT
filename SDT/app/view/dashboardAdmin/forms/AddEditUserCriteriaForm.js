@@ -8,9 +8,9 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditUserCriteriaForm', {
     floating: true,
     closable: true,
     scrollable: true,
+    frame: true,
     modal: true,
     type: 'Add', //Add or Edit
-    height: 150,
     width: 325,
     initComponent: function () {
         var me = this;

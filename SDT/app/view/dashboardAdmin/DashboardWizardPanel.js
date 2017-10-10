@@ -31,7 +31,7 @@
             mode = me.type === 'Edit' ? 'Update' : 'Create';
         return {
             title: 'Dashboarding Design Wizard: ' + mode + ' ' + me.dashboardType + " Dashboard",
-            height: 60,
+            height: 10,
             headerPosition: 'top',
             position: 'top',
             stepText: 'Step {0} of {1}: {2}'
@@ -44,7 +44,7 @@
     buildCardPanelConfig: function () {
         return {
             defaults: {
-                baseCls: 'x-small-editor',
+                bodyStyle: 'background-color:transparent;',
                 border: false
             },
             layout: 'card'

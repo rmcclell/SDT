@@ -8,12 +8,11 @@
     layout: 'fit',
     showTitle: true,
     scrollable: true,
-    layout: 'anchor',
     items: [{
         xtype: 'dataview',
+        style: 'background-color:#FFF;',
+        padding: 5,
         itemSelector: 'div.thumb-wrap',
-        margin: '10 5 10 5',
-        anchor: '100%',
         emptyText: 'No data available',
         store: {
             fields: [

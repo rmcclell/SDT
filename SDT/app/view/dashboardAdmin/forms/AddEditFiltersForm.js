@@ -6,16 +6,16 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditFiltersForm', {
     closable: true,
     floating: true,
     modal: true,
+    frame: true,
     type: 'Add',
     filterType: 'Base',
-    height: 200,
     width: 500,
     layout: 'anchor',
     scrollable: true,
     store: null,
-    frame: true,
+    bodyPadding: 5,
     trackResetOnLoad: true,
-    defaults: { anchor: '100%', margin: 5, validateOnBlur: false, labelWidth: 70 },
+    defaults: { anchor: '100%', validateOnBlur: false, labelWidth: 70 },
     initComponent: function () {
         var me = this;
         me.title = me.initType(me.type, me.filterType);

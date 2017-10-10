@@ -8,10 +8,10 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditChartForm', {
     floating: true,
     closable: true,
     type: 'Add', //Add or Edit
-    height: 600,
     width: 800,
-    layout: 'vbox',
+    layout: 'anchor',
     scrollable: true,
+    bodyPadding: 5,
     initComponent: function () {
         var me = this;
         me.title = me.initType(me.type);
@@ -21,7 +21,7 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditChartForm', {
         return type + ' Chart';
     },
     trackResetOnLoad: true,
-    defaults: { width: '100%', margin: 5, validateOnBlur: false },
+    defaults: { anchor: '100%', validateOnBlur: false },
     items: [{
         xtype: 'textfield',
         fieldLabel: 'Title',

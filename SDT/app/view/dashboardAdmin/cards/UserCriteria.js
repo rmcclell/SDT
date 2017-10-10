@@ -14,7 +14,7 @@
     scrollable: true,
     defaults: {
         width: '100%',
-        margin: '20 5 20 5'
+        margin: 5
     },
     items: [{
         xtype: 'userCriteriaGrid',

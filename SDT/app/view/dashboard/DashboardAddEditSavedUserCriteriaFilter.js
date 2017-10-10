@@ -3,6 +3,7 @@
     alias: 'widget.dashboardAddEditSavedUserCriteriaFilter',
     autoShow: true,
     modal: true,
+    frame: true,
     floating: true,
     closable: true,
     mode: undefined, //Must be set on creation
@@ -11,6 +12,7 @@
     },
     width: 400,
     height: 100,
+    bodyPadding: 5,
     trackResetOnLoad: true,
     layout: 'anchor',
     initComponent: function () {
@@ -21,7 +23,6 @@
     },
     items: [{
         anchor: '100%',
-        margin: 10,
         name: 'dashboardSavedUserCriteriaFilters',
         xtype: 'textfield',
         selectOnFocus: true,

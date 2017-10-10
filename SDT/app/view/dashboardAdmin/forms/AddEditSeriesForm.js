@@ -1,17 +1,18 @@
 ﻿Ext.define('SDT.view.dashboardAdmin.forms.AddEditSeriesForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.addEditSeriesForm',
-    layout: 'vbox',
+    layout: 'anchor',
     requires: [
         'SDT.view.dashboardAdmin.fields.ColorCombo'
     ],
     alias: 'widget.addEditSeriesForm',
     floating: true,
     closable: true,
+    bodyPadding: 5,
     modal: true,
     type: 'Add',
     filterType: 'Base',
-    height: 600,
+    frame: true,
     width: 600,
     initComponent: function () {
         var me = this;
@@ -23,14 +24,14 @@
     },
     scrollable: true,
     trackResetOnLoad: true,
-    defaults: { width: '100%', margin: 5, validateOnBlur: false },
+    defaults: { anchor: '100%', width: '100%', margin: 5, validateOnBlur: false },
     items: [{
             xtype: 'textfield',
             fieldLabel: 'Group',
             labelWidth: 45,
             hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
             name: 'group'
-        }, {
+    }, {
         xtype: 'container',
         defaults: { validateOnBlur: false, labelWidth: 35 },
         layout: 'column',
@@ -55,7 +56,6 @@
         xtype: 'fieldset',
         title: 'Filter Grouping Options',
         name: 'filterGroupingFieldset',
-        //minHeight: 90,
         height: 90,
         minWidth: 400,
         defaults: { validateOnBlur: false },
@@ -115,8 +115,7 @@
     buttons: [{
         text: 'Add Series',
         itemId: 'applyBtn',
-        formBind: true, //only enabled once the form is valid
-        disabled: true
+        formBind: true
     }, {
         text: 'Close',
         handler: function () {
