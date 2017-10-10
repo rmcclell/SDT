@@ -70,12 +70,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             },
             'viewport': {
                 afterrender: me.initDashboardStores
-            },
-            'panel[type="Independent"] tool[type="unpin"]': {
-                click: me.activateChart
-            },
-            'panel[type="Independent"]': {
-                activate: me.toogleActiveChart
             }
         });
     },
@@ -95,25 +89,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
     applyFilterChange: function (field) {
         field.fireEvent('applyFilterChange', field);
-    },
-
-    activateChart: function (tool) {
-        var panel = tool.up('panel'),
-            disableComps,
-            contentComp = panel.down('chart, panel');
-
-        panel.fireEvent('activate', panel);
-    },
-
-    toogleActiveChart: function (panel) {
-
-        var me = this,
-            chartid = panel.itemId.slice(0, panel.itemId.indexOf('-panel'));
-
-        //Update last active chart
-        Ext.state.Manager.set(Ext.String.format('activeChart-{0}', me.currentDashboardId), chartid);
-        me.reloadActiveChartData();
-
     },
 
     reloadActiveChartData: function () {
@@ -466,7 +441,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         //dashboardsView.getEl().unmask();
         //};
 
-        //Set sent params both independent and connected charts wrap params as array
+        //Set sent params both connected charts wrap params as array
 
         //proxy.url = '/data/mock/dashboard/' + Ext.state.Manager.get('defaultDashboardId') + '/DashboardConnectedCharts.json';
         //proxy.url = chartInfo.dataIndex + 'select';
@@ -516,7 +491,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             dashboardsView = me.getDashboardsView(),
             dashboardChartResultsContainer = dashboardsView.down('dashboardChartResultsContainer'),
             grid = dashboardsView.down('dashboardRowResultsGrid'),
-            activepanel = (dashboardConfig.type !== 'Independent') ? null : Ext.ComponentQuery.query('#' + this.getLastActiveChartId() + '-panel', currentContainer)[0],
+            activepanel = (dashboardConfig.type === 'Connected') ? null : Ext.ComponentQuery.query('#' + this.getLastActiveChartId() + '-panel', currentContainer)[0],
             activeChartTitle = (activepanel) ? activepanel.title + ': ' : '',
             fields,
             store,
@@ -596,12 +571,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
             //chart.title = currentChartConifg.title;
 
-            if (dashboardConfig.type === 'Independent' && chart.itemId === lastActiveChartId) {
-                chart.disabled = false;
-            } else if (dashboardConfig.type === 'Independent' && chart.itemId !== lastActiveChartId) {
-                chart.disabled = true;
-            }
-
             dashboardConfigObj.parts['portlet' + (index + 1)] = me.createPortlet(chart, dashboardConfig.type, currentChartConifg.title, lastActiveChartId);
             defaultContentObj = me.createDefaultContent(index);
 
@@ -639,7 +608,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var me = this,
             dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
             dashboardCriteriaPanel = me.getDashboardCriteriaPanel(),
-            userCriteriaData = (dashboardConfig.type !== 'Independent') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData'),
+            userCriteriaData = (dashboardConfig.type === 'Connected') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData'),
             dashboardCriteriaForm = dashboardCriteriaPanel.getForm();
 
         dashboardCriteriaForm.getFields().each(function (field) {
@@ -685,17 +654,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         firstConfigRecord = me.getCurrentDashboardRecord(store);
 
-        if (firstConfigRecord.get('type') !== 'Independent') {
+        if (firstConfigRecord.get('type') === 'Connected') {
             dataIndex = firstConfigRecord.get('dataIndex');
             me.getDefaultColumns(firstConfigRecord);
             criteriaPanel.initCriteriaPanel(firstConfigRecord.getData().id, firstConfigRecord.userCriteriaFields().getRange());
             me.loadBaseCriteriaPanel(firstConfigRecord.baseCriteria());
-        } else {
-            var activeChart = me.getActiveChart(firstConfigRecord);
-            dataIndex = activeChart.get('dataIndex');
-            me.getDefaultColumns(activeChart);
-            criteriaPanel.initCriteriaPanel(firstConfigRecord.getData().id, activeChart.userCriteriaFields().getRange(), activeChart.get('chartid'));
-            me.loadBaseCriteriaPanel(activeChart.baseCriteria());
         }
     },
 
@@ -839,7 +802,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
             firstConfigRecord = me.getCurrentDashboardRecord(dashboardConfigStore);
 
-            if (firstConfigRecord.get('type') !== 'Independent') {
+            if (firstConfigRecord.get('type') === 'Connected') {
 
                 queries.push(firstConfigRecord.getQuery().getData());
 
@@ -850,23 +813,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
                 me.loadDashboard(queries, firstConfigRecord.charts(), me.getChartInfo(firstConfigRecord.getData()), firstConfigRecord.getData().resultsPanel, firstConfigRecord.getData(), firstConfigRecord.get('dataIndex'), activeQuery);
 
-            } else {
-
-                var activeChart = me.getActiveChart(firstConfigRecord);
-
-                activeChart.getQuery().set('filters', criteriaFilters);
-
-                activeQuery = activeChart.getQuery();
-                activeQuery.set('dataIndex', activeChart.get('dataIndex'));
-                activeQuery.set('chartid', activeChart.get('chartid'));
-
-                Ext.Array.each(firstConfigRecord.charts().getRange(), function (chart) {
-                    chart.getQuery().set('dataIndex', chart.get('dataIndex'));
-                    chart.getQuery().set('chartid', chart.get('chartid'));
-                    queries.push(chart.getQuery());
-                });
-
-                me.loadDashboard(queries, firstConfigRecord.charts(), me.getChartInfo(firstConfigRecord.getData()), activeChart.getData().resultsPanel, firstConfigRecord.getData(), activeChart.get('dataIndex'), activeQuery);
             }
 
         };

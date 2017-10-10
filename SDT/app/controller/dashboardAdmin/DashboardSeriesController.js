@@ -25,13 +25,10 @@
             'addEditConnectedChartForm[type="Edit"] seriesGrid': {
                 show: me.loadSeriesConnectedGrid
             },
-            'addEditIndependentChartForm[type="Edit"] addEditIndependentChartForm': {
-                beforerender: me.loadSeriesIndependentGrid
-            },
             'addEditChartView > addEditChartForm': {
                 afterrender: me.bindSeriesDataChangedEvent
             },
-            'addEditConnectedChartForm, addEditIndependentChartForm': {
+            'addEditConnectedChartForm': {
                 afterrender: me.bindSeriesDataChangedEvent
             }
         });
@@ -152,19 +149,6 @@
         var filters = Ext.decode(fieldValue);
         store.loadData(filters);
     },
-    loadSeriesIndependentGrid: function (formPanel) {
-        var me = this,
-            field = formPanel.getForm().findField('seriesData'),
-            //chartid = formPanel.getForm().findField('chartid'),
-            store = formPanel.down('seriesGrid').getStore();
-
-        field.on('change', function (field, newValue, oldValue) {
-            //chartid.on('change', function () {
-            me.loadSeriesGridFromField(newValue, store);
-            //}, me, { single: true });
-        }, me, { single: true });
-    },
-
     loadSeriesConnectedGrid: function (grid) {
         var me = this,
             field = grid.up('form').getForm().findField('seriesData'),

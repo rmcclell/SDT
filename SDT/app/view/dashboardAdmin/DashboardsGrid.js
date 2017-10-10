@@ -20,9 +20,6 @@
                 items: [{
                     text: 'Connected',
                     itemId: 'createConnectedDashboardBtn'
-                }, {
-                    text: 'Independent',
-                    itemId: 'createIndependentDashboardBtn'
                 }]
             }
         }, {

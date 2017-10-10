@@ -50,7 +50,7 @@
             'addEditFiltersForm, addEditChartForm, addEditCriteriaSelectionForm': {
                 afterrender: me.clearFieldFilter
             },
-            'addEditFiltersForm field[name="fieldName"], addEditChartForm field[name="fieldName"], addEditIndependentChartForm field[name="fieldName"]': {
+            'addEditFiltersForm field[name="fieldName"], addEditChartForm field[name="fieldName"]': {
                 change: me.updateFieldLabel
             },
             'addEditFiltersForm button#applyBtn': {
@@ -76,9 +76,6 @@
             },
             'filtersContainer button[name="applyCriteriaGrouping"], addEditSeriesForm button[name="applyCriteriaGrouping"]': {
                 click: me.executeApplycriteriaGrouping
-            },
-            'addEditIndependentChartForm[type="Edit"]': {
-                afterrender: me.preloadFiltersGrid
             }
         });
     },
@@ -107,15 +104,6 @@
         ref: 'dashboardsGrid',
         selector: 'dashboardsGrid'
     }],
-
-    preloadFiltersGrid: function (window) {
-        var store = window.down('filtersGrid').getStore(),
-            field = window.down('field[name="baseCriteria"]');
-
-        field.on('change', function (field, newValue, oldValue) {
-            this.loadFiltersGridFromField(field, store);
-        }, this, { single: true });
-    },
 
     preventDuplicateSelections: function (combo, newValue, oldValue) {
         combo.setValue(Ext.Array.unique(combo.getValue()));
@@ -628,7 +616,7 @@
         var me = this,
             store = grid.getStore(),
             parent = grid.up('form'),
-            filterType = (parent.xtype === 'filters' || parent.xtype === 'addEditIndependentChartForm') ? 'Base' : 'Series',
+            filterType = 'Series',
             rec = record.copy(record.id),
             formPanel = Ext.widget('addEditFiltersForm', { filterType: filterType, type: 'Edit', store: store }),
             form = formPanel.getForm(),
@@ -793,7 +781,7 @@
     showCreateFilterForm: function (btn) {
         var store = btn.up('grid').getStore(),
             parent = btn.up('form'),
-            filterType = (parent.xtype === 'filters' || parent.xtype === 'addEditIndependentChartForm') ? 'Base' : 'Series';
+            filterType = 'Series';
 
         Ext.widget('addEditFiltersForm', { filterType: filterType, type: 'Add', store: store }).show();
     },

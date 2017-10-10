@@ -487,7 +487,6 @@ Ext.application({
         'dashboardAdmin.DashboardAdminController',
         'dashboardAdmin.DashboardWizardController',
         'dashboardAdmin.DashboardConnectedWizardController',
-        'dashboardAdmin.DashboardIndependentWizardController',
 
         'dashboardAdmin.DashboardDetailsController',
         'dashboardAdmin.DashboardUserCriteriaController',

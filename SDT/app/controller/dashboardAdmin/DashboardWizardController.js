@@ -27,7 +27,7 @@
                 beforeclose: me.returnToDashboardsGrid,
                 finish: me.finishWizard
             },
-            'addEditIndependentChartForm button#applyBtn, addEditSeriesForm button#applyBtn, addEditConnectedChartForm button#applyBtn, addEditFiltersForm button#applyBtn, addEditUserCriteriaForm button#applyBtn': {
+            'addEditSeriesForm button#applyBtn, addEditConnectedChartForm button#applyBtn, addEditFiltersForm button#applyBtn, addEditUserCriteriaForm button#applyBtn': {
                 beforerender: me.setApplyButtonText
             }
         });
@@ -69,7 +69,7 @@
 
     finishWizard: function (panel, data) {
         var me = this,
-            dataObj = (data.detailsCard.type !== 'Independent') ? { query: {}} : {},
+            dataObj = (data.detailsCard.type === 'Connected') ? { query: {}} : {},
             store = Ext.getStore('DashboardConfigStore'),
             dashboard,
             callbackFn;
@@ -78,7 +78,7 @@
             Ext.Object.each(cardValue, function (field, fieldValue) {
                 fieldValue = (Ext.isFunction(fieldValue.charAt) && (fieldValue.charAt(0) === '{' || fieldValue.charAt(0) === '[')) ? Ext.decode(fieldValue) : fieldValue; //Only decode json data
                 if (field === 'criteria' || field === 'facet' || field === 'filters' || field === 'sorting' || field === 'criteriaGrouping' || field === 'filterGroupingType') {
-                    if (data.detailsCard.type !== 'Independent') {
+                    if (data.detailsCard.type === 'Connected') {
                         dataObj.query[field] = fieldValue;
                     }
                 } else {

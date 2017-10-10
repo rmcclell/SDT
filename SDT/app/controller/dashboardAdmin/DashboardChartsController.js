@@ -6,7 +6,6 @@
     views: [
         'dashboardAdmin.cards.Charts',
         'dashboardAdmin.forms.AddEditConnectedChartForm',
-        'dashboardAdmin.forms.AddEditIndependentChartForm',
         'dashboardAdmin.containers.ChartsContainer',
         'dashboardAdmin.grids.ChartsGrid',
         'SDT.view.dashboardAdmin.grids.ChartUserCriteriaGrid'
@@ -28,31 +27,19 @@
             'dashboardConnectedWizardPanel chartsGrid button[text="Add Chart"]': {
                 click: me.showCreateConnectedChartForm
             },
-            'dashboardIndependentWizardPanel chartsIndependentGrid button[text="Add Chart"]': {
-                click: me.showCreateIndependentChartForm
-            },
-            'dashboardConnectedWizardPanel chartsGrid, dashboardIndependentWizardPanel chartsGrid': {
+            'dashboardConnectedWizardPanel chartsGrid': {
                 select: me.previewChart
-            },
-            'dashboardIndependentWizardPanel chartsGrid': {
-                select: me.setUserCriteriaGridStore
             },
             'dashboardConnectedWizardPanel chartsActions': {
                 editItem: me.chartConnectedEditItem
             },
-            'dashboardIndependentWizardPanel chartsActions': {
-                editItem: me.chartIndependentEditItem
-            },
             'addEditConnectedChartForm button#applyBtn': {
                 click: me.applyChartItem
-            },
-            'addEditIndependentChartForm button#applyBtn': {
-                click: me.applyIndependentChartItem
             },
             'form[type="Add"] field[name="chartid"]': {
                 afterrender: me.createChartId
             },
-            'addEditConnectedChartForm field[name="dataSource"], addEditConnectedChartForm field[name="fieldName"], addEditIndependentChartVieForm field[name="dataSource"], addEditIndependentChartForm field[name="fieldName"]': {
+            'addEditConnectedChartForm field[name="dataSource"], addEditConnectedChartForm field[name="fieldName"]': {
                 change: me.updateQueryOrField
             },
             'charts > chartsContainer field[name="facet"]': {
@@ -220,26 +207,7 @@
             }
         }
     },
-
-    setUserCriteriaGridStore: function (rowModel, record, index, eOpts) {
-        var me = this,
-            records,
-            userCriteriaGrid = me.getChartUserCriteriaGrid(),
-            store = userCriteriaGrid.getStore();
-
-        if (userCriteriaGrid) {
-            store.removeAll();
-            userCriteriaGrid.show();
-            records = record.get('userCriteriaFields');
-            if (records) {
-                store.loadData(records);
-            }
-        }
-
-        me.loadFiltersPreviewGrid(rowModel, record, index, eOpts);
-
-    },
-
+    
     bindChartDataChangedEvent: function (field) {
         var me = this,
             form = field.up('form'),
@@ -274,78 +242,19 @@
             charts.setValue('[' + chartArray.join(',') + ']');
         });
     },
-
-    applyIndependentChartItem: function (btn) {
-        var me = this,
-            grid = me.getCharts().down('grid'),
-            formPanel = btn.up('form'),
-            form = formPanel.getForm(),
-            foundRecord,
-            store,
-            formValues,
-            chart;
-        me.updateChartQueryField(btn);
-        if (form.isValid()) {
-
-            store = me.getDashboardAdminChartStoreStore();
-            formValues = form.getValues();
-
-            formValues.seriesData = Ext.isEmpty(formValues.seriesData) ? '' : Ext.decode(formValues.seriesData);
-            formValues.baseCriteria = Ext.isEmpty(formValues.baseCriteria) ? [] : Ext.decode(formValues.baseCriteria);
-            formValues.query = Ext.isEmpty(formValues.query) ? '' : Ext.decode(formValues.query);
-            formValues.resultsPanel = Ext.isEmpty(formValues.resultsPanel) ? {} : Ext.decode(formValues.resultsPanel);
-            formValues.userCriteriaData = Ext.isEmpty(formValues.userCriteriaFields) ? [] : Ext.decode(formValues.userCriteriaFields);
-
-            formValues.title = Ext.String.trim(formValues.title);
-
-            chart = Ext.create('SDT.model.dashboardAdmin.ChartModel', formValues);
-
-            if (formPanel.type === 'Add') {
-                chart.phantom = true;
-                store.add(chart);
-
-                form.reset();
-                formPanel.down('tabpanel').getLayout().setActiveItem(0); //Reset tab focus to first tab
-
-                //Remove data from grids
-
-                formPanel.down('filtersGrid').getStore().removeAll();
-                formPanel.down('seriesGrid').getStore().removeAll();
-                formPanel.down('userCriteriaGrid').getStore().removeAll();
-
-                formPanel.down('previewGrid').getStore().removeAll();
-
-                formPanel.down('field[hidden="false"]').focus(true, 10); //Reset field focus to first visible field in form
-            } else {
-                foundRecord = form.getRecord();
-                foundRecord = store.getById(foundRecord.id);
-                foundRecord.beginEdit();
-                foundRecord.set(chart.getData()); //Replace old values with new
-                foundRecord.endEdit();
-                foundRecord.commit();
-                store.sync(); //Sync is technically suppose to fire the datachange event on store but appears to be broken in framework
-                store.fireEvent('datachanged', store);
-                formPanel.close();
-            }
-            grid.getSelectionModel().select(chart);
-
-        } else {
-            Ext.Msg.alert('', 'Please ensure all required fields are populated.');
-        }
-    },
     updateChartQueryField: function (button) {
         var query = {},
             queryField,
-            independentChartFormPanel = button.up('addEditIndependentChartForm'),
-            independentChartForm = independentChartFormPanel.getForm();
+            chartFormPanel = button.up('addEditchartForm'),
+            chartForm = chartFormPanel.getForm();
 
-        queryField = independentChartForm.findField('query');
-        query.criteria = independentChartForm.findField('criteria').getValue();
-        query.criteriaGrouping = independentChartForm.findField('criteriaGrouping').getValue();
-        query.filterGroupingType = independentChartForm.findField('filterGroupingType').getValue();
-        query.facet = independentChartForm.findField('facetField').getValue() + independentChartForm.findField('facetQuery').getValue();
-        query.filters = independentChartForm.findField('filters').getValue();
-        query.sorting = independentChartForm.findField('sorting').getValue();
+        queryField = chartForm.findField('query');
+        query.criteria = chartForm.findField('criteria').getValue();
+        query.criteriaGrouping = chartForm.findField('criteriaGrouping').getValue();
+        query.filterGroupingType = chartForm.findField('filterGroupingType').getValue();
+        query.facet = chartForm.findField('facetField').getValue() + chartForm.findField('facetQuery').getValue();
+        query.filters = chartForm.findField('filters').getValue();
+        query.sorting = chartForm.findField('sorting').getValue();
         queryField.setValue(Ext.encode(query));
     },
     applyChartItem: function (btn) {
@@ -417,46 +326,6 @@
         formPanel.show();
     },
 
-    chartIndependentEditItem: function (column, record, eventName, actionItem, grid) {
-        var formPanel = Ext.widget('addEditIndependentChartForm', { type: 'Edit' }),
-            rec = record.copy(record.data.chartid), // clone the record to avoid altering orignal
-            seriesData = rec.getData().seriesData,
-            baseCriteria = rec.getData().baseCriteria,
-            resultsPanel = rec.getData().resultsPanel,
-            query = rec.getData().query,
-            userCriteriaFields = rec.getData().userCriteriaFields,
-            form = formPanel.getForm();
-        //TODO: Remove this code when all rangeCriteria and rangeData have been removed from legacy dashboards
-        Ext.Array.each(seriesData, function (series) {
-            if (Ext.isEmpty(series.seriesCriteria)) {
-                series.seriesCriteria = series.rangeCriteria;
-                series.rangeCriteria = null;
-                delete series.rangeCriteria;
-            }
-        });
-        seriesData = Ext.encode(seriesData);
-        query = Ext.encode(query);
-        baseCriteria = Ext.encode(baseCriteria);
-        resultsPanel = Ext.encode(resultsPanel);
-        userCriteriaFields = Ext.encode(userCriteriaFields);
-        rec.set('seriesData', seriesData); //Encode to allow loading in form field
-        rec.set('query', query);
-        rec.set('baseCriteria', baseCriteria); //Encode to allow loading in form field
-        rec.set('resultsPanel', resultsPanel); //Encode to allow loading in form field
-        rec.set('userCriteriaFields', userCriteriaFields); //Encode to allow loading in form field
-        view.on('beforerender', function () {
-            var store = this.getDashboardAdminFieldStoreStore();
-            store.on('load', function () {
-                form.loadRecord(rec);
-                form.fireEvent('dirtychange', form, false); //Fire dirtychange event to notify series when to load data on edit
-            }, this, { single: true });
-            view.down("#filterGroupingType").setValue(Ext.decode(query).filterGroupingType);
-            view.down("#criteriaGrouping").setValue(Ext.decode(query).criteriaGrouping);
-        }, this, { single: true });
-
-        view.show();
-    },
-
     loadChartsGrid: function (card) {
         var me = this,
             store = me.getDashboardAdminChartStoreStore(),
@@ -475,9 +344,5 @@
 
     showCreateConnectedChartForm: function (btn) {
         Ext.create('SDT.view.dashboardAdmin.forms.AddEditConnectedChartForm', { type: 'Add' }).show();
-    },
-
-    showCreateIndependentChartForm: function (btn) {
-        Ext.create('SDT.view.dashboardAdmin.forms.AddEditIndependentChartForm', { type: 'Add' }).show();
     }
 });

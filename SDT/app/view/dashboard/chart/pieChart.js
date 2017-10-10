@@ -15,7 +15,17 @@
             field: 'label',
             display: 'outside',
             fontSize: 11
-		}/*
+        },
+        tooltip: {
+            trackMouse: true,
+            renderer: function (tooltip, record, item) {
+                var formatString = '0';
+
+                tooltip.setHtml(record.get('label') + ': ' +
+                    Ext.util.Format.number(record.get('count'), formatString));
+            }
+        }
+        /*
 
 		tooltip: {
 			trackMouse: true,

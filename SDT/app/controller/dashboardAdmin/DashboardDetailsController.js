@@ -14,7 +14,7 @@
     init: function () {
         var me = this;
         me.control({
-            'details detailsContainer field[name="dataIndex"], addEditIndependentChartForm field[name="dataIndex"]': {
+            'details detailsContainer field[name="dataIndex"]': {
                 change: me.updateResultsPanelObj,
                 beforerender: me.setDefaultValue
             },

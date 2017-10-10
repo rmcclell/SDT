@@ -237,7 +237,6 @@
 
         });
 
-        //Hard coded to connected until independent support is available
         dashboardWizard = Ext.create('SDT.view.dashboardAdmin.Dashboard' + record.get('type') + 'WizardPanel', { type: 'Edit' });
 
         //dashboardWizard = Ext.create('SDT.view.dashboardAdmin.DashboardWizardPanel', { type: 'Edit' });
