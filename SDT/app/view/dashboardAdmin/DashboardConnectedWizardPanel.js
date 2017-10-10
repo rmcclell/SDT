@@ -1,32 +1,23 @@
 Ext.define('SDT.view.dashboardAdmin.DashboardConnectedWizardPanel', {
     extend: 'SDT.view.dashboardAdmin.DashboardWizardPanel',
     requires: [
-        'SDT.view.dashboardAdmin.cards.connected.DetailsConnected',
-        'SDT.view.dashboardAdmin.cards.connected.FiltersConnected',
-        'SDT.view.dashboardAdmin.cards.connected.ChartsConnected',
-        'SDT.view.dashboardAdmin.cards.connected.UserCriteriaConnected',
-        'SDT.view.dashboardAdmin.cards.connected.SaveConnected'
+        'SDT.view.dashboardAdmin.cards.Details',
+        'SDT.view.dashboardAdmin.cards.Filters',
+        'SDT.view.dashboardAdmin.cards.Charts',
+        'SDT.view.dashboardAdmin.cards.UserCriteria',
+        'SDT.view.dashboardAdmin.cards.Save'
     ],
     alias: 'widget.dashboardConnectedWizardPanel',
     dashboardType: 'Connected',
     buildCards: function () {
 
-        var cards = [];
-
-        // first card "Details"
-        cards.push(Ext.widget('detailsConnected'));
-
-        // second card "Filters"
-        cards.push(Ext.widget('filtersConnected'));
-
-        // third card "Charts"
-        cards.push(Ext.widget('chartsConnected'));
-
-        // fourth card "Criteria Selection"
-        cards.push(Ext.widget('userCriteriaConnected'));
-
-        //fifth card "Save"
-        cards.push(Ext.widget('saveConnected'));
+        var cards = [
+            Ext.widget('details'), // first card "Details"
+            Ext.widget('filters'), // second card "Filters"
+            Ext.widget('charts'), // third card "Charts"
+            Ext.widget('userCriteria'), // fourth card "Criteria Selection"
+            Ext.widget('save') //fifth card "Save"
+        ];
 
         return cards;
     }

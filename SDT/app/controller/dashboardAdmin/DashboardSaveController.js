@@ -1,7 +1,7 @@
 ﻿Ext.define('SDT.controller.dashboardAdmin.DashboardSaveController', {
     extend: 'Ext.app.Controller',
     views: [
-        'dashboardAdmin.panels.SaveConnectedPanel'
+        'dashboardAdmin.cards.Save'
     ],
     models: [],
     stores: [],

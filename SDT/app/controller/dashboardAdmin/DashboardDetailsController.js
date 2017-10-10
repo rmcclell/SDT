@@ -1,8 +1,7 @@
 ﻿Ext.define('SDT.controller.dashboardAdmin.DashboardDetailsController', {
     extend: 'Ext.app.Controller',
     views: [
-        'dashboardAdmin.cards.Details',
-        'dashboardAdmin.containers.DetailsContainer'
+        'dashboardAdmin.cards.Details'
     ],
     models: [
         'dashboardAdmin.DashboardsModel'
@@ -14,11 +13,11 @@
     init: function () {
         var me = this;
         me.control({
-            'details detailsContainer field[name="dataIndex"]': {
+            'details field[name="dataIndex"]': {
                 change: me.updateResultsPanelObj,
                 beforerender: me.setDefaultValue
             },
-            'details detailsContainer field[name="title"]': {
+            'details field[name="title"]': {
                 beforerender: me.bindTitleFieldValidator
             }
         });

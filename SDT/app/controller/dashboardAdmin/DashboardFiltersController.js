@@ -11,7 +11,6 @@
         'dashboardAdmin.containers.fieldTypes.TextContainer',
         'dashboardAdmin.containers.fieldTypes.BooleanContainer',
 
-        'dashboardAdmin.containers.FiltersContainer',
         'dashboardAdmin.grids.FiltersGrid',
         'dashboardAdmin.grids.PreviewGrid'
     ],
@@ -71,10 +70,10 @@
             'filtersGrid button[text="Add Filter"]': {
                 click: me.showCreateFilterForm
             },
-            'filtersContainer field[name="filterGroupingType"], addEditSeriesForm field[name="filterGroupingType"]': {
+            'filters field[name="filterGroupingType"], addEditSeriesForm field[name="filterGroupingType"]': {
                 change: me.changeFilterGroupType
             },
-            'filtersContainer button[name="applyCriteriaGrouping"], addEditSeriesForm button[name="applyCriteriaGrouping"]': {
+            'filters button[name="applyCriteriaGrouping"], addEditSeriesForm button[name="applyCriteriaGrouping"]': {
                 click: me.executeApplycriteriaGrouping
             }
         });
@@ -85,9 +84,6 @@
     }, {
         ref: 'details',
         selector: 'details'
-    }, {
-        ref: 'filtersContainer',
-        selector: 'filters filtersContainer'
     }, {
         ref: 'filters',
         selector: 'filters'
@@ -280,7 +276,7 @@
 
         store.on('datachanged', function () {
 
-            filterGroupingFieldset = grid.up('form').down('filtersContainer').down('fieldset');
+            filterGroupingFieldset = grid.up('form').down('fieldset');
             field = grid.up('form').getForm().findField('criteria');
 
             baseCriteria = field.up('form').getForm().findField('baseCriteria');

@@ -6,7 +6,6 @@
     views: [
         'dashboardAdmin.cards.Charts',
         'dashboardAdmin.forms.AddEditConnectedChartForm',
-        'dashboardAdmin.containers.ChartsContainer',
         'dashboardAdmin.grids.ChartsGrid',
         'SDT.view.dashboardAdmin.grids.ChartUserCriteriaGrid'
     ],
@@ -42,7 +41,7 @@
             'addEditConnectedChartForm field[name="dataSource"], addEditConnectedChartForm field[name="fieldName"]': {
                 change: me.updateQueryOrField
             },
-            'charts > chartsContainer field[name="facet"]': {
+            'charts field[name="facet"]': {
                 afterrender: me.bindChartDataChangedEvent
             }
         });
@@ -143,7 +142,7 @@
 
                 console.log(chart);
 
-                panel = grid.up('chartsContainer');
+                panel = grid.up('charts');
 
                 //panel.removeA();
                 panel.insert(1, chart);

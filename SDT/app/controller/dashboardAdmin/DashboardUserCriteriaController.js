@@ -17,7 +17,7 @@
             'dashboardConnectedWizardPanel[type="Edit"] userCriteria': {
                 show: me.loadUserCriteriaConnectedGrid
             },
-            'userCriteriaContainer field[name="userCriteriaFields"]': {
+            'userCriteria field[name="userCriteriaFields"]': {
                 afterrender: me.bindCriteriaDataChangedEvent
             },
             'addEditUserCriteriaForm field[name="name"]': {
