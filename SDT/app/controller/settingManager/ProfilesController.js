@@ -16,7 +16,7 @@ Ext.define('SDT.controller.settingManager.ProfilesController', {
     init: function () {
         var me = this;
         me.control({
-            'profilesGrid > toolbar > button[text="Remove All"]': {
+            'profilesGrid > toolbar > button#removeAll': {
                 click: me.onProfileGridDeleteAllButtonClick
             },
             'profilesGrid profilesActions': {
@@ -25,7 +25,7 @@ Ext.define('SDT.controller.settingManager.ProfilesController', {
             'profilesGrid profilesActions, solrIndexesGrid solrIndexesActions': {
                 deleteItem: me.onDeletItem
             },
-            'profilesGrid > toolbar > button[text="Add"]': {
+            'profilesGrid > toolbar > button#add': {
                 click: me.onProfileGridAddButtonClick
             },
             'addEditProfilesForm button#applyBtn': {

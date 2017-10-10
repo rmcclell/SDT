@@ -17,11 +17,11 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
     init: function () {
         var me = this;
         me.control({
-            /*'solrIndexesGrid > toolbar > button[text="Remove All"]': {
+            /*'solrIndexesGrid > toolbar > button#removeAll': {
                 click: me.onProfileGridDeleteAllButtonClick
             },
             */
-            'solrIndexesGrid > toolbar > button[text="Add"]': {
+            'solrIndexesGrid > toolbar > button#add': {
                 click: me.onSolrIndexesAddButtonClick
             },
             'solrIndexesGrid solrIndexesActions': {
@@ -32,7 +32,7 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
                     button.setText('Edit');
                 }
             },
-            'addEditSolrIndexesForm grid > toolbar > button[text="Remove All"]': {
+            'addEditSolrIndexesForm grid > toolbar > button#removeAll': {
                 click: me.onFieldDeleteAllButtonClick
             },
             'addEditSolrIndexesForm grid > toolbar > button#getSolrFields': {

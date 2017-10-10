@@ -26,6 +26,7 @@
     tools: [{
         xtype: 'button',
         text: 'Add Filter',
+        itemId: 'addFilter',
         tooltip: 'Apply filters to reduce your results returned',
         glyph: 'xf055@FontAwesome'
     }],

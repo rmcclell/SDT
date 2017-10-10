@@ -7,7 +7,7 @@ Ext.define('SDT.controller.settingManager.PreferencesController', {
     init: function () {
         var me = this;
         me.control({
-            'preferencesGrid > toolbar > button[text="Remove All"]': {
+            'preferencesGrid > toolbar > button#removeAll': {
                 click: me.onUserPreferenceDeleteAllButtonClick
             },
             'preferencesGrid': {

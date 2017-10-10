@@ -33,7 +33,8 @@
         }, {
             xtype: 'button',
             glyph: 0xf0fe, //'x-icon icon-delete',
-            text: 'Remove All'
+            text: 'Remove All',
+            itemId: 'removeAll'
         }]
     }],
     columns: [{

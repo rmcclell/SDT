@@ -67,7 +67,7 @@
             'filtersActions': {
                 editItem: me.filterEditItem
             },
-            'filtersGrid button[text="Add Filter"]': {
+            'filtersGrid button#addFilter': {
                 click: me.showCreateFilterForm
             },
             'filters field[name="filterGroupingType"], addEditSeriesForm field[name="filterGroupingType"]': {

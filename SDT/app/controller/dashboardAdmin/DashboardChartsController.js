@@ -23,7 +23,7 @@
             'charts': {
                 show: me.loadChartsGrid
             },
-            'dashboardWizardPanel chartsGrid button[text="Add Chart"]': {
+            'dashboardWizardPanel chartsGrid button#addChart': {
                 click: me.showCreateConnectedChartForm
             },
             'dashboardWizardPanel chartsGrid': {

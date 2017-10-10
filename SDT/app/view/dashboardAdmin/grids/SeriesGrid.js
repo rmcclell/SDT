@@ -21,6 +21,7 @@
     tools: [{
         xtype: 'button',
         text: 'Add Series',
+        itemId: 'addSeries',
 		glyph: 0xf0fe
     }],
     title: 'Series',

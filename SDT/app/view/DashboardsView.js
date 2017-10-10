@@ -12,7 +12,7 @@
         glyph: 0xf021,
         text: 'Refresh',
         tooltip: 'Click to reload dashboard configuration and results data.',
-        name: 'refresh'
+        itemId: 'refresh'
     }],
     items: [{
         xtype: 'dashboardCriteriaContainer',

@@ -23,7 +23,7 @@
             'addEditUserCriteriaForm field[name="name"]': {
                 select: me.updateLabelField
             },
-            'userCriteriaGrid button[text="Add Criteria"]': {
+            'userCriteriaGrid button#addCriteria': {
                 click: me.showCreateCriteriaForm
             },
             'userCriteriaActions': {

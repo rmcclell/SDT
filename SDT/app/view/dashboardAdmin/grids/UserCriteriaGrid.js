@@ -25,6 +25,7 @@
     tools: [{
         xtype: 'button',
         text: 'Add Criteria',
+        itemId: 'addCriteria',
         glyph: 0xf0fe
     }],
     columns: [{

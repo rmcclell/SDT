@@ -20,10 +20,10 @@
                 beforerender: me.bindDashboardStoreEvents,
                 afterrender: me.loadDashboardGrid
             },
-            'dashboardsGrid > toolbar > button[text="Refresh"]': {
+            'dashboardsGrid > toolbar > button#refresh': {
                 click: me.loadDashboardGrid
             },
-            'dashboardsGrid > toolbar > button menuitem#createConnectedDashboardBtn': {
+            'dashboardsGrid > toolbar > button#createDashboardBtn': {
                 click: me.createDashboard
             },
             'dashboardActions': {

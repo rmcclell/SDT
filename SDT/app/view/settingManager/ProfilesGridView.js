@@ -13,11 +13,13 @@
         items: [{
             xtype: 'button',
             glyph: 0xf0fe,
-            text: 'Add'
+            text: 'Add',
+            itemId: 'add'
         }, {
             xtype: 'button',
             glyph: 0xf056,
-            text: 'Remove All'
+            text: 'Remove All',
+            itemId: 'removeAll'
         }]
     }],
     columns: [{

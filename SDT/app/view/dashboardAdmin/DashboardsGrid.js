@@ -15,13 +15,8 @@
         xtype: 'toolbar',
         items: [{
             text: 'Create Dashboard',
-			glyph: 0xf0fe,
-            menu: {
-                items: [{
-                    text: 'Connected',
-                    itemId: 'createConnectedDashboardBtn'
-                }]
-            }
+            glyph: 0xf0fe,
+            itemId: 'createDashboardBtn'
         }, {
             xtype: 'tbseparator',
             margin: '0 8 0 8'

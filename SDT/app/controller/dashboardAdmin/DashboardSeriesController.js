@@ -13,7 +13,7 @@
     init: function () {
         var me = this;
         me.control({
-            'seriesGrid button[text="Add Series"]': {
+            'seriesGrid button#addSeries': {
                 click: me.showSeriesForm
             },
             'seriesActions': {
