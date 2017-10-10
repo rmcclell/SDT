@@ -106,7 +106,6 @@
     <Content Include="app\controller\dashboard\DashboardController.js" />
     <Content Include="app\controller\dashboard\SavedDashboardController.js" />
     <Content Include="app\controller\globalSearch\GlobalSearchController.js" />
-    <Content Include="app\controller\menuManagement\MenuManagementController.js" />
     <Content Include="app\controller\settingManager\DisplayController.js" />
     <Content Include="app\controller\settingManager\PreferencesController.js" />
     <Content Include="app\controller\settingManager\ProfilesController.js" />
@@ -138,7 +137,6 @@
     <Content Include="app\model\dashboard\DashboardResultsPanelConfigModel.js" />
     <Content Include="app\model\dashboard\DashboardSelectedFilterModel.js" />
     <Content Include="app\model\dashboard\DashboardUserCriteriaFieldConfigModel.js" />
-    <Content Include="app\model\menuManagement\MenuTreeNodeModel.js" />
     <Content Include="app\model\settingManager\FieldsModel.js" />
     <Content Include="app\model\settingManager\ProfilesModel.js" />
     <Content Include="app\model\settingManager\SolrIndexesModel.js" />
@@ -161,7 +159,6 @@
     <Content Include="app\store\dashboard\DashboardSelectedFilterStore.js" />
     <Content Include="app\store\globalSearch\GlobalSearchFilterStore.js" />
     <Content Include="app\store\LanguagesStore.js" />
-    <Content Include="app\store\menuManagement\MenuTreeStore.js" />
     <Content Include="app\store\settingManager\ProfilesStore.js" />
     <Content Include="app\store\settingManager\SolrIndexesStore.js" />
     <Content Include="app\store\settingManager\SolrIndexFieldsStore.js" />
@@ -221,11 +218,6 @@
     <Content Include="app\view\globalSearch\GlobalSearchTabPanel.js" />
     <Content Include="app\view\globalSearch\GlobalSearchView.js" />
     <Content Include="app\view\HomeView.js" />
-    <Content Include="app\view\menuManagement\forms\MenuManagementForm.js" />
-    <Content Include="app\view\menuManagement\tree\MenuTreeConfig.js" />
-    <Content Include="app\view\menuManagement\views\AddEditDashboardView.js" />
-    <Content Include="app\view\menuManagement\views\AddEditFolderView.js" />
-    <Content Include="app\view\menuManagement\views\AddEditLinkView.js" />
     <Content Include="app\view\settingManager\forms\AddEditProfilesForm.js" />
     <Content Include="app\view\settingManager\forms\AddEditSolrIndexesForm.js" />
     <Content Include="app\view\settingManager\grids\columns\PreferencesActions.js" />

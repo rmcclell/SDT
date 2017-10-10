@@ -5,19 +5,18 @@
         'SDT.view.dashboard.DashboardCurrentCriteriaPanel'
     ],
     header: false,
-    width: 250,
-    minWidth: 225,
+    width: 260,
+    minWidth: 260,
     animCollapse: false,
     split: true,
     collapsible: true,
-    layout: 'border',
+    layout: 'vbox',
+    defaults: { width: '100%' },
     alias: 'widget.dashboardCriteriaContainer',
     items: [{
-        xtype: 'dashboardCurrentCriteriaPanel',
-        region: 'north'
+        xtype: 'dashboardCurrentCriteriaPanel'
     }, {
-        xtype: 'dashboardCriteriaPanel',
-        region: 'center'
+        xtype: 'dashboardCriteriaPanel'
     }],
     getDashboardCriteriaPanel: function () {
         return this.down('dashboardCriteriaPanel');

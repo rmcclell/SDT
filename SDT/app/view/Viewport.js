@@ -60,10 +60,6 @@ Ext.define('SDT.view.Viewport', {
                     text: 'Dashboard Admin Tool',
                     itemId: 'menuItemDashboardAdmin',
                     iconCls: 'x-icon icon-application_view_detail'
-                }, {
-                    text: 'Dashboard Menu Management',
-                    itemId: 'menuItemMenuManagement',
-                    iconCls: 'x-icon icon-application_view_detail'
                 }]
             }, '->', {
                 xtype: 'container',

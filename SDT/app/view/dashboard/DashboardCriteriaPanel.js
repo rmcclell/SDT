@@ -8,13 +8,14 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
     trackResetOnLoad: true,
     stateful: true,
     layout: {
-        type: 'anchor',
+        type: 'vbox',
         reserveScrollbar: true // There will be a gap even when there's no scrollbar
     },
+    flex: 2,
     scrollable: true,
     collapsible: false,
     title: 'User Criteria',
-    defaults: { anchor: '100%', layout: 'hbox', vertical: false },
+    defaults: { layout: 'hbox', vertical: false },
     tools: [{
         type: 'save',
         disabled: true,
@@ -36,7 +37,7 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
                 me.stateId
             )
         ); //Add criteria fields from config data
-        Ext.resumeLayouts(true);
+        Ext.resumeLayouts();
     },
     buildSavedCriteria: function (stateId) {
         return {

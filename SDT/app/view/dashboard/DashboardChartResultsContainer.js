@@ -1,5 +1,5 @@
 ﻿Ext.define('SDT.view.dashboard.DashboardChartResultsContainer', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.panel.Panel',
     alias: 'widget.dashboardChartResultsContainer',
     layout: 'fit',
     itemId: 'dashboardContainer',

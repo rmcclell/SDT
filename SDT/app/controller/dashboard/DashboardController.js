@@ -14,7 +14,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         'dashboard.chart.barChart'
     ],
     models: [
-        'menuManagement.MenuTreeNodeModel',
         'dashboard.DashboardQueryConfigModel',
         'dashboard.DashboardFieldValueModel',
         'dashboard.DashboardFieldValuesModel',
@@ -26,7 +25,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         'dashboard.DashboardResponseModel'
     ],
     stores: [
-        'menuManagement.MenuTreeStore',
         'dashboard.DashboardCriteriaFilterStore',
         'dashboard.DashboardListsStore',
         'dashboard.DashboardChartsStore',
@@ -113,42 +111,19 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
     initDashboardStores: function () {
         var me = this,
-            menuStore = me.getMenuManagementMenuTreeStoreStore();
+            store = Ext.getStore('DashboardConfigStore');
 
-        me.initMenuStore(menuStore);
-        //me.initDefaultDashboardStore(defaultDashboardStore);
+        me.initMenuStore(store);
     },
 
     initMenuStore: function (store) {
         var me = this,
-            startingNode,
-            btnMenu,
-            callbackFn;
+            btnMenu;
 
-        me.bindMenuChanged(store);
-
-
-
-        callbackFn = function (records, operation, success) {
-            if (success && records.length > 0) {
-                startingNode = store.getNodeById('a8de99a0-1b59-4df5-992d-13048917c93b'); //Select Dashboard tree item by id, done to allow future menu changes
-                btnMenu = Ext.ComponentQuery.query('#dashboardsListBtn')[0].menu; //Dashboard menu button could reuse for other menu buttons in future
-                me.buildDashboardMenu(store, startingNode, btnMenu);
-            } else {
-                Ext.Msg.alert('Dashboards Menu Error', 'Sorry, the dashboard menu configuration could not be loaded. No dashboard menu configurations were found.');
-            }
-        };
-
-        store.load({ callback: callbackFn });
-    },
-
-    initDefaultDashboardStore: function (store) {
-        callbackFn = function (records, operation, success) {
-            if (!success || records.length === 0) {
-                Ext.Msg.alert('Dashboards Default Error', 'Sorry, the set default dashboard could not be loaded. No default dashboard was found.');
-            }
-        };
-        store.load({ callback: callbackFn });
+        btnMenu = Ext.ComponentQuery.query('#dashboardsListBtn')[0].menu; //Dashboard menu button could reuse for other menu buttons in future
+        me.buildDashboardMenu(store, btnMenu);
+        me.bindMenuChanged(store, btnMenu);
+        
     },
 
     setupGridColumns: function (grid) {
@@ -232,15 +207,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         }
     },
 
-    bindMenuChanged: function (store) {
-        var me = this,
-            btnMenu,
-            startingNode;
+    bindMenuChanged: function (store, btnMenu) {
+        var me = this;
 
         store.on('datachanged', function () {
-            startingNode = store.getNodeById('a8de99a0-1b59-4df5-992d-13048917c93b'); //Select Dashboard tree item by id, done to allow future menu changes
-            btnMenu = Ext.ComponentQuery.query('#dashboardsListBtn')[0].menu; //Dashboard menu button could reuse for other menu buttons in future
-            me.buildDashboardMenu(store, startingNode, btnMenu);
+            me.buildDashboardMenu(store, btnMenu);
         });
     },
 
@@ -360,58 +331,24 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: me.currentDashboardId, chartid: me.getLastActiveChartId() });
 
     },
-    buildDashboardMenu: function (store, startingNode, btnMenu) {
-        var menuObj,
-            selectNodes,
+    buildDashboardMenu: function (store, btnMenu) {
+        var menu = [],
+            records = store.getRange(),
             currentMenu = btnMenu;
 
         Ext.suspendLayouts();
 
         btnMenu.removeAll();
 
-        selectNodes = function (node) {
-            if (node) {
-                if (node.data.parentId !== 'root') {
-
-                    menuObj = {
-                        text: node.data.text,
-                        tooltip: node.data.qtip,
-                        glyph: 0xf1ea
-                    };
-
-                    if (!node.isLeaf() && node.hasChildNodes()) { //Folder must contain children to be shown
-                        menuObj.menu = { items: [] };
-                        currentMenu = currentMenu.add(menuObj).menu; //Go deeper in menu structure
-                    } else if (!node.isLeaf() && !node.hasChildNodes()) {
-                        menuObj.menu = { items: [{ text: 'No Dashboards or Links Available', tooltip: 'Links or Dashboards may be added through "Dashboard Menu Management".' }] };
-                        currentMenu.add(menuObj); //Create button to indicate empty folder and don't go deeper
-                    } else {
-                        //Define common props same whether link or dashboard type
-
-                        if (node.data.iconCls === 'x-icon icon-server_chart') { //Dashboard
-                            menuObj.dashboardId = node.data.dashboardId;
-                        } else { //Link
-                            menuObj.href = node.data.href;
-                            menuObj.hrefTarget = '_blank';
-                        }
-                        currentMenu.add(menuObj);
-
-                        if (node.isLast()) {
-                            currentMenu = (currentMenu && currentMenu.ownerItem && currentMenu.ownerItem.parentMenu) ? currentMenu.ownerItem.parentMenu : currentMenu; //Go back up to parrent when you reach last node
-                        }
-                    }
-                }
-
-                node.eachChild(function (n) {
-                    selectNodes(n);
-                });
-
-            }
-        };
-
-        selectNodes(startingNode);
-        Ext.resumeLayouts(true);
-
+        for (var r = 0; r < records.length; r++) {
+            menu.push({
+                text: records[r].get('title'),
+                tooltip: records[r].get('description'),
+                glyph: 0xf1ea
+            });
+        }
+        currentMenu.add(menu)
+        Ext.resumeLayouts();
     },
 
     loadDashboard: function (queries, chartConfig, chartInfo, resultsPanelConfig, dashboardConfig, dataIndex, activeQuery) {
@@ -430,7 +367,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         title = Ext.String.format('Dashboards: <span style="cursor:pointer;" data-qtip="{0}">{1}</span>', Ext.String.htmlEncode(me.buildDashboardInfoTpl(chartInfo)), chartInfo.title);
 
-        dashboardsView.setTitle(title);
+        dashboardsView.down('dashboardChartResultsContainer').setTitle(title);
 
         //callbackFn = function (records, operation, success) {
         //if (success) {
@@ -633,9 +570,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             '<b>Title:</b> {title}<br>',
             '<b>Description:</b> {description}<br>',
             '<b>Type:</b> {type}<br>',
-            '<b>Created By:</b> {createdBy}<br>',
             '<b>Created Date:</b> {createDate}<br>',
-            '<b>Modified By:</b> {modifiedBy}<br>',
             '<b>Modified Date:</b> {modifiedDate}<br>',
             '</p>',
             '</tpl>'

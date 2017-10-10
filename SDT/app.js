@@ -498,9 +498,7 @@ Ext.application({
 		'settingManager.DisplayController',
 		'settingManager.PreferencesController',
 		'settingManager.ProfilesController',
-		'settingManager.SolrIndexesController',
-        
-        'menuManagement.MenuManagementController'
+		'settingManager.SolrIndexesController'
     ],
 
     /* Main entry point */

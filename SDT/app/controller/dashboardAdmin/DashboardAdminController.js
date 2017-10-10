@@ -6,12 +6,10 @@
         'dashboardAdmin.forms.DashboardCloneForm'
     ],
     models: [
-        'dashboardAdmin.DashboardsModel',
-        'menuManagement.MenuTreeNodeModel'
+        'dashboardAdmin.DashboardsModel'
     ],
     stores: [
-        'dashboardAdmin.DashboardsStore',
-        'menuManagement.MenuTreeStore'
+        'dashboardAdmin.DashboardsStore'
     ],
     init: function () {
         var me = this;
@@ -59,76 +57,8 @@
 
     bindDashboardStoreEvents: function (grid) {
         var store = grid.getStore();
-
-        store.on('add', function (gridStore, records) {
-            //me.reloadDashboardMenu(records[0], 'create');
-        });
-
-        store.on('remove', function (gridStore, record) {
-            //me.reloadDashboardMenu(record, 'destory');
-        });
-
-        store.on('update', function (gridStore, record) {
-            //me.reloadDashboardMenu(record, 'update');
-        });
     },
-
-    reloadDashboardMenu: function (record, action) {
-        var me = this,
-            menuStore = me.getMenuManagementMenuTreeStoreStore(),
-            startingNode = menuStore.getNodeById('a8de99a0-1b59-4df5-992d-13048917c93b'), //Select Dashboard tree item by id, done to allow future menu changes
-            node,
-            id,
-            nodeData = { dashboardId: record.data.id, text: record.data.title, leaf: true, iconCls: 'x-icon icon-server_chart' },
-            createdNode,
-            foundRecord;
-
-        //Update the store that populates of dashboard active list menu items by firing the datachanged event
-
-        if (record.data.active && (action === 'create' || action === 'update')) {
-            if (action === 'create') {
-                Ext.Msg.show({
-                    title: 'Add your newely created dashboard to menu now',
-                    msg: 'Would you like to add your dashboard to root menu and launch the "Dashboard Menu Management" tool to further customized? Note you must add to menu before it will be visible to users, you may do this later.',
-                    buttons: Ext.Msg.YESNO,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            id = Ext.data.IdGenerator.get('uuid').generate();
-                            nodeData.id = id;
-                            node = Ext.create('SDT.model.menuManagement.MenuTreeNodeModel', nodeData);
-                            node.phantom = true;
-                            node.internalId = id;
-                            createdNode = startingNode.createNode(node);
-                            startingNode.appendChild(createdNode, false, true); //Third argument needed for commit changes
-                            Ext.create('SDT.view.menuManagement.forms.MenuManagementForm'); //Bring up menu dialog to allow user to further customize
-                        }
-                    },
-                    icon: Ext.Msg.QUESTION
-                });
-            } else if (action === 'update') {
-                foundRecord = startingNode.findChild('dashboardId', record.data.id, true);
-                if (foundRecord) {
-                    Ext.Msg.show({
-                        title: 'Dashboard menu is out sync with current dashboard congfig',
-                        msg: 'You may have made changes to the current dashboard that may not be in sync with what is displayed on the menu they may require you to update the information manually with them the "Dashboard Menu Management" tool. Would you like to do this now?',
-                        buttons: Ext.Msg.YESNO,
-                        fn: function (btn) {
-                            if (btn === 'yes') {
-                                Ext.create('SDT.view.menuManagement.forms.MenuManagementForm'); //Bring up menu dialog to allow user to fix issues
-                            }
-                        },
-                        icon: Ext.Msg.QUESTION
-                    });
-                }
-            }
-        } else {
-            foundRecord = startingNode.findChild('dashboardId', record.data.id, true);
-            if (foundRecord) {
-                foundRecord.destroy({ action: 'destroy', params: { id: foundRecord.data.id } });
-            }
-        }
-    },
-
+    
     deleteDashboard: function (column, record, eventName, actionItem, grid, rowIndex) {
         var msg,
             tpl = Ext.create('Ext.XTemplate',
@@ -171,7 +101,6 @@
             if (operation.success) {
                 record.data.query = Ext.decode(record.data.query.slice(0, record.data.query.length));
                 store.add(record);
-                me.reloadDashboardMenu(record, 'create');
             }
             window.close();
         };

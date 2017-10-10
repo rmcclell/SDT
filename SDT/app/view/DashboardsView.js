@@ -1,5 +1,5 @@
 ﻿Ext.define('SDT.view.DashboardsView', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     requires: [
         'SDT.view.dashboard.DashboardCriteriaContainer',
         'SDT.view.dashboard.DashboardChartResultsContainer',
@@ -7,20 +7,20 @@
     ],
     alias: 'widget.dashboardsView',
     layout: 'border',
-    tools: [{
-        xtype: 'button',
-        glyph: 0xf021,
-        text: 'Refresh',
-        tooltip: 'Click to reload dashboard configuration and results data.',
-        itemId: 'refresh'
-    }],
     items: [{
         xtype: 'dashboardCriteriaContainer',
         region: 'west'
     }, {
         xtype: 'dashboardChartResultsContainer',
         scrollable: true,
-        region: 'center'
+        region: 'center',
+        tools: [{
+            xtype: 'button',
+            glyph: 0xf021,
+            text: 'Refresh',
+            tooltip: 'Click to reload dashboard configuration and results data.',
+            itemId: 'refresh'
+        }]
     }, {
         flex: 1,
         xtype: 'dashboardRowResultsGrid',
