@@ -18,7 +18,6 @@ Ext.require([
     'SDT.util.GLOBALS',
     'SDT.util.DateUtils',
     'SDT.util.UtilFunctions',
-	'SDT.override.ActionColumn',
 	'SDT.view.Viewport'
 ]);
 

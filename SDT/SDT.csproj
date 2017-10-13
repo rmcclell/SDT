@@ -141,7 +141,6 @@
     <Content Include="app\model\settingManager\ProfilesModel.js" />
     <Content Include="app\model\settingManager\SolrIndexesModel.js" />
     <Content Include="app\model\settingManager\SolrIndexFieldsModel.js" />
-    <Content Include="app\override\ActionColumn.js" />
     <Content Include="app\store\dashboardAdmin\AvailableValueStore.js" />
     <Content Include="app\store\dashboardAdmin\ChartStore.js" />
     <Content Include="app\store\dashboardAdmin\DashboardsStore.js" />
@@ -256,6 +255,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\model\globalSearch\" />
+    <Folder Include="app\override\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <PropertyGroup>
