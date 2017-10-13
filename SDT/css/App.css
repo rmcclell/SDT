@@ -9,9 +9,9 @@
 
 /*.x-grid-cell-inner-action-col{line-height:0;font-size:0}*/
 
-.fa, .x-btn-glyph, .x-grid-cell-inner-action-col {
-	color: #FF8C00 !important;
-	opacity: 1 !important;
+.fa, .x-btn-glyph, .x-grid-cell-inner-action-col, .x-action-col-icon {
+    color: #FF8C00 !important;
+    opacity: 1 !important;
 }
 
 .header {
@@ -113,4 +113,14 @@ svg text.x-hide-visibility {
 .x-row-action-item-icon {
     cursor: pointer;
     padding: 0 10px;
+}
+
+.fa-column-chart:before {
+    content: "\f080";
+}
+
+.fa-column-chart {
+    -o-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
 }

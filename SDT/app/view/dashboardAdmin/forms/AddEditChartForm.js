@@ -72,15 +72,15 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditChartForm', {
         store: Ext.create('Ext.data.Store', {
             fields: ['value', 'key', 'iconCls'], //Date will eventually contain js date for date comparision
             data: [
-                { value: 'Bar Chart', key: 'barChart', iconCls: 'icon-chart_bar' },
-                { value: 'Column Chart', key: 'columnChart', iconCls: 'icon-chart_column' },
-                { value: 'Pie Chart', key: 'pieChart', iconCls: 'icon-chart_pie' }
+                { value: 'Bar Chart', key: 'barChart', iconCls: 'fa-bar-chart' },
+                { value: 'Column Chart', key: 'columnChart', iconCls: 'fa-column-chart' },
+                { value: 'Pie Chart', key: 'pieChart', iconCls: 'fa-pie-chart' }
             ]
         }),
         listConfig: {
             // Custom rendering template for each item
             getInnerTpl: function () {
-                return '<img class="x-grid-cell-icon {iconCls}" data-qtip="{value}" src="' + Ext.BLANK_IMAGE_URL + '"><span style="padding-left:15px;">{value}</span>';
+                return '<i class="fa {iconCls}" data-qtip="{value}"></i><span style="padding-left:15px;">{value}</span>';
             }
         }
     }, {

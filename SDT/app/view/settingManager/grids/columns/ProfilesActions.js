@@ -12,11 +12,11 @@
     buildItems: function () {
         var me = this;
         return [{
-            glyph: 'xf14b@FontAwesome',
+            glyph: 0xf14b,
             tooltip: 'Edit Profile',
             handler: function () { me.fireEventArgs('editItem', arguments); }
         }, {
-            glyph: 'xf056@FontAwesome',
+            glyph: 0xf056,
             tooltip: 'Delete Profile',
             handler: function () { me.fireEventArgs('deleteItem', arguments); }
         }];

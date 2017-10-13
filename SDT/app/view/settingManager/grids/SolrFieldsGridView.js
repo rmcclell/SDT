@@ -43,10 +43,10 @@
         text: 'Actions',
         sortable: false,
         items: [{
-            glyph: 'xf056@FontAwesome',
+            glyph: 0xf056,
             tooltip: 'Delete Field'
         }, {
-            glyph: 'xf14b@FontAwesome',
+            glyph: 0xf14b,
             tooltip: 'Edit Field'
         }]
     }, {

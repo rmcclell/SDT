@@ -15,19 +15,19 @@
     buildItems: function () {
         var me = this;
         return [{
-            glyph: 'xf14b@FontAwesome',
+            glyph: 0xf14b,
 			tooltip: 'Edit Dashboard',
             handler: function (grid, rowIndex, colIndex, item, e, rec, meta) {
                 me.fireEvent('editDashboard', this, rec, 'editDashboard', item, grid, rowIndex);
             }
         }, {
-            glyph: 'xf056@FontAwesome',
+            glyph: 0xf056,
             tooltip: 'Delete Dashoard',
             handler: function (grid, rowIndex, colIndex, item, e, rec, meta) {
                 me.fireEvent('deleteItem', this, rec, 'deleteItem', item, grid, rowIndex);
             }
         }, {
-            glyph: 'xf0c5@FontAwesome',
+            glyph: 0xf0c5,
 			tooltip: 'Clone Dashboard',
             handler: function (grid, rowIndex, colIndex, item, e, rec, meta) {
                 me.fireEvent('cloneDashboard', this, rec, 'cloneDashboard', item);

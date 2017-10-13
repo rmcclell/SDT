@@ -21,7 +21,7 @@
         text: 'Add Chart',
         itemId: 'addChart',
         tooltip: 'Add pie or bar charts to the dashboard of data in a select field',
-        glyph: 'xf14b@FontAwesome'
+        glyph: 0xf14b
     }],
     columns: [{
         xtype: 'chartsActions',

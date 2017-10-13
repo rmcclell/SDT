@@ -28,7 +28,7 @@
         text: 'Add Filter',
         itemId: 'addFilter',
         tooltip: 'Apply filters to reduce your results returned',
-        glyph: 'xf055@FontAwesome'
+        glyph: 0xf055
     }],
     columns: [{
         xtype: 'filtersActions',
