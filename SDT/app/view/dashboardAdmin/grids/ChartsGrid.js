@@ -31,14 +31,14 @@
         dataIndex: 'type',
         width: 110,
         renderer: function (val) {
-            var tpl = Ext.create('Ext.Template', '<img class="x-grid-cell-icon {iconCls}" data-qtip="{chartType}" src="{spacer}"><span style="padding-left:15px;">{chartType}</span>', { compiled: true, disableFormats: true });
+            var tpl = Ext.create('Ext.Template', '<i class="fa {iconCls}" data-qtip="{chartType}"></i><span style="padding-left:15px;">{chartType}</span>', { compiled: true, disableFormats: true });
 
             if (val === 'pieChart') {
-                return tpl.apply({ iconCls: 'icon-chart_pie', chartType: 'Pie Chart', spacer: Ext.BLANK_IMAGE_URL });
+                return tpl.apply({ iconCls: 'fa-pie-chart', chartType: 'Pie Chart' });
             } else if (val === 'columnChart') {
-                return tpl.apply({ iconCls: 'icon-chart_column', chartType: 'Column Chart', spacer: Ext.BLANK_IMAGE_URL });
+                return tpl.apply({ iconCls: 'fa-column-chart', chartType: 'Column Chart' });
             } else {
-                return tpl.apply({ iconCls: 'icon-chart_bar', chartType: 'Bar Chart', spacer: Ext.BLANK_IMAGE_URL });
+                return tpl.apply({ iconCls: 'fa-bar-chart', chartType: 'Bar Chart' });
             }
         }
     }, {

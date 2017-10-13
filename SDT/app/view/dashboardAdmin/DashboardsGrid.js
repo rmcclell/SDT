@@ -22,6 +22,7 @@
             margin: '0 8 0 8'
         }, {
             text: 'Refresh',
+            itemId: 'refresh',
             glyph: 0xf021
         }, {
             xtype: 'tbseparator',

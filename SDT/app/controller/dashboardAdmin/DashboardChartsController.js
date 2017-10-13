@@ -230,8 +230,8 @@
                 data.id = null;
                 delete data.id;
 
-                facets.push(data.facetField);
-                facets.push(data.facetQuery);
+                Ext.Array.include(facets, data.facetField);
+                Ext.Array.include(facets, data.facetQuery);
 
                 Ext.Array.include(chartArray, Ext.encode(data));
             });

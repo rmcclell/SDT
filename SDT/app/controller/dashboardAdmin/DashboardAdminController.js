@@ -154,6 +154,7 @@
         data.modifiedDate = dtStr; //Update modified date
 
         data.userCriteriaFields = Ext.Array.pluck(record.userCriteriaFields().getRange(), 'data');
+        data.charts = Ext.Array.pluck(record.charts().getRange(), 'data');
 
         console.log(data);
 
