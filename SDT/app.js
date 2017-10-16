@@ -479,8 +479,6 @@ Ext.application({
         'dashboard.DashboardController',
         'dashboard.SavedDashboardController',
         
-		//'globalSearch.GlobalSearchController',
-                
 		'ViewportController',
         
         'dashboardAdmin.DashboardAdminController',

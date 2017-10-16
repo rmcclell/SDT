@@ -5,7 +5,6 @@ Ext.define('SDT.view.Viewport', {
         'SDT.util.GLOBALS',
         'SDT.view.DashboardsView',
         'SDT.view.DashboardAdminView',
-        'SDT.view.globalSearch.GlobalSearchView',
         'SDT.view.HomeView'
     ],
     layout: 'border',
@@ -32,18 +31,6 @@ Ext.define('SDT.view.Viewport', {
             dock: 'top',
             xtype: 'toolbar',
             items: [{
-                xtype: 'textfield',
-                width: 250,
-                itemId: 'globalSearchTextField'
-            }, {
-                glyph: 0xf002,
-                text: 'Search',
-                itemId: 'globalSearchBtn',
-                menu: [{
-                    text: 'Global Search',
-                    itemId: 'menuItemGlobalSearch'
-                }]
-            }, '-', {
                 text: 'Home',
                 glyph: 0xf015,
                 itemId: 'homeButton'
@@ -104,8 +91,6 @@ Ext.define('SDT.view.Viewport', {
             xtype: 'dashboardsView'
         }, {
             xtype: 'dashboardAdminView'
-        }, {
-            xtype: 'globalSearchView'
         }]
     }]
 });
