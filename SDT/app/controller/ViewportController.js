@@ -10,8 +10,7 @@ Ext.define('SDT.controller.ViewportController', {
         'dashboard.DashboardListsModel'
     ],
     stores: [
-        'LanguagesStore',
-        'ThemesStore'
+        'LanguagesStore'
     ],
     refs: [{
         ref: 'viewportPanel',
@@ -25,12 +24,6 @@ Ext.define('SDT.controller.ViewportController', {
         me.control({
             '#menuItemLanguages': {
                 beforerender: me.getLanguages
-            },
-            '#menuItemThemes': {
-                beforerender: me.getThemes
-            },
-            'themesCombo': {
-                select: me.onSelectTheme
             },
             '#homeButton': {
                 click: me.loadHomeViewPanel
@@ -79,27 +72,6 @@ Ext.define('SDT.controller.ViewportController', {
 
         Ext.resumeLayouts(true);
     },
-    getThemes: function (menu) {
-        var me = this,
-            themeStore = me.getThemesStoreStore(),
-            records = themeStore.getRange();
-
-        Ext.suspendLayouts();
-        Ext.Array.each(records, function (record) {
-            var checked = (record.data.theme === 'Gray') ? true : false;
-            menu.menu.add({
-                text: record.data.theme,
-                checked: checked,
-                value: record.data.cssFile,
-                rawValue: record.data.theme, //Leverage value and rawValue on standard combos
-                listeners: {
-                    click: me.onSelectTheme
-                }
-            });
-        });
-
-        Ext.resumeLayouts(true);
-    },
     loadHomeViewPanel: function (button) {
         var viewPort = this.getViewportPanel(),
             view = viewPort.down('homeView');
@@ -112,22 +84,6 @@ Ext.define('SDT.controller.ViewportController', {
 
         viewPort.getLayout().setActiveItem(view); //Set parent view active
         view.getLayout().setActiveItem(0);
-    },
-    onSelectTheme: function (comp) {
-
-        var linkTag,
-            href,
-            path,
-            newValue = comp.value;
-
-        //Get current file path css file
-        linkTag = Ext.get('currentTheme');
-        href = linkTag.getAttribute('href');
-        path = href.slice(0, href.lastIndexOf('/'));
-
-        //Set new file path css file
-        Ext.util.CSS.swapStyleSheet('currentTheme', path + '/' + newValue);
-        Ext.util.CSS.refreshCache();
     },
     onSelectLanguage: function (comp) {
         //component can be a menu item or combo item

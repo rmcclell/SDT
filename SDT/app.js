@@ -32,7 +32,6 @@ Ext.application({
 
         Ext.state.Manager.set('defaultDashboardId', 'cats');
 
-
         var profiles = [{
             "name": "Profile 1",
             "active": true,

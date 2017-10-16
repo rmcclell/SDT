@@ -94,7 +94,6 @@
     <Content Include="app\component\button\ExportButton.js" />
     <Content Include="app\component\combo\LanguagesCombo.js" />
     <Content Include="app\component\combo\OperatorCombo.js" />
-    <Content Include="app\component\combo\ThemesCombo.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardAdminController.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardChartsController.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardDetailsController.js" />
@@ -159,7 +158,6 @@
     <Content Include="app\store\settingManager\ProfilesStore.js" />
     <Content Include="app\store\settingManager\SolrIndexesStore.js" />
     <Content Include="app\store\settingManager\SolrIndexFieldsStore.js" />
-    <Content Include="app\store\ThemesStore.js" />
     <Content Include="app\util\DateUtils.js" />
     <Content Include="app\util\Globals.js" />
     <Content Include="app\util\UtilFunctions.js" />

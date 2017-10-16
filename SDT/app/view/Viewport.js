@@ -69,16 +69,6 @@ Ext.define('SDT.view.Viewport', {
                             items: []
                         }
                     }, {
-                        text: 'Themes',
-                        hidden: false,
-                        itemId: 'menuItemThemes',
-                        menu: {
-                            defaults: {
-                                group: 'themes'
-                            },
-                            items: []
-                        }
-                    }, {
                         text: 'Settings',
                         itemId: 'settingManagerMenuBtn'
                     }]
