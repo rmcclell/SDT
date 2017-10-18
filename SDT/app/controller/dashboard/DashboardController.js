@@ -28,6 +28,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         'dashboard.DashboardCriteriaFilterStore',
         'dashboard.DashboardListsStore',
         'dashboard.DashboardChartsStore',
+        'dashboard.DashboardCriteriaCombosStore',
         'dashboard.DashboardResultStore',
         'dashboard.DashboardSelectedFilterStore'
     ],
@@ -351,13 +352,16 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         Ext.resumeLayouts();
     },
 
-    loadDashboard: function (queries, chartConfig, chartInfo, resultsPanelConfig, dashboardConfig, dataIndex, activeQuery) {
+    loadDashboard: function (queries, dashboardConfig) {
         var me = this,
-            dashboardStore = me.getDashboardDashboardChartsStoreStore(),
-            proxy = dashboardStore.getProxy(),
+            dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
+            resultsPanelConfig = { type: '', titlePrefix: 'Results', exportable: true, namespace: 'DashboardRowResultsGrid' },
+            chartInfo = me.getChartInfo(dashboardConfig.getData()),
+            chartConfig = dashboardConfig.charts(),
+            dataIndex = dashboardConfig.get('dataIndex'),
+            proxy = dashboardConfigStore.getProxy(),
             dashboardsView = me.getDashboardsView(),
             dashboardChartResultsContainer = dashboardsView.down('dashboardChartResultsContainer'),
-            currentContainer = dashboardChartResultsContainer.down('container'),
             callbackFn,
             title;
 
@@ -367,13 +371,17 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         title = Ext.String.format('Dashboards: <span style="cursor:pointer;" data-qtip="{0}">{1}</span>', Ext.String.htmlEncode(me.buildDashboardInfoTpl(chartInfo)), chartInfo.title);
 
-        dashboardsView.down('dashboardChartResultsContainer').setTitle(title);
+        dashboardChartResultsContainer.setTitle(title);
 
         //callbackFn = function (records, operation, success) {
         //if (success) {
-        me.loadCriteriaCombos(chartInfo, dashboardConfig);
-        me.loadChartData(dashboardStore, queries, chartConfig, chartInfo, resultsPanelConfig, dashboardConfig, activeQuery);
-        me.loadResultsPanel(activeQuery, resultsPanelConfig, dashboardConfig);
+
+        var userCriteriaData = (dashboardConfig.type === 'Connected') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData');
+
+        me.loadCriteriaCombosData(chartConfig, chartInfo, dashboardConfig);
+        me.loadCriteriaCombos(chartInfo, dashboardConfig, userCriteriaData);
+        me.loadChartData(chartConfig, chartInfo, dashboardConfig);
+        me.loadResultsPanel(resultsPanelConfig, dashboardConfig);
         //}
         //dashboardsView.getEl().unmask();
         //};
@@ -396,13 +404,36 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         //});
 
     },
-    loadChartData: function (data, query, chartConfig, chartInfo, resultsPanelConfig, dashboardConfig, activeQuery) {
+    loadCriteriaCombosData: function (chartConfig, chartInfo, dashboardConfig) {
+        var me = this,
+            store = Ext.getStore('DashboardCriteriaCombosStore'),
+            proxy = store.getProxy(),
+            fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig.userCriteriaFields().getRange(), 'data'), 'name').join('&facet.field=');
+
+        proxy.url = chartInfo.dataIndex + 'select';
+
+        debugger;
+        proxy.extraParams = {
+            q: '*:*',
+            facet: true,
+            'json.nl': 'arrarr',
+            'facet.missing': true,
+            'facet.field': fieldNames,
+            rows: 0
+        };
+        var callbackFn = function () {
+            debugger;
+            //me.loadPanelConfig(chartConfig, store, dashboardConfig, chartInfo);
+        };
+
+        //store.load({ callback: callbackFn });
+
+    },
+    loadChartData: function (chartConfig, chartInfo, dashboardConfig) {
         var me = this,
             store = Ext.getStore('DashboardChartsStore'),
             proxy = store.getProxy(),
-            dashboardsView = me.getDashboardsView(),
-            fieldNames = Ext.Array.unique(Ext.Array.pluck(Ext.Array.pluck(chartConfig.getRange(), 'data'), 'fieldName')).join(','),
-            currentContainer = dashboardsView.down('dashboardChartResultsContainer');
+            fieldNames = Ext.Array.unique(Ext.Array.pluck(Ext.Array.pluck(chartConfig.getRange(), 'data'), 'fieldName')).join(',');
 
         proxy.url = chartInfo.dataIndex + 'select';
         
@@ -423,10 +454,12 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         //dashboardsView.getEl().unmask();
     },
 
-    loadResultsPanel: function (query, resultsPanelConfig, dashboardConfig) {
+    loadResultsPanel: function (resultsPanelConfig, dashboardConfig) {
         var me = this,
+            query = {},
             dashboardsView = me.getDashboardsView(),
             dashboardChartResultsContainer = dashboardsView.down('dashboardChartResultsContainer'),
+            currentContainer = dashboardChartResultsContainer.down('container'),
             grid = dashboardsView.down('dashboardRowResultsGrid'),
             activepanel = (dashboardConfig.type === 'Connected') ? null : Ext.ComponentQuery.query('#' + this.getLastActiveChartId() + '-panel', currentContainer)[0],
             activeChartTitle = (activepanel) ? activepanel.title + ': ' : '',
@@ -540,12 +573,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         };
     },
 
-    loadCriteriaCombos: function (chartInfo, dashboardConfig) {
+    loadCriteriaCombos: function (chartInfo, dashboardConfig, userCriteriaData) {
 
         var me = this,
             dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
             dashboardCriteriaPanel = me.getDashboardCriteriaPanel(),
-            userCriteriaData = (dashboardConfig.type === 'Connected') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData'),
             dashboardCriteriaForm = dashboardCriteriaPanel.getForm();
 
         dashboardCriteriaForm.getFields().each(function (field) {
@@ -730,7 +762,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
             criteriaFilters = me.getCriteriaFilters(),
             firstConfigRecord,
-            activeQuery,
             criteriaPanel = me.getDashboardCriteriaPanel();
 
         callback = function () {
@@ -738,16 +769,9 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             firstConfigRecord = me.getCurrentDashboardRecord(dashboardConfigStore);
 
             if (firstConfigRecord.get('type') === 'Connected') {
-
                 queries.push(firstConfigRecord.getQuery().getData());
-
                 queries[0].filters = criteriaFilters;
-
-                activeQuery = queries[0];
-                activeQuery.dataIndex = firstConfigRecord.get('dataIndex');
-
-                me.loadDashboard(queries, firstConfigRecord.charts(), me.getChartInfo(firstConfigRecord.getData()), firstConfigRecord.getData().resultsPanel, firstConfigRecord.getData(), firstConfigRecord.get('dataIndex'), activeQuery);
-
+                me.loadDashboard(queries, firstConfigRecord);
             }
 
         };
