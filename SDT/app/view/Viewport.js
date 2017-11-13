@@ -66,7 +66,14 @@ Ext.define('SDT.view.Viewport', {
                             defaults: {
                                 group: 'languages'
                             },
-                            items: []
+                            items: [{
+                                text: 'English',
+                                name: 'en',
+                                checked: true
+                            }, {
+                                text: 'Spanish',
+                                name: 'es'
+                            }]
                         }
                     }, {
                         text: 'Settings',

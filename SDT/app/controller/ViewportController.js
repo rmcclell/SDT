@@ -2,15 +2,12 @@ Ext.define('SDT.controller.ViewportController', {
     extend: 'Ext.app.Controller',
     requires: [
         'SDT.util.GLOBALS'
-	],
+    ],
     views: [
         'Viewport'
     ],
     models: [
         'dashboard.DashboardListsModel'
-    ],
-    stores: [
-        'LanguagesStore'
     ],
     refs: [{
         ref: 'viewportPanel',
@@ -22,9 +19,6 @@ Ext.define('SDT.controller.ViewportController', {
     init: function () {
         var me = this;
         me.control({
-            '#menuItemLanguages': {
-                beforerender: me.getLanguages
-            },
             '#homeButton': {
                 click: me.loadHomeViewPanel
             },
@@ -48,29 +42,6 @@ Ext.define('SDT.controller.ViewportController', {
         Ext.util.Format.thousandSeparator = SDT.util.GLOBALS.DISPLAY_FORMATS.number.charAt(1);
         SDT.util.GLOBALS.DISPLAY_FORMATS.date = Ext.state.Manager.get('stateDateFormat',
                      { value: { "radioDateFormat": 'm-d-Y' } }).value.radioDateFormat;
-    },
-    
-    getLanguages: function (menu) {
-        var languageStore = this.getLanguagesStoreStore(),
-            records = languageStore.getRange(),
-            me = this;
-
-        Ext.suspendLayouts();
-
-        Ext.Array.each(records, function (record) {
-            var checked = (record.data.language === 'English') ? true : false;
-            menu.menu.add({
-                text: record.data.language,
-                value: record.data.code,
-                rawValue: record.data.language, //Leverage value and rawValue on standard combos
-                checked: checked,
-                listeners: {
-                    click: me.onSelectLanguage
-                }
-            });
-        });
-
-        Ext.resumeLayouts(true);
     },
     loadHomeViewPanel: function (button) {
         var viewPort = this.getViewportPanel(),

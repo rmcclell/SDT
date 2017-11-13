@@ -91,7 +91,6 @@
   <ItemGroup>
     <Content Include="app.js" />
     <Content Include="app\component\button\ExportButton.js" />
-    <Content Include="app\component\combo\LanguagesCombo.js" />
     <Content Include="app\component\combo\OperatorCombo.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardAdminController.js" />
     <Content Include="app\controller\dashboardAdmin\DashboardChartsController.js" />
@@ -108,11 +107,8 @@
     <Content Include="app\controller\settingManager\SettingManagerController.js" />
     <Content Include="app\controller\settingManager\SolrIndexesController.js" />
     <Content Include="app\controller\ViewportController.js" />
-    <Content Include="app\locale\ext-lang-de.js" />
     <Content Include="app\locale\ext-lang-en.js" />
     <Content Include="app\locale\ext-lang-es.js" />
-    <Content Include="app\locale\ext-lang-fr.js" />
-    <Content Include="app\locale\ext-lang-it.js" />
     <Content Include="app\model\dashboardAdmin\AvailableValueModel.js" />
     <Content Include="app\model\dashboardAdmin\ChartModel.js" />
     <Content Include="app\model\dashboardAdmin\DashboardsModel.js" />
@@ -151,7 +147,6 @@
     <Content Include="app\store\dashboard\DashboardResultStore.js" />
     <Content Include="app\store\dashboard\DashboardSavedUserCriteriaStore.js" />
     <Content Include="app\store\dashboard\DashboardSelectedFilterStore.js" />
-    <Content Include="app\store\LanguagesStore.js" />
     <Content Include="app\store\settingManager\SolrIndexesStore.js" />
     <Content Include="app\store\settingManager\SolrIndexFieldsStore.js" />
     <Content Include="app\util\DateUtils.js" />
