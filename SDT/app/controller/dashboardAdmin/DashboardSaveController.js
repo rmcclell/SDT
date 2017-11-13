@@ -3,8 +3,6 @@
     views: [
         'dashboardAdmin.cards.Save'
     ],
-    models: [],
-    stores: [],
     init: function () {
         var me = this;
         me.control({

@@ -36,10 +36,7 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
             },
             'addEditSolrIndexesWForm button#applyBtn': {
                 click: me.onApplyButtonClick
-            }//,
-            //'solrIndexesGrid': {
-            //    activate: me.onSolrIndexesGridShow
-            //}
+            }
         });
     },
 
@@ -121,12 +118,6 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
     onFieldDeleteAllButtonClick: function (button) {
         button.up('grid').getStore().removeAll();
     },
-
-    //onSolrIndexesGridShow: function (grid) {
-        //var store = grid.getStore();
-
-        //store.loadRawData(Ext.state.Manager.get('solrIndexes'));
-    //},
 
     onDeletItem: function (view, colIndex, rowIndex, item, e, record, row) {
         record.store.removeAt(rowIndex);

@@ -53,9 +53,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                 collapse: me.collapseDashboardCriteriaContainer,
                 expand: me.expandDashboardCriteriaContainer
             },
-            //'dashboardRowResultsGrid': {
-            //beforerender: me.setupGridColumns
-            //},
             'pieChart, barChart, columnChart': {
                 dashboardSeriesClick: me.onChartFilterChange
             },
@@ -64,7 +61,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             'dashboardsView': {
                 afterrender: me.onDashboardChange
             },
-            'dashboardsView button[name="refresh"]': {
+            'dashboardsView button#refresh': {
                 click: me.refreshDashboard
             },
             'viewport': {
@@ -88,16 +85,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
     applyFilterChange: function (field) {
         field.fireEvent('applyFilterChange', field);
-    },
-
-    reloadActiveChartData: function () {
-
-        var me = this,
-            dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
-            criteriaPanel = me.getDashboardCriteriaPanel();
-
-        //me.loadDashboardConfigComps(criteriaPanel, dashboardConfigStore);
-
     },
 
     onFilterExpand: function (field) {
@@ -275,11 +262,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             criteriaPanel = me.getDashboardCriteriaPanel(),
             dashboardConfigStore = Ext.getStore('DashboardConfigStore');
 
-        //callbackFn = function (records, operation, success) {
-        //    if (success && records.length > 0) {
-        //        me.loadDashboardConfigComps(criteriaPanel, dashboardConfigStore);
-        //    }
-        //};
+        callbackFn = function (records, operation, success) {
+            if (success && records.length > 0) {
+                me.loadDashboardConfigComps(criteriaPanel, dashboardConfigStore);
+            }
+        };
 
         //dashboardConfigStore.load({ callback: callbackFn });
     },
@@ -647,11 +634,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             criteriaPanel = me.getDashboardCriteriaPanel(),
             dashboardConfigStore = Ext.getStore('DashboardConfigStore');
 
-        dashboardsView.on('titlechange', function () {
-            //viewportPanel.getEl().unmask();
-        }, me, { single: true });
-
-        //viewportPanel.getEl().mask('Loading...', 'loadingMask');
         viewportPanel.getLayout().setActiveItem(dashboardsView); //Set parent view active
 
         if (menu.dashboardId && menu.dashboardId !== me.currentDashboardId) {
@@ -666,8 +648,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
             me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: menu.dashboardId, chartid: me.getLastActiveChartId() });
 
-        } else {
-            //viewportPanel.getEl().unmask();
         }
     },
     loadBaseCriteriaPanel: function (store) {
