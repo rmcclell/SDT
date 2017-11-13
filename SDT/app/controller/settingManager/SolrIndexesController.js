@@ -84,7 +84,7 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
     onSolrIndexesEditItem: function (view, colIndex, rowIndex, item, e, record, row) {
         var formPanel = Ext.widget('addEditSolrIndexesForm', { type: 'Edit', store: view.getStore() }).show();
         formPanel.getForm().loadRecord(record);
-        formPanel.down('grid').getStore().loadData(record.solrFields().getRange());
+        formPanel.down('grid').getStore().loadData(record.get('solrFields'));
     },
 
     getSolrFields: function (button) {
