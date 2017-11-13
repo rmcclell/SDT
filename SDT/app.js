@@ -27,19 +27,9 @@ Ext.application({
     enableQuickTips: true,
     appFolder: 'app',
 	init: function(){
-		localStorage.setItem( 'activeProfile', 'default' );
-        Ext.state.Manager.setProvider(Ext.create('Ext.state.LocalStorageProvider', { prefix: localStorage.getItem('activeProfile') + '-' }));
+		Ext.state.Manager.setProvider(Ext.create('Ext.state.LocalStorageProvider', { prefix: 'default-' }));
 
         Ext.state.Manager.set('defaultDashboardId', 'cats');
-
-        var profiles = [{
-            "name": "Profile 1",
-            "active": true,
-            "createDate": "2013-07-15T13:27:36Z",
-            "modifiedDate": "2013-07-15T13:27:36Z"
-        }]
-
-        Ext.state.Manager.set('profiles', profiles);
 
         var solrIndexes = [{
             "id": 1,
@@ -493,7 +483,6 @@ Ext.application({
         'settingManager.SettingManagerController',
 		'settingManager.DisplayController',
 		'settingManager.PreferencesController',
-		'settingManager.ProfilesController',
 		'settingManager.SolrIndexesController'
     ],
 

@@ -27,12 +27,10 @@ Ext.define('SDT.controller.settingManager.PreferencesController', {
         var preferences = provider.state;
 
         for (var propertyName in preferences) {
-            if (preferences.hasOwnProperty(propertyName) && propertyName !== 'profiles') {
-                store.add({
-                    key: propertyName,
-                    value: Ext.encode(preferences[propertyName])
-                });
-            }
+            store.add({
+                key: propertyName,
+                value: Ext.encode(preferences[propertyName])
+            });
         }
 
         grid.columns[0].handler = function (grid, rowIndex, colIndex) {

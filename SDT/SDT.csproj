@@ -72,7 +72,6 @@
     <Content Include="data\mock\dashboard\DashboardsMenu.json" />
     <Content Include="data\mock\dashboard\DefaultDashboardsId.json" />
     <Content Include="data\mock\settingManager\Preferences.json" />
-    <Content Include="data\mock\settingManager\Profiles.json" />
     <Content Include="data\mock\settingManager\SolrIndexes.json" />
     <Content Include="data\mock\Success.json" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
@@ -106,7 +105,6 @@
     <Content Include="app\controller\dashboard\SavedDashboardController.js" />
     <Content Include="app\controller\settingManager\DisplayController.js" />
     <Content Include="app\controller\settingManager\PreferencesController.js" />
-    <Content Include="app\controller\settingManager\ProfilesController.js" />
     <Content Include="app\controller\settingManager\SettingManagerController.js" />
     <Content Include="app\controller\settingManager\SolrIndexesController.js" />
     <Content Include="app\controller\ViewportController.js" />
@@ -136,7 +134,6 @@
     <Content Include="app\model\dashboard\DashboardSelectedFilterModel.js" />
     <Content Include="app\model\dashboard\DashboardUserCriteriaFieldConfigModel.js" />
     <Content Include="app\model\settingManager\FieldsModel.js" />
-    <Content Include="app\model\settingManager\ProfilesModel.js" />
     <Content Include="app\model\settingManager\SolrIndexesModel.js" />
     <Content Include="app\model\settingManager\SolrIndexFieldsModel.js" />
     <Content Include="app\store\dashboardAdmin\AvailableValueStore.js" />
@@ -155,7 +152,6 @@
     <Content Include="app\store\dashboard\DashboardSavedUserCriteriaStore.js" />
     <Content Include="app\store\dashboard\DashboardSelectedFilterStore.js" />
     <Content Include="app\store\LanguagesStore.js" />
-    <Content Include="app\store\settingManager\ProfilesStore.js" />
     <Content Include="app\store\settingManager\SolrIndexesStore.js" />
     <Content Include="app\store\settingManager\SolrIndexFieldsStore.js" />
     <Content Include="app\util\DateUtils.js" />
@@ -211,15 +207,12 @@
     <Content Include="app\view\dashboard\DashboardCurrentCriteriaPanel.js" />
     <Content Include="app\view\dashboard\DashboardRowResultsGrid.js" />
     <Content Include="app\view\HomeView.js" />
-    <Content Include="app\view\settingManager\forms\AddEditProfilesForm.js" />
     <Content Include="app\view\settingManager\forms\AddEditSolrIndexesForm.js" />
     <Content Include="app\view\settingManager\grids\columns\PreferencesActions.js" />
-    <Content Include="app\view\settingManager\grids\columns\ProfilesActions.js" />
     <Content Include="app\view\settingManager\grids\columns\SolrIndexesActions.js" />
     <Content Include="app\view\settingManager\grids\SolrFieldsGridView.js" />
     <Content Include="app\view\settingManager\localDisplayFormat.js" />
     <Content Include="app\view\settingManager\PreferencesGridView.js" />
-    <Content Include="app\view\settingManager\ProfilesGridView.js" />
     <Content Include="app\view\settingManager\SettingManagerDialogView.js" />
     <Content Include="app\view\settingManager\SolrIndexesGridView.js" />
     <Content Include="app\view\Viewport.js" />

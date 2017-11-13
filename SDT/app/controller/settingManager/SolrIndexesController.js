@@ -17,10 +17,6 @@ Ext.define('SDT.controller.settingManager.SolrIndexesController', {
     init: function () {
         var me = this;
         me.control({
-            /*'solrIndexesGrid > toolbar > button#removeAll': {
-                click: me.onProfileGridDeleteAllButtonClick
-            },
-            */
             'solrIndexesGrid > toolbar > button#add': {
                 click: me.onSolrIndexesAddButtonClick
             },
