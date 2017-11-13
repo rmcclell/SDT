@@ -438,18 +438,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var me = this,
             store = Ext.getStore('DashboardChartsStore'),
             proxy = store.getProxy(),
-            fieldNames = Ext.Array.unique(Ext.Array.pluck(Ext.Array.pluck(chartConfig.getRange(), 'data'), 'fieldName')).join(',');
+            fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name');
 
         proxy.url = chartInfo.dataIndex + 'select';
-        
-        proxy.extraParams = {
-            q: '*:*',
-            facet: true,
-            'json.nl': 'arrarr',
-            'facet.missing': true,
-            'facet.field': fieldNames,
-            rows: 0
-        };
+        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0&facet.field=' + fieldNames.join('&facet.field=')
+
         var callbackFn = function () {
             me.loadPanelConfig(chartConfig, store, dashboardConfig, chartInfo);
         };
