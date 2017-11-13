@@ -379,7 +379,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var userCriteriaData = (dashboardConfig.type === 'Connected') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData');
 
         me.loadCriteriaCombosData(chartConfig, chartInfo, dashboardConfig);
-        me.loadCriteriaCombos(chartInfo, dashboardConfig, userCriteriaData);
         me.loadChartData(chartConfig, chartInfo, dashboardConfig);
         me.loadResultsPanel(resultsPanelConfig, dashboardConfig);
         //}
@@ -408,11 +407,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var me = this,
             store = Ext.getStore('DashboardCriteriaCombosStore'),
             proxy = store.getProxy(),
-            fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig.userCriteriaFields().getRange(), 'data'), 'name').join('&facet.field=');
+            fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name');
 
         proxy.url = chartInfo.dataIndex + 'select';
 
-        debugger;
+        /*
         proxy.extraParams = {
             q: '*:*',
             facet: true,
@@ -421,12 +420,18 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             'facet.field': fieldNames,
             rows: 0
         };
-        var callbackFn = function () {
-            debugger;
-            //me.loadPanelConfig(chartConfig, store, dashboardConfig, chartInfo);
+        */
+
+        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0&facet.field=' + fieldNames.join('&facet.field=')
+
+
+        var callbackFn = function (records) {
+            if (records.length) {
+                me.loadCriteriaCombos(chartInfo, dashboardConfig, records[0].get('facet_fields'));
+            }
         };
 
-        //store.load({ callback: callbackFn });
+        store.load({ callback: callbackFn });
 
     },
     loadChartData: function (chartConfig, chartInfo, dashboardConfig) {
