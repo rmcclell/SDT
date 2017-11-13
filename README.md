@@ -1,6 +1,8 @@
 # SDT
 Solr Data Tool
 
+![Alt text](/resources/screenshot.png?raw=true "Dashboard Screenshot")
+
 ## Goals of Project
 This is standalone tool to provide custom visual dashboards of solr index with Sencha ExtJs
 
