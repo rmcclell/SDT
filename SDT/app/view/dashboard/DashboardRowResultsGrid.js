@@ -8,8 +8,7 @@
     ],
     tools: [{
         xtype: 'exportButton'
-    }
-    ],
+    }],
     alias: 'widget.dashboardRowResultsGrid',
     store: 'dashboard.DashboardResultStore',
     stateful: true,

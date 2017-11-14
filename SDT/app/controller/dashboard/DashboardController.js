@@ -64,6 +64,22 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             'dashboardsView button#refresh': {
                 click: me.refreshDashboard
             },
+            'dashboardRowResultsGrid exportButton menuitem[name="all"]': {
+                click: function (button) {
+                    var proxy = button.up('grid').getStore().getProxy();
+                    var url = proxy.url;
+                    //url = url.replace('/select', '/export');
+
+                    proxy.extraParams.wt = 'csv';
+
+                    Ext.Ajax.request({
+                        url: url,
+                        params: proxy.extraParams,
+                        method: 'GET',
+                        success: function (result, request) { debugger; }
+                    });
+                }
+            },
             'viewport': {
                 afterrender: me.initDashboardStores
             }
