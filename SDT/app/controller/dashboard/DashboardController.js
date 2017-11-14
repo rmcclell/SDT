@@ -43,11 +43,10 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                 expand: me.onFilterExpand,
                 collapse: me.onFilterCollapse,
                 applyFilterChange: me.onApplyFilterChange,
-                removeitem: me.applyFilterChange
+                removeitem: me.onApplyFilterChange
             },
             'dashboardCriteriaPanel operatorCombo': {
-                applyFilterChange: me.onApplyFilterChange,
-                select: me.applyFilterChange
+                select: me.onApplyFilterChange
             },
             'dashboardCriteriaContainer': {
                 collapse: me.collapseDashboardCriteriaContainer,
@@ -137,17 +136,13 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         
     },
 
-    applyFilterChange: function (field) {
-        field.fireEvent('applyFilterChange', field);
-    },
-
     onFilterExpand: function (field) {
         field.valueOnExpand = field.getValue(); //field.lastValue is changed immediately upon selection so a seperate var was need to check for change after collapse. combo boxes cant update till user collapses field to all multiply values to be selected
     },
 
     onFilterCollapse: function (field) {
         if (Ext.isArray(field.getValue()) && field.getValue().length > 0 && !field.isEqual(field.valueOnExpand, field.getValue())) {
-            this.applyFilterChange(field);
+            this.onApplyFilterChange(field);
         }
     },
 
@@ -354,41 +349,15 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         //Set dashboard view active before loading tab
 
-        //dashboardsView.getEl().mask('Loading...', 'loadingMask');
-
         title = Ext.String.format('Dashboards: <span style="cursor:pointer;" data-qtip="{0}">{1}</span>', Ext.String.htmlEncode(me.buildDashboardInfoTpl(chartInfo)), chartInfo.title);
 
         dashboardChartResultsContainer.setTitle(title);
 
-        //callbackFn = function (records, operation, success) {
-        //if (success) {
-
         var userCriteriaData = (dashboardConfig.type === 'Connected') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData');
 
         me.loadCriteriaCombosData(chartConfig, chartInfo, dashboardConfig);
-        me.loadChartData(chartConfig, chartInfo, dashboardConfig);
-        me.loadResultsPanel(resultsPanelConfig, dashboardConfig);
-        //}
-        //dashboardsView.getEl().unmask();
-        //};
-
-        //Set sent params both connected charts wrap params as array
-
-        //proxy.url = '/data/mock/dashboard/' + Ext.state.Manager.get('defaultDashboardId') + '/DashboardConnectedCharts.json';
-        //proxy.url = chartInfo.dataIndex + 'select';
-        //proxy.extraParams = {
-        //q: '*:*',
-        //facet: true,
-        //'facet.field': 'coat',
-        //rows: 0
-        //};
-        //proxy.extraParams = { chartParms: queries };
-
-        //dashboardStore.load({
-        //    scope: me,
-        //    callback: callbackFn
-        //});
-
+        me.loadChartData(queries, chartConfig, chartInfo, dashboardConfig);
+        me.loadResultsPanel(queries, resultsPanelConfig, dashboardConfig);
     },
     loadCriteriaCombosData: function (chartConfig, chartInfo, dashboardConfig) {
         var me = this,
@@ -397,20 +366,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name');
 
         proxy.url = chartInfo.dataIndex + 'select';
-
-        /*
-        proxy.extraParams = {
-            q: '*:*',
-            facet: true,
-            'json.nl': 'arrarr',
-            'facet.missing': true,
-            'facet.field': fieldNames,
-            rows: 0
-        };
-        */
-
         proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0&facet.field=' + fieldNames.join('&facet.field=')
-
 
         var callbackFn = function (records) {
             if (records.length) {
@@ -421,25 +377,23 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         store.load({ callback: callbackFn });
 
     },
-    loadChartData: function (chartConfig, chartInfo, dashboardConfig) {
+    loadChartData: function (queries, chartConfig, chartInfo, dashboardConfig) {
         var me = this,
             store = Ext.getStore('DashboardChartsStore'),
             proxy = store.getProxy(),
             fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name');
 
         proxy.url = chartInfo.dataIndex + 'select';
-        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0&facet.field=' + fieldNames.join('&facet.field=')
+        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0&facet.field=' + fieldNames.join('&facet.field=') + Ext.Array.pluck(queries, 'filters').join('');
 
         var callbackFn = function () {
             me.loadPanelConfig(chartConfig, store, dashboardConfig, chartInfo);
         };
 
         store.load({ callback: callbackFn });
-
-        //dashboardsView.getEl().unmask();
     },
 
-    loadResultsPanel: function (resultsPanelConfig, dashboardConfig) {
+    loadResultsPanel: function (queries, resultsPanelConfig, dashboardConfig) {
         var me = this,
             query = {},
             dashboardsView = me.getDashboardsView(),
@@ -449,24 +403,15 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             activepanel = (dashboardConfig.type === 'Connected') ? null : Ext.ComponentQuery.query('#' + this.getLastActiveChartId() + '-panel', currentContainer)[0],
             activeChartTitle = (activepanel) ? activepanel.title + ': ' : '',
             fields,
-            store,
-            proxy;
+            fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name'),
+            store = grid.getStore(),
+            proxy = store.getProxy();
 
         grid.hide(); //hide to avoid autoLoad from triggering
 
-        store = grid.getStore();
-        proxy = store.getProxy();
-
-        fields = Ext.Array.pluck(grid.getColumns(), 'dataIndex');
-
-        if (fields.length > 0) {
-            query.fieldsList = fields.join(',');
-        }
-        //proxy.url = '/data/mock/dashboard/' + Ext.state.Manager.get('defaultDashboardId') + '/Dashboard.json';
-        proxy.url = 'http://localhost:8983/solr/cats/select';
-        proxy.extraParams = { q: '*:*' };
-        //proxy.extraParams = query;
-
+        proxy.url = dashboardConfig.get('dataIndex') + 'select';
+        proxy.url += '?q=*:*&facet=false&fl=' + fieldNames.join(',') + Ext.Array.pluck(queries, 'filters').join('');
+        
         store.on('beforeload', function () {
             grid.show(); //Used to supress autoLoad bug issue
         });
@@ -475,7 +420,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             scope: me,
             callback: function (records, operation, success) {
                 grid.setTitle(activeChartTitle + ' Results - ' + store.getTotalCount());
-                //grid.setTitle(activeChartTitle + resultsPanelConfig.titlePrefix + ' - ' + store.getTotalCount());
             }
         });
 
@@ -520,11 +464,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                     : me.buildFacetFieldStore(data.facet_fields[currentChartConifg.fieldName], currentChartConifg.fieldName),
                 chart;
 
-            //currentChartConifg.controller = 'SDT.controller.dashboard.DashboardController';
-
             chart = me.buildChart(currentChartConifg, store);
-
-            //chart.title = currentChartConifg.title;
 
             dashboardConfigObj.parts['portlet' + (r + 1)] = me.createPortlet(chart, dashboardConfig.type, currentChartConifg.title, lastActiveChartId);
             defaultContentObj = me.createDefaultContent(r);
@@ -533,10 +473,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         }
         
         var dashboard = Ext.create('Ext.dashboard.Dashboard', dashboardConfigObj);
-        //var dashboardContainer = Ext.ComponentQuery.query('#dashboardContainer')[0];
 
         panel.removeAll();
-
         panel.add(dashboard);
 
         Ext.resumeLayouts(false);
