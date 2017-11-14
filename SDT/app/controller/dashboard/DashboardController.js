@@ -64,21 +64,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             'dashboardsView button#refresh': {
                 click: me.refreshDashboard
             },
-            'dashboardRowResultsGrid exportButton menuitem[name="all"]': {
-                click: function (button) {
-                    var proxy = button.up('grid').getStore().getProxy();
-                    var url = proxy.url;
-                    //url = url.replace('/select', '/export');
-
-                    proxy.extraParams.wt = 'csv';
-
-                    Ext.Ajax.request({
-                        url: url,
-                        params: proxy.extraParams,
-                        method: 'GET',
-                        success: function (result, request) { debugger; }
-                    });
-                }
+            'dashboardRowResultsGrid exportButton menuitem[name="all"], dashboardRowResultsGrid exportButton menuitem[name="visible"]': {
+                click: me.export
             },
             'viewport': {
                 afterrender: me.initDashboardStores
@@ -98,6 +85,57 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         ref: 'dashboardFilters',
         selector: '#dashboardSelectedChartFilters'
     }],
+
+    download: function (content, fileName, mimeType) {
+        var a = document.createElement('a');
+        mimeType = mimeType || 'application/octet-stream';
+
+        if (navigator.msSaveBlob) { // IE10
+            navigator.msSaveBlob(new Blob([content], {
+                type: mimeType
+            }), fileName);
+        } else if (URL && 'download' in a) { //html5 A[download]
+            a.href = URL.createObjectURL(new Blob([content], {
+                type: mimeType
+            }));
+            a.setAttribute('download', fileName);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } else {
+            location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+        }
+    },
+
+    export: function (button) {
+
+        var me = this;
+
+        var grid = button.up('grid');
+        var store = grid.getStore();
+        var columns = (button.name === 'all') ? grid.getColumns() : grid.headerCt.getVisibleGridColumns();
+        var fieldsList = Ext.Array.pluck(columns, 'dataIndex');
+
+        var proxy = store.getProxy();
+        var url = proxy.url;
+
+        var params = Ext.clone(proxy.extraParams);
+
+        params.rows = store.getTotalCount();
+        params.wt = 'csv';
+        params.fl = fieldsList.join(',');
+
+        Ext.Ajax.request({
+            url: url,
+            params: params,
+            method: 'GET',
+            success: function (result, request) {
+                me.download(result.responseText, 'dowload.csv', 'text/csv;encoding:utf-8');
+            }
+        });
+
+        
+    },
 
     applyFilterChange: function (field) {
         field.fireEvent('applyFilterChange', field);
@@ -130,10 +168,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         
     },
 
-    setupGridColumns: function (grid) {
+    setupGridColumns: function (grid, columns) {
         var me = this,
-            columns = grid.defaultColumns,
-            fixedIntialConfigColumns = [],
             fields = [],
             intialConfigColumns = [];
 
@@ -153,62 +189,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         //Get column config information from grid
 
-        Ext.Array.each(grid.columns, function (record, index, len) {
-            //Dont push the checkbox config on to new list of columns otherwise it doubles
-            if (Ext.isEmpty(record.dataIndex)) {
-                fixedIntialConfigColumns.push(record.initialConfig); //Push rownumberer column and action columns
-            } else {
-                intialConfigColumns.push(record.initialConfig);
-            }
-        });
-
-        //Merge config data from grid view with columns return from service call
-
-        Ext.Array.each(columns, function (column) {
-
-            Ext.Array.each(intialConfigColumns, function (intialConfigColumn) {
-                if (intialConfigColumn.dataIndex === column.dataIndex) {
-                    if (column.type === 'tdate') {
-                        intialConfigColumn.renderer = function (v, record) {
-                            return SDT.util.DateUtils.convertGridDate(v, record);
-                        };
-                    }
-                    Ext.apply(column, intialConfigColumn);
-                }
-            });
-
-            //Construct fields object for dynamic store
-
-            var fieldData;
-
-            if (column.type === 'tdate') {
-
-                fieldData = {
-                    name: column.dataIndex,
-                    type: 'date',
-                    dateFormat: 'c'
-                };
-
-            } else {
-                fieldData = column.dataIndex;
-            }
-
-            fields.push(fieldData);
-        });
-
-        columns = Ext.Array.merge(fixedIntialConfigColumns, columns);
-
         //Create model from scratch to avoid sorter not getting reset
         var store = Ext.create('SDT.store.dashboard.DashboardResultStore');
         store.setFields(fields);
 
         grid.reconfigure(store, columns);
-
-        if (Ext.isGecko) {
-            if (grid.xtype === 'dashboardRowResultsGrid') {
-                grid.down('#sortingOrderLabel').setDisabled(false);
-            }
-        }
     },
 
     bindMenuChanged: function (store, btnMenu) {
@@ -220,7 +205,9 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     },
 
     buildGridColumns: function (records, grid) {
-        var me = this, columns = [];
+        var me = this, columns = [{
+            xtype: 'rownumberer'
+        }];
 
         Ext.Array.each(records, function (record) {
             var obj = {};
@@ -234,11 +221,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
             //Apply column renderers
             if (record.type === 'tdate') {
-                if ((record.key === 'orderLastUpdatedTime')) {
-                    obj.renderer = function (value) { return SDT.util.DateUtils.convertGridDate(value); };
-                } else {
-                    obj.renderer = function (value) { return SDT.util.DateUtils.removeTimestamp(value); };
-                }
+                obj.renderer = function (value) { return SDT.util.DateUtils.convertGridDate(value); };
             }
 
             //Additional override config can be provided in view
@@ -253,8 +236,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         });
 
-        grid.defaultColumns = columns;
-        me.setupGridColumns(grid);
+        me.setupGridColumns(grid, columns);
     },
 
     getDefaultColumns: function (currentDashboardRecord) {
@@ -473,7 +455,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         store = grid.getStore();
         proxy = store.getProxy();
 
-        fields = Ext.Array.pluck(grid.defaultColumns, 'dataIndex');
+        fields = Ext.Array.pluck(grid.getColumns(), 'dataIndex');
 
         if (fields.length > 0) {
             query.fieldsList = fields.join(',');

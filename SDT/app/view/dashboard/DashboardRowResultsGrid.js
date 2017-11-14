@@ -15,21 +15,5 @@
     stateId: 'dashboardRowResultsGrid',
     prefix: '',
     //Columns Definitions come from omc2 storage lookup column family
-    columns: [{
-        sealed: true,
-        text: '',
-        itemId: 'startingColumn',
-        menuDisabled: true,
-        draggable: false,
-        stateful: false,
-        hideable: false,
-        cls: 'x-grouped-column-header',
-        columns: [{
-            xtype: 'rownumberer',
-            height: 60,
-            stateful: false,
-            draggable: false,
-            width: 60
-        }]
-    }]
+    columns: []
 });
