@@ -92,8 +92,7 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
                 editable: true,
                 forceSelection: true,
                 queryMode: 'local',
-                emptyText: 'No Saved Filters',
-                helpText: 'This control allows users to save there own filter groups and name them for later use.'
+                emptyText: 'No Saved Filters'
             }, {
                 xtype: 'button',
                 glyph: 0xf0fe,
@@ -129,7 +128,7 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
                 defaults: { layout: 'hbox', labelAlign: 'top', margin: 6 },
                 items: [{
                     xtype: 'tagfield',
-                    flex: 1,
+                    width: 165,
                     fieldLabel: item.fieldLabel,
                     name: item.name,
                     itemId: 'dashboard' + item.name + 'Filters',
@@ -146,13 +145,11 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
                         }
                     },
                     store: Ext.create('SDT.store.dashboard.DashboardCriteriaFilterStore'),
-                    editable: true,
                     queryMode: 'local',
                     emptyText: ''
                 }, {
                     xtype: 'operatorCombo',
-                    name: item.name + 'Operator',
-                    helpText: 'The current dashboard will be filtered by the ' + item.fieldLabel + ' value(s) selected.'
+                    name: item.name + 'Operator'
                 }]
             };
             fieldContainers.push(fieldContainer);
@@ -185,9 +182,8 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
             store: Ext.create('SDT.store.dashboard.DashboardSelectedFilterStore'),
             selectOnFocus: false,
             editable: false,
-            queryMode: 'local',
-            //emptyText: 'No chart drill-in applied',
-            helpText: 'This control displays chart filters that have been selected by the user.'
+            queryMode: 'local'
+            //emptyText: 'No chart drill-in applied'
         };
     },
     saveState: function () { } //Needed to override deffault save behavoir

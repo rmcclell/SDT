@@ -18,9 +18,7 @@
         xtype: 'textfield',
         fieldLabel: 'Title',
         name: 'title',
-        allowBlank: false,
-        hasFocus: true,
-        helpText: 'Please provide a name for your new dashboard.'
+        allowBlank: false
     }, {
         xtype: 'textarea',
         fieldLabel: 'Description',
@@ -30,12 +28,10 @@
             var me = this;
             me.setActiveErrors(Ext.Array.unique(me.getActiveErrors()));
             return (me.allowBlank === false && Ext.util.Format.trim(text).length === 0) ? me.blankText : true; //Validate textfield with just white space as false
-        },
-        helpText: 'Please provide a description for your new dashboard.'
+        }
     }, {
         xtype: 'combo',
         fieldLabel: 'Data Source',
-        helpText: 'Please provide the data source of dashboard to define what data your dashboard is derived from.',
         itemId: 'dataIndex',
         name: 'dataIndex',
         forceSelection: true,
@@ -76,7 +72,6 @@
         xtype: 'checkbox',
         fieldLabel: 'Active',
         name: 'active',
-        helpText: 'Please provide whether your dashboard is active and available for use or not.',
         inputValue: true,
         checked: true
     }, {
@@ -84,7 +79,6 @@
         fieldLabel: 'Default',
         name: 'defaultDashboard',
         disabled: true,
-        helpText: 'Indicates whether the dashboard is set as the system default.',
         inputValue: true
     }]
 });

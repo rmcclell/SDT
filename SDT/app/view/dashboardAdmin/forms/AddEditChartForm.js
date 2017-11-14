@@ -25,15 +25,12 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditChartForm', {
     items: [{
         xtype: 'textfield',
         fieldLabel: 'Title',
-        hasFocus: true,
-        helpText: 'Define a title for your chart to use.',
         name: 'title',
         allowBlank: false
     }, {
         xtype: 'combo',
         fieldLabel: 'Data Source',
         name: 'dataSource',
-        helpText: 'Select your data source field or query. Query allows you to customize your return chart with defined ranges. Field offer less customization and uses data as is to create chart',
         typeAhead: true,
         queryMode: 'local',
         forceSelection: true,
@@ -44,7 +41,6 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditChartForm', {
         fieldLabel: 'Field Name',
         name: 'fieldName',
         hidden: true,
-        helpText: 'Select a field name for your chart to collect its data from.',
         typeAhead: true,
         queryMode: 'local',
         forceSelection: true,
@@ -61,7 +57,6 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditChartForm', {
         xtype: 'combo',
         fieldLabel: 'Chart Type',
         name: 'type',
-        helpText: 'Select your chart type pie or bar type.',
         typeAhead: true,
         queryMode: 'local',
         displayField: 'value',
