@@ -129,6 +129,7 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
                 items: [{
                     xtype: 'tagfield',
                     width: 165,
+                    stacked: true,
                     fieldLabel: item.fieldLabel,
                     name: item.name,
                     itemId: 'dashboard' + item.name + 'Filters',

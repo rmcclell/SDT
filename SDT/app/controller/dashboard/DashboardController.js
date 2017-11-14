@@ -41,12 +41,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             },
             'dashboardCriteriaPanel combo': {
                 expand: me.onFilterExpand,
-                collapse: me.onFilterCollapse,
                 applyFilterChange: me.onApplyFilterChange,
-                removeitem: me.onApplyFilterChange
+                change: me.onApplyFilterChange
             },
             'dashboardCriteriaPanel operatorCombo': {
-                select: me.onApplyFilterChange
+                change: me.onApplyFilterChange
             },
             'dashboardCriteriaContainer': {
                 collapse: me.collapseDashboardCriteriaContainer,
@@ -140,11 +139,14 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         field.valueOnExpand = field.getValue(); //field.lastValue is changed immediately upon selection so a seperate var was need to check for change after collapse. combo boxes cant update till user collapses field to all multiply values to be selected
     },
 
+    /*
     onFilterCollapse: function (field) {
         if (Ext.isArray(field.getValue()) && field.getValue().length > 0 && !field.isEqual(field.valueOnExpand, field.getValue())) {
             this.onApplyFilterChange(field);
         }
     },
+    */
+
 
     initDashboardStores: function () {
         var me = this,
