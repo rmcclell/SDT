@@ -205,36 +205,38 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     },
 
     buildGridColumns: function (records, grid) {
-        var me = this, columns = [{
-            xtype: 'rownumberer'
-        }];
+        var me = this,
+            r,
+            obj = {},
+            columns = [{
+                xtype: 'rownumberer'
+            }];
 
-        Ext.Array.each(records, function (record) {
-            var obj = {};
-            //record = record.getData();
+        for (r = 0; r < records.length; r++) {
 
-            if (record.type === 'boolean') {
+            obj = {};
+            
+            if (records[r].type === 'boolean') {
                 obj.xtype = 'booleancolumn';
                 obj.trueText = 'Yes';
                 obj.falseText = 'No';
             }
 
             //Apply column renderers
-            if (record.type === 'tdate') {
+            if (records[r].type === 'tdate') {
                 obj.renderer = function (value) { return SDT.util.DateUtils.convertGridDate(value); };
             }
 
             //Additional override config can be provided in view
 
-            obj.dataIndex = record.key;
-            obj.hidden = (record.showInGrid) ? false : true;
-            obj.type = record.type;
-            obj.text = record.value;
+            obj.dataIndex = records[r].key;
+            obj.hidden = (records[r].showInGrid) ? false : true;
+            obj.type = records[r].type;
+            obj.text = records[r].value;
             obj.flex = 1;
 
             columns.push(obj);
-
-        });
+        }
 
         me.setupGridColumns(grid, columns);
     },
@@ -508,8 +510,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         };
 
         
-        Ext.Array.each(records, function (record, index, allRecords) {
-            var currentChartConifg = record.getData(),
+        for (var r = 0; r < records.length; r++ ) {
+            var currentChartConifg = records[r].getData(),
                 //data = (chartDataStore.getById(currentChartConifg.chartid)) ? chartDataStore.getById(currentChartConifg.chartid).getData() : { "facet_counts": { "facet_queries": {}, "facet_fields": {}, "facet_dates": {}, "facet_ranges": {} } },
                 data = chartDataStore.first().getData(),
                 panel,
@@ -524,11 +526,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
             //chart.title = currentChartConifg.title;
 
-            dashboardConfigObj.parts['portlet' + (index + 1)] = me.createPortlet(chart, dashboardConfig.type, currentChartConifg.title, lastActiveChartId);
-            defaultContentObj = me.createDefaultContent(index);
+            dashboardConfigObj.parts['portlet' + (r + 1)] = me.createPortlet(chart, dashboardConfig.type, currentChartConifg.title, lastActiveChartId);
+            defaultContentObj = me.createDefaultContent(r);
 
             dashboardConfigObj.defaultContent.push(defaultContentObj);
-        });
+        }
         
         var dashboard = Ext.create('Ext.dashboard.Dashboard', dashboardConfigObj);
         //var dashboardContainer = Ext.ComponentQuery.query('#dashboardContainer')[0];
@@ -561,22 +563,17 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var me = this,
             dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
             dashboardCriteriaPanel = me.getDashboardCriteriaPanel(),
-            dashboardCriteriaForm = dashboardCriteriaPanel.getForm();
+            dashboardCriteriaForm = dashboardCriteriaPanel.getForm(),
+            fields = dashboardCriteriaForm.getFields().getRange();
 
-        dashboardCriteriaForm.getFields().each(function (field) {
-            if (field.name !== 'dashboardSelectedChartFilters' && field.name !== 'dashboardSavedUserCriteriaFilters') {
-                Ext.Object.each(userCriteriaData, function (fieldName, fieldData) {
-                    if (field.name === fieldName) {
-                        if (fieldData && fieldData.length > 0) {
-                            if (fieldData[fieldData.length - 1] && fieldData[fieldData.length - 1][0] === null) {
-                                fieldData[fieldData.length - 1][0] = 'Not Set';
-                            }
-                            field.store.loadData(fieldData);
-                        }
-                    }
-                });
+        for (var f = 0; f < fields.length; f++) {
+            if (fields[f].xtype !== 'operatorCombo' && fields[f].name !== 'dashboardSelectedChartFilters' && fields[f].name !== 'dashboardSavedUserCriteriaFilters') {
+                if (userCriteriaData[fields[f].name]) {
+                    userCriteriaData[fields[f].name].push(['Not Set']);
+                    fields[f].store.loadData(userCriteriaData[fields[f].name]);
+                }
             }
-        });
+        }
     },
     buildDashboardInfoTpl: function (data) {
         var tpl = Ext.create('Ext.XTemplate',
@@ -939,25 +936,21 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         var countValues = Ext.Object.getValues(data);
 
-        Ext.Array.each(seriesData, function (item, index, allItems) {
+        for (var s = 0; s < seriesData.length; s++) {
+                var value = countValues[s];
 
-            var value = countValues[index];
+                if (value > 0) {
+                    //if (chartid === item.group) {
 
-            if (value > 0) {
-                //if (chartid === item.group) {
-
-                recs.push({
-                    label: item.label,
-                    count: value,
-                    color: item.color,
-                    legend: Ext.String.format('{0}:{1}', item.label, value),
-                    range: decodeURIComponent(item.criteria)
-                });
-                //}
-            }
-
-
-        });
+                    recs.push({
+                        label: seriesData[s].label,
+                        count: value,
+                        color: seriesData[s].color,
+                        legend: Ext.String.format('{0}:{1}', seriesData[s].label, value),
+                        range: decodeURIComponent(seriesData[s].criteria)
+                    });
+                }
+        }
 
         Ext.define('store.' + chartId, {
             extend: 'Ext.data.JsonStore',
