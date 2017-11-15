@@ -14,7 +14,6 @@
         var me = this;
         me.control({
             'details field[name="dataIndex"]': {
-                change: me.updateResultsPanelObj,
                 beforerender: me.setDefaultValue
             },
             'details field[name="title"]': {
@@ -47,15 +46,6 @@
     setDefaultValue: function (combo) {
         combo.getStore().loadData(Ext.state.Manager.get('solrIndexes'));
     },
-
-    updateResultsPanelObj: function (combo, newValue, oldValue) {
-        var resultsPanel = combo.up('form').getForm().findField('resultsPanel'), resultsPanelObj;
-
-        resultsPanelObj = { type: '', titlePrefix: 'Results', exportable: true, namespace: 'DashboardRowResultsGrid' };
-        resultsPanel.setValue(Ext.encode(resultsPanelObj));
-        //this.loadFieldStore(newValue);
-    },
-
     loadFieldStore: function (dataIndex) {
         var me = this,
             store = me.getDashboardAdminFieldStoreStore();

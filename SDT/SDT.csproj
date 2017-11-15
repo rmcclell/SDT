@@ -75,6 +75,7 @@
     <Content Include="release\ColoradoPeaks.csv" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -118,7 +119,6 @@
     <Content Include="app\model\dashboard\DashboardQueryConfigModel.js" />
     <Content Include="app\model\dashboard\DashboardResponseModel.js" />
     <Content Include="app\model\dashboard\DashboardResultModel.js" />
-    <Content Include="app\model\dashboard\DashboardResultsPanelConfigModel.js" />
     <Content Include="app\model\dashboard\DashboardSelectedFilterModel.js" />
     <Content Include="app\model\dashboard\DashboardUserCriteriaFieldConfigModel.js" />
     <Content Include="app\model\settingManager\FieldsModel.js" />

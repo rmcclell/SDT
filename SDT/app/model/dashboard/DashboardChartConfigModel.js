@@ -2,7 +2,6 @@
     extend: 'Ext.data.Model',
 	requires:[
 		'SDT.model.dashboard.DashboardQueryConfigModel',
-        'SDT.model.dashboard.DashboardResultsPanelConfigModel',
         'SDT.model.dashboard.DashboardUserCriteriaFieldConfigModel',
         'SDT.model.dashboard.DashboardBaseCriteriaConfigModel',
 	],
@@ -31,7 +30,6 @@
     ],
     associations: [
         { type: 'hasOne', model: 'SDT.model.dashboard.DashboardQueryConfigModel', name: 'query' },
-        { type: 'hasOne', model: 'SDT.model.dashboard.DashboardResultsPanelConfigModel', name: 'resultsPanel' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardUserCriteriaFieldConfigModel', name: 'userCriteriaFields' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardBaseCriteriaConfigModel', name: 'baseCriteria' }
     ]

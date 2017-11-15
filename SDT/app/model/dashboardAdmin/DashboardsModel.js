@@ -28,7 +28,6 @@ Ext.define('SDT.model.dashboardAdmin.DashboardsModel', {
     ],
     associations: [
         { type: 'hasOne', model: 'SDT.model.dashboard.DashboardQueryConfigModel', name: 'query' },
-        { type: 'hasOne', model: 'SDT.model.dashboard.DashboardResultsPanelConfigModel', name: 'resultsPanel' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardChartConfigModel', name: 'charts' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardUserCriteriaFieldConfigModel', name: 'userCriteriaFields' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardBaseCriteriaConfigModel', name: 'baseCriteria' }

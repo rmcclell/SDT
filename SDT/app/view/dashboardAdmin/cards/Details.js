@@ -55,11 +55,6 @@
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD
     }, {
         xtype: 'textfield',
-        fieldLabel: 'Results Panel',
-        name: 'resultsPanel',
-        hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD
-    }, {
-        xtype: 'textfield',
         fieldLabel: 'Create Date',
         name: 'createDate',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD

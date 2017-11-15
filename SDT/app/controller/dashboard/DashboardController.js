@@ -339,7 +339,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     loadDashboard: function (queries, dashboardConfig) {
         var me = this,
             dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
-            resultsPanelConfig = { type: '', titlePrefix: 'Results', exportable: true, namespace: 'DashboardRowResultsGrid' },
             chartInfo = me.getChartInfo(dashboardConfig.getData()),
             chartConfig = dashboardConfig.charts(),
             dataIndex = dashboardConfig.get('dataIndex'),
@@ -359,7 +358,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         me.loadCriteriaCombosData(chartConfig, chartInfo, dashboardConfig);
         me.loadChartData(queries, chartConfig, chartInfo, dashboardConfig);
-        me.loadResultsPanel(queries, resultsPanelConfig, dashboardConfig);
+        me.loadResultsPanel(queries, dashboardConfig);
     },
     loadCriteriaCombosData: function (chartConfig, chartInfo, dashboardConfig) {
         var me = this,
@@ -395,7 +394,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         store.load({ callback: callbackFn });
     },
 
-    loadResultsPanel: function (queries, resultsPanelConfig, dashboardConfig) {
+    loadResultsPanel: function (queries, dashboardConfig) {
         var me = this,
             query = {},
             dashboardsView = me.getDashboardsView(),
