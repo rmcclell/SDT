@@ -11,11 +11,11 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
         type: 'vbox',
         reserveScrollbar: true // There will be a gap even when there's no scrollbar
     },
-    flex: 2,
+    flex: 1,
     scrollable: true,
     collapsible: false,
     title: 'User Criteria',
-    defaults: { layout: 'hbox', vertical: false },
+    defaults: { layout: 'hbox', vertical: false, align: 'stretchmax' },
     tools: [{
         type: 'save',
         disabled: true,
@@ -41,6 +41,7 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
     },
     buildSavedCriteria: function (stateId) {
         return {
+            width: '100%',
             defaults: { layout: { vertical: false, type: 'hbox', align: 'stretchmax' } },
             items: [{
                 margin: '0 5 0 5',
@@ -125,10 +126,11 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
         Ext.Array.each(records, function (record) {
             item = record.getData();
             fieldContainer = {
+                width: '100%',
                 defaults: { layout: 'hbox', labelAlign: 'top', margin: 6 },
                 items: [{
                     xtype: 'tagfield',
-                    width: 165,
+                    flex: 1,
                     stacked: true,
                     fieldLabel: item.fieldLabel,
                     name: item.name,
@@ -163,6 +165,7 @@ Ext.define('SDT.view.dashboard.DashboardCriteriaPanel', {
     buildChartFilters: function () {
         return {
             labelAlign: 'top',
+            width: '100%',
             margin: 6,
             xtype: 'tagfield',
             fieldLabel: 'Chart Drill-in',

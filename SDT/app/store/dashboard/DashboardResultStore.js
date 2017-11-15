@@ -8,7 +8,6 @@ Ext.define('SDT.proxyAjax', {
 
         for (i = 0; i < length; i++) {
             sorter = sorters[i];
-            console.log(sorter);
             sortStrs[i] = sorter._property + ' ' + sorter._direction
         }
 
