@@ -273,6 +273,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             foundRecord,
             criteriaPanel = me.getDashboardCriteriaPanel();
 
+
         store.on('datachanged', function (store) {
             if (store.getCount() > 0) {
                 me.loadDashboardConfigComps(criteriaPanel, store);
@@ -301,7 +302,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                     icon: Ext.Msg.QUESTION
                 });
             }
-        }, { single: true });
+        }, me, { single: true });
 
         store.loadRawData(Ext.state.Manager.get('dashboards'));
     },
@@ -328,6 +329,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         for (var r = 0; r < records.length; r++) {
             menu.push({
                 text: records[r].get('title'),
+                dashboardId: records[r].get('id'),
                 tooltip: records[r].get('description'),
                 glyph: 0xf1ea
             });
@@ -528,17 +530,12 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         );
         return tpl.apply(data);
     },
-
-    getCurrentDashboardRecord: function (store) {
-        return store.getById(this.currentDashboardId);
-    },
-
     loadDashboardConfigComps: function (criteriaPanel, store) {
         var me = this,
             dataIndex,
             firstConfigRecord;
 
-        firstConfigRecord = me.getCurrentDashboardRecord(store);
+        firstConfigRecord = store.getById(me.currentDashboardId);
 
         if (firstConfigRecord.get('type') === 'Connected') {
             dataIndex = firstConfigRecord.get('dataIndex');
@@ -678,7 +675,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         callback = function () {
 
-            firstConfigRecord = me.getCurrentDashboardRecord(dashboardConfigStore);
+            firstConfigRecord = dashboardConfigStore.getById(me.currentDashboardId);
 
             if (firstConfigRecord.get('type') === 'Connected') {
                 queries.push(firstConfigRecord.getQuery().getData());

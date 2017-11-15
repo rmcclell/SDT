@@ -3,7 +3,9 @@ Ext.define('SDT.model.settingManager.SolrIndexesModel', {
     requires: [
         'SDT.model.settingManager.FieldsModel'
     ],
+    idProperty: 'id',
     fields: [
+        'id',
         'name',
         'baseUrl',
         'adminUrl',

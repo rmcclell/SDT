@@ -154,7 +154,7 @@
         var dataIndex;
 
         if (Ext.isEmpty(record.get('dataIndex'))) {
-            dataIndex = Ext.ComponentQuery.query('#dataIndex')[0].getValue();
+            dataIndex = Ext.ComponentQuery.query('#dataIndex')[0].lastSelectedRecords[0].get('baseUrl');
         } else {
             dataIndex = record.get('dataIndex');
         }

@@ -1,7 +1,9 @@
 Ext.define('SDT.model.dashboardAdmin.DashboardsModel', {
     extend: 'Ext.data.Model',
+    identifier: 'sequential',
+    idProperty: 'id',
     fields: [
-        { name: 'id', persist: false },
+        'id',
         'active',
         'baseCriteria',
         'charts',

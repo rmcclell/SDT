@@ -29,7 +29,7 @@ Ext.application({
 	init: function(){
 		Ext.state.Manager.setProvider(Ext.create('Ext.state.LocalStorageProvider', { prefix: 'default-' }));
 
-        Ext.state.Manager.set('defaultDashboardId', 'cats');
+        Ext.state.Manager.set('defaultDashboardId', 1);
 
         var solrIndexes = [{
             "id": 1,
@@ -81,7 +81,7 @@ Ext.application({
         store.loadRawData(solrIndexes);
 
         var dashboards = [{
-            "id": "cats",
+            "dashboardId": 1,
             "title": "Cats",
             "description": "Cats Description",
             "solrIndexId": 1,

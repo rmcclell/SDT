@@ -242,7 +242,7 @@
     excuteGridPreview: function (grid) {
         var callbackFn,
             form = grid.up('form').getForm(),
-            dataIndexValue = Ext.ComponentQuery.query('#dataIndex')[0].getValue(),
+            dataIndexValue = Ext.ComponentQuery.query('#dataIndex')[0].lastSelectedRecords[0].get('baseUrl'),
             criteria = form.findField('criteria').getValue(),
             store = grid.getStore(),
             currentExtraParams = store.getProxy().extraParams;
@@ -648,7 +648,7 @@
             type = parent.up('component[type="Add"], component[type="Edit"]').type, //Determine type of filter add or edit could be a wizard panel or window
             currentForm = grid.up('form'),
             field = currentForm.getForm().findField('baseCriteria'),
-            dataIndexValue = Ext.ComponentQuery.query('#dataIndex')[0].getValue(),
+            dataIndexValue = Ext.ComponentQuery.query('#dataIndex')[0].lastSelectedRecords[0].get('baseUrl'),
             fieldData = {},
             query = {},
             fields = [],
@@ -788,7 +788,7 @@
             valueCombo = formPanel.getForm().findField('value'),
             fieldName = formPanel.getForm().findField('fieldName').getValue(),
             callbackFn,
-            dataIndexValue = Ext.ComponentQuery.query('#dataIndex')[0].getValue(),
+            dataIndexValue = Ext.ComponentQuery.query('#dataIndex')[0].lastSelectedRecords[0].get('baseUrl'),
             store = valueCombo.getStore(),
             proxy = store.getProxy();
 

@@ -33,13 +33,13 @@
         xtype: 'combo',
         fieldLabel: 'Data Source',
         itemId: 'dataIndex',
-        name: 'dataIndex',
+        name: 'solrIndexId',
         forceSelection: true,
         typeAhead: true,
         queryMode: 'local',
         store: 'SolrIndexesStore',
         displayField: 'name',
-        valueField: 'baseUrl',
+        valueField: 'id',
         allowBlank: false
     }, {
         xtype: 'textfield',
@@ -51,7 +51,6 @@
         xtype: 'textfield',
         fieldLabel: 'Id',
         name: 'id',
-        value: 'NEW',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD
     }, {
         xtype: 'textfield',

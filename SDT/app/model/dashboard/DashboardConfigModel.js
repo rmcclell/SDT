@@ -6,7 +6,8 @@ Ext.define('SDT.model.dashboard.DashboardConfigModel', {
         'SDT.model.dashboard.DashboardUserCriteriaFieldConfigModel',
         'SDT.model.dashboard.DashboardBaseCriteriaConfigModel'
 	],
-	uses: ['SDT.util.DateUtils'],
+    uses: ['SDT.util.DateUtils'],
+    identifier: 'sequential',
     idProperty: 'id',
     fields: [
         'id',
