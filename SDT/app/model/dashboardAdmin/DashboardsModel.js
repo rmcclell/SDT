@@ -1,6 +1,6 @@
 Ext.define('SDT.model.dashboardAdmin.DashboardsModel', {
     extend: 'Ext.data.Model',
-    identifier: 'sequential',
+    identifier: 'uuid',
     idProperty: 'id',
     fields: [
         'id',

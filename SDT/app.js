@@ -27,9 +27,9 @@ Ext.application({
     enableQuickTips: true,
     appFolder: 'app',
 	init: function(){
-		Ext.state.Manager.setProvider(Ext.create('Ext.state.LocalStorageProvider', { prefix: 'default-' }));
+		Ext.state.Manager.setProvider(Ext.create('Ext.state.LocalStorageProvider', { prefix: '' }));
 
-        Ext.state.Manager.set('defaultDashboardId', 1);
+        Ext.state.Manager.set('defaultDashboardId', '764b6a31-05a9-4ba8-85ce-fd9199f7fd5f');
 
         var solrIndexes = [{
             "id": 1,
@@ -81,7 +81,7 @@ Ext.application({
         store.loadRawData(solrIndexes);
 
         var dashboards = [{
-            "dashboardId": 1,
+            "id": "764b6a31-05a9-4ba8-85ce-fd9199f7fd5f",
             "title": "Cats",
             "description": "Cats Description",
             "solrIndexId": 1,
@@ -157,6 +157,7 @@ Ext.application({
         Ext.state.Manager.set('dashboards', dashboards);
         //store = Ext.getStore('DashboardConfigStore');
         //store.loadRawData(dashboards);
+        //store.load();
     },
     stores: [
         'settingManager.SolrIndexesStore',

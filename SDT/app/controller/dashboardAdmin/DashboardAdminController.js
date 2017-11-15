@@ -5,12 +5,6 @@
         'dashboardAdmin.DashboardsGrid',
         'dashboardAdmin.forms.DashboardCloneForm'
     ],
-    models: [
-        'dashboardAdmin.DashboardsModel'
-    ],
-    stores: [
-        'dashboardAdmin.DashboardsStore'
-    ],
     init: function () {
         var me = this;
         me.control({
@@ -131,7 +125,7 @@
         data.modifiedDate = dtStr;
         data.createDate = dtStr;
 
-        dashboard = Ext.create('SDT.model.dashboardAdmin.DashboardsModel', data);
+        dashboard = Ext.create('SDT.model.dashboard.DashboardConfigModel', data);
 
         cloneDialog = Ext.create('SDT.view.dashboardAdmin.forms.DashboardCloneForm');
         cloneDialog.getForm().loadRecord(dashboard); //Pre populate dashboard data

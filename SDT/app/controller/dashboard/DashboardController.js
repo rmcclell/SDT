@@ -285,7 +285,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                     fn: function (btn) {
                         if (btn === 'yes') {
                             //Restore dashboard to system default and load
-                            Ext.state.Manager.set('lastDashboardId', null);
                             /*
                             foundRecord = dashboardDefaultStore.first();
 
@@ -311,9 +310,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var me = this,
             dashboardConfigStore = Ext.getStore('DashboardConfigStore');
 
-        me.currentDashboardId = (!Ext.isEmpty(Ext.state.Manager.get('lastDashboardId'))) ?
-            Ext.state.Manager.get('lastDashboardId') : Ext.state.Manager.get('defaultDashboardId'); //Set the default dashboard as current dashboard
-
+        me.currentDashboardId = Ext.state.Manager.get('defaultDashboardId'); //Set the default dashboard as current dashboard
         me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: me.currentDashboardId, chartid: me.getLastActiveChartId() });
 
     },
@@ -343,7 +340,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
             chartInfo = me.getChartInfo(dashboardConfig.getData()),
             chartConfig = dashboardConfig.charts(),
-            dataIndex = dashboardConfig.get('dataIndex'),
+            indexesStore = Ext.getStore('SolrIndexesStore'),
+            dataIndex = indexesStore.getById(dashboardConfig.get('solrIndexId')).get('baseUrl'),
             proxy = dashboardConfigStore.getProxy(),
             dashboardsView = me.getDashboardsView(),
             dashboardChartResultsContainer = dashboardsView.down('dashboardChartResultsContainer'),
@@ -356,7 +354,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         dashboardChartResultsContainer.setTitle(title);
 
-        var userCriteriaData = (dashboardConfig.type === 'Connected') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData');
+        //var userCriteriaData = (dashboardConfig.type === 'Connected') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData');
 
         me.loadCriteriaCombosData(chartConfig, chartInfo, dashboardConfig);
         me.loadChartData(queries, chartConfig, chartInfo, dashboardConfig);
@@ -366,9 +364,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var me = this,
             store = Ext.getStore('DashboardCriteriaCombosStore'),
             proxy = store.getProxy(),
+            indexesStore = Ext.getStore('SolrIndexesStore'),
+            dataIndex = indexesStore.getById(dashboardConfig.get('solrIndexId')).get('baseUrl'),
             fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name');
 
-        proxy.url = chartInfo.dataIndex + 'select';
+        proxy.url = dataIndex + 'select';
         proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0&facet.field=' + fieldNames.join('&facet.field=')
 
         var callbackFn = function (records) {
@@ -384,9 +384,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var me = this,
             store = Ext.getStore('DashboardChartsStore'),
             proxy = store.getProxy(),
+            indexesStore = Ext.getStore('SolrIndexesStore'),
+            dataIndex = indexesStore.getById(dashboardConfig.get('solrIndexId')).get('baseUrl'),
             fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name');
 
-        proxy.url = chartInfo.dataIndex + 'select';
+        proxy.url = dataIndex + 'select';
         proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0&facet.field=' + fieldNames.join('&facet.field=') + Ext.Array.pluck(queries, 'filters').join('');
 
         var callbackFn = function () {
@@ -400,6 +402,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         var me = this,
             query = {},
             dashboardsView = me.getDashboardsView(),
+            indexesStore = Ext.getStore('SolrIndexesStore'),
+            dataIndex = indexesStore.getById(dashboardConfig.get('solrIndexId')).get('baseUrl'),
             dashboardChartResultsContainer = dashboardsView.down('dashboardChartResultsContainer'),
             currentContainer = dashboardChartResultsContainer.down('container'),
             grid = dashboardsView.down('dashboardRowResultsGrid'),
@@ -412,7 +416,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         grid.hide(); //hide to avoid autoLoad from triggering
 
-        proxy.url = dashboardConfig.get('dataIndex') + 'select';
+        proxy.url = dataIndex + 'select';
         proxy.url += '?q=*:*&facet=false&fl=' + fieldNames.join(',') + Ext.Array.pluck(queries, 'filters').join('');
         
         store.on('beforeload', function () {
@@ -532,13 +536,11 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     },
     loadDashboardConfigComps: function (criteriaPanel, store) {
         var me = this,
-            dataIndex,
             firstConfigRecord;
 
         firstConfigRecord = store.getById(me.currentDashboardId);
 
         if (firstConfigRecord.get('type') === 'Connected') {
-            dataIndex = firstConfigRecord.get('dataIndex');
             me.getDefaultColumns(firstConfigRecord);
             criteriaPanel.initCriteriaPanel(firstConfigRecord.getData().id, firstConfigRecord.userCriteriaFields().getRange());
             me.loadBaseCriteriaPanel(firstConfigRecord.baseCriteria());
@@ -569,16 +571,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         if (menu.dashboardId && menu.dashboardId !== me.currentDashboardId) {
             me.currentDashboardId = menu.dashboardId;
-
-            //Only save preference entry if user click on dashboard the is not the system default
-            if (!menu.defaultDashboard) {
-                Ext.state.Manager.set('lastDashboardId', menu.dashboardId); //Save the dashboard id of the last loaded
-            } else {
-                Ext.state.Manager.set('lastDashboardId', null);
-            }
-
+            Ext.state.Manager.set('defaultDashboardId', menu.dashboardId);
             me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: menu.dashboardId, chartid: me.getLastActiveChartId() });
-
         }
     },
     loadBaseCriteriaPanel: function (store) {

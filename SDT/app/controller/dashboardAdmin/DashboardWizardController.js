@@ -3,12 +3,7 @@
     uses: [
         'SDT.util.DateUtils'
     ],
-    views: [],
-    models: [
-        'dashboardAdmin.DashboardsModel'
-    ],
     stores: [
-        'dashboardAdmin.DashboardsStore',
         'dashboardAdmin.FieldStore'
     ],
     init: function () {
@@ -69,7 +64,7 @@
 
     finishWizard: function (panel, data) {
         var me = this,
-            dataObj = (data.detailsCard.type === 'Connected') ? { query: {}} : {},
+            dataObj = (data.detailsCard.type === 'Connected') ? { query: {} } : {},
             store = Ext.getStore('DashboardConfigStore'),
             dashboard,
             callbackFn;
@@ -93,12 +88,15 @@
         dataObj.active = (dataObj.active === null || dataObj.active === undefined) ? false : dataObj.active; //Unchecked checked checked boxes posting null instead of false
 
         if (panel.type === 'Add') {
-            dashboard = Ext.create('SDT.model.dashboardAdmin.DashboardsModel', dataObj);
-            dashboard.phantom = (panel.type === 'Edit') ? false : true;
+            dashboard = Ext.create('SDT.model.dashboard.DashboardConfigModel', dataObj);
+            //dashboard.phantom = (panel.type === 'Edit') ? false : true;
             store.add(dashboard);
         }
 
-        store.sync();
+        //store.sync();
+
+        Ext.state.Manager.set('dashboards', Ext.Array.pluck(store.getRange(), 'data'));
+
         panel.close();
     },
 

@@ -126,7 +126,6 @@
     <Content Include="app\model\settingManager\SolrIndexFieldsModel.js" />
     <Content Include="app\store\dashboardAdmin\AvailableValueStore.js" />
     <Content Include="app\store\dashboardAdmin\ChartStore.js" />
-    <Content Include="app\store\dashboardAdmin\DashboardsStore.js" />
     <Content Include="app\store\dashboardAdmin\FieldStore.js" />
     <Content Include="app\store\dashboardAdmin\FiltersStore.js" />
     <Content Include="app\store\dashboardAdmin\PreviewStore.js" />

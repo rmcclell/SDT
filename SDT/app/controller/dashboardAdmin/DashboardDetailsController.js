@@ -3,11 +3,7 @@
     views: [
         'dashboardAdmin.cards.Details'
     ],
-    models: [
-        'dashboardAdmin.DashboardsModel'
-    ],
     stores: [
-        'dashboardAdmin.DashboardsStore',
         'dashboardAdmin.FieldStore'
     ],
     init: function () {
@@ -23,7 +19,7 @@
     },
     refs: [],
     bindTitleFieldValidator: function (field) {
-        var store = this.getDashboardAdminDashboardsStoreStore();
+        var store = Ext.getStore('DashboardConfigStore');
 
         //Create custom validator to check if title is already taken bound at runtime to allow access to dashboard store
         field.validator = function (text) {

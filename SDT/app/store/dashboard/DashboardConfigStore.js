@@ -4,6 +4,6 @@
     model: 'SDT.model.dashboard.DashboardConfigModel',
     proxy: {
         type: 'localstorage',
-        id: 'default-dashboards'
+        id: 'dashboards'
     }
 });

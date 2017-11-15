@@ -4,6 +4,6 @@ Ext.define('SDT.store.settingManager.SolrIndexesStore', {
     model: 'SDT.model.settingManager.SolrIndexesModel',
     proxy: {
         type: 'localstorage',
-        id: 'default-solrIndexes'
+        id: 'solrIndexes'
     }
 });

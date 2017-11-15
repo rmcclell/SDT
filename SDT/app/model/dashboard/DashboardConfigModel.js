@@ -7,8 +7,12 @@ Ext.define('SDT.model.dashboard.DashboardConfigModel', {
         'SDT.model.dashboard.DashboardBaseCriteriaConfigModel'
 	],
     uses: ['SDT.util.DateUtils'],
-    identifier: 'sequential',
+    identifier: 'uuid',
     idProperty: 'id',
+    proxy: {
+        type: 'localstorage',
+        id: 'dashboards'
+    },
     fields: [
         'id',
         'title',
