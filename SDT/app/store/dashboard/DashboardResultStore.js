@@ -1,4 +1,22 @@
-﻿Ext.define('SDT.store.dashboard.DashboardResultStore', {
+﻿//TODO: Relocated to seperate file
+Ext.define('SDT.proxyAjax', {
+    override: 'Ext.data.proxy.Ajax',
+    encodeSorters: function (sorters) {
+        var length = sorters.length,
+            sortStrs = [],
+            sorter, i;
+
+        for (i = 0; i < length; i++) {
+            sorter = sorters[i];
+            console.log(sorter);
+            sortStrs[i] = sorter._property + ' ' + sorter._direction
+        }
+
+        return sortStrs.join(',');
+    }
+});
+
+Ext.define('SDT.store.dashboard.DashboardResultStore', {
     extend: 'Ext.data.Store',
     remoteFilter: false,
     remoteSort: true,
@@ -11,8 +29,6 @@
         sortParam: 'sort',
         startParam: 'start',
         noCache: false,
-        simpleSortMode: true,
-        directionParam: 'direction',
         reader: {
             type: 'json',
             rootProperty: 'response.docs',
