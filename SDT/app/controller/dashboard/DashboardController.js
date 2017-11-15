@@ -368,8 +368,10 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             dataIndex = indexesStore.getById(dashboardConfig.get('solrIndexId')).get('baseUrl'),
             fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name');
 
+        fieldNames = (fieldNames.length) ? '&facet.field=' + fieldNames.join('&facet.field=') : '';
+
         proxy.url = dataIndex + 'select';
-        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0&facet.field=' + fieldNames.join('&facet.field=')
+        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0' + fieldNames;
 
         var callbackFn = function (records) {
             if (records.length) {
@@ -388,8 +390,10 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             dataIndex = indexesStore.getById(dashboardConfig.get('solrIndexId')).get('baseUrl'),
             fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name');
 
+        fieldNames = (fieldNames.length) ? '&facet.field=' + fieldNames.join('&facet.field=') : '';
+
         proxy.url = dataIndex + 'select';
-        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0&facet.field=' + fieldNames.join('&facet.field=') + Ext.Array.pluck(queries, 'filters').join('');
+        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0' + fieldNames;
 
         var callbackFn = function () {
             me.loadPanelConfig(chartConfig, store, dashboardConfig, chartInfo);
