@@ -96,9 +96,8 @@
     },
 
     applyCriteriaItem: function (btn) {
-        var window = btn.up('window'),
-            store = window.store,
-            formPanel = btn.up('form'),
+        var formPanel = btn.up('form'),
+            store = formPanel.store,
             form = formPanel.getForm(),
             formValues,
             criteria;
@@ -110,7 +109,7 @@
 
             criteria = Ext.create('SDT.model.dashboardAdmin.UserCriteriaModel', formValues);
 
-            if (window.type === 'Add') {
+            if (formPanel.type === 'Add') {
                 if (store.findRecord('name', criteria.getData().name) === null) {
                     store.add(criteria);
                     form.reset();
@@ -128,7 +127,7 @@
                 foundRecord.commit();
                 store.sync(); //Sync is technically suppose to fire the datachange event on store but appears to be broken in framework
                 store.fireEvent('datachanged', store);
-                window.close();
+                formPanel.close();
             }
         } else {
             Ext.Msg.alert('', 'Please ensure all required fields are populated.');
