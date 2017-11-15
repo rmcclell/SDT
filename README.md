@@ -1,6 +1,9 @@
 # SDT
 Solr Data Tool
 
+## Introduction
+This tool is designed to allow users to create a visual based dashboard of solr indexes. The dashboard configuration tool uses a wizard style UI to create dashboards that configuration data it stored within the browser local storage. Users can point to different indexes on different domains. Facet based data can be disected to product chart with drill down approach.  
+
 ![Alt text](SDT/resources/screenshot.png?raw=true "Dashboard Screenshot")
 
 ## Goals of Project
