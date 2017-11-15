@@ -304,17 +304,7 @@
             seriesData = rec.getData().seriesData,
             form = formPanel.getForm();
 
-        //TODO: Remove this code when all rangeCriteria and rangeData have been removed from legacy dashboards
-        Ext.Array.each(seriesData, function (series) {
-            if (Ext.isEmpty(series.seriesCriteria)) {
-                series.seriesCriteria = series.rangeCriteria;
-                series.rangeCriteria = null;
-                delete series.rangeCriteria;
-            }
-        });
-
         seriesData = Ext.encode(seriesData);
-
         rec.set('seriesData', seriesData); //Encode to allow loading in form field
 
         formPanel.on('beforerender', function () {

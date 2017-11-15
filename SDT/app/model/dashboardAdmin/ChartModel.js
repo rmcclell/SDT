@@ -9,10 +9,7 @@
         'fieldLabel',
         'facetQuery',
         'chartid',
-        'rangeData', //For existing dashboards to be phased out
-        {name: 'seriesData', convert: function (val, record) {
-            return (Ext.isEmpty(val)) ? record.data.rangeData : val; //Temp till legacy dashboards migrated
-        } },
+        'seriesData',
         'dataSource',
         'facetField',
         'dataIndex',
