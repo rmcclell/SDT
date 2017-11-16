@@ -371,7 +371,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         fieldNames = (fieldNames.length) ? '&facet.field=' + fieldNames.join('&facet.field=') : '';
 
         proxy.url = dataIndex + 'select';
-        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0' + fieldNames;
+        proxy.url += '?q=*:*&omitHeader=true&facet=true&json.nl=arrarr&facet.missing=true&rows=0' + fieldNames;
 
         var callbackFn = function (records) {
             if (records.length) {
@@ -388,12 +388,12 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             proxy = store.getProxy(),
             indexesStore = Ext.getStore('SolrIndexesStore'),
             dataIndex = indexesStore.getById(dashboardConfig.get('solrIndexId')).get('baseUrl'),
-            fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name');
+            fieldNames = Ext.Array.pluck(indexesStore.getById(dashboardConfig.get('solrIndexId')).get('solrFields'), 'key');
 
         fieldNames = (fieldNames.length) ? '&facet.field=' + fieldNames.join('&facet.field=') : '';
 
         proxy.url = dataIndex + 'select';
-        proxy.url += '?q=*:*&facet=true&json.nl=arrarr&facet.missing=true&rows=0' + fieldNames;
+        proxy.url += '?q=*:*&omitHeader=true&facet=true&json.nl=arrarr&facet.missing=true&rows=0' + fieldNames;
 
         var callbackFn = function () {
             me.loadPanelConfig(chartConfig, store, dashboardConfig, chartInfo);
@@ -414,15 +414,17 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             activepanel = (dashboardConfig.type === 'Connected') ? null : Ext.ComponentQuery.query('#' + this.getLastActiveChartId() + '-panel', currentContainer)[0],
             activeChartTitle = (activepanel) ? activepanel.title + ': ' : '',
             fields,
-            fieldNames = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig._userCriteriaFields.getRange(), 'data'), 'name'),
+            fieldNames = Ext.Array.pluck(indexesStore.getById(dashboardConfig.get('solrIndexId')).get('solrFields'), 'key'), //TODO: add filter to use showGrid property
             store = grid.getStore(),
             proxy = store.getProxy();
 
         grid.hide(); //hide to avoid autoLoad from triggering
 
         proxy.url = dataIndex + 'select';
-        proxy.url += '?q=*:*&facet=false&fl=' + fieldNames.join(',') + Ext.Array.pluck(queries, 'filters').join('');
-        
+        proxy.url += '?q=*:*&omitHeader=true&facet=false&fl=' + fieldNames.join(',') + Ext.Array.pluck(queries, 'filters').join('');
+
+
+
         store.on('beforeload', function () {
             grid.show(); //Used to supress autoLoad bug issue
         });
