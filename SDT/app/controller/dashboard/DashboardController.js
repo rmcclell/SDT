@@ -529,11 +529,9 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         firstConfigRecord = store.getById(me.currentDashboardId);
 
-        if (firstConfigRecord.get('type') === 'Connected') {
-            me.getDefaultColumns(firstConfigRecord);
-            criteriaPanel.initCriteriaPanel(firstConfigRecord.getData().id, firstConfigRecord.userCriteriaFields().getRange());
-            me.loadBaseCriteriaPanel(firstConfigRecord.baseCriteria());
-        }
+        me.getDefaultColumns(firstConfigRecord);
+        criteriaPanel.initCriteriaPanel(firstConfigRecord.getData().id, firstConfigRecord.userCriteriaFields().getRange());
+        me.loadBaseCriteriaPanel(firstConfigRecord.baseCriteria());
     },
 
     getLastActiveChartId: function () {
@@ -558,11 +556,9 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         viewportPanel.getLayout().setActiveItem(dashboardsView); //Set parent view active
 
-        if (menu.dashboardId && menu.dashboardId !== me.currentDashboardId) {
-            me.currentDashboardId = menu.dashboardId;
-            Ext.state.Manager.set('defaultDashboardId', menu.dashboardId);
-            me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: menu.dashboardId, chartid: me.getLastActiveChartId() });
-        }
+        me.currentDashboardId = menu.dashboardId;
+        Ext.state.Manager.set('defaultDashboardId', menu.dashboardId);
+        me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: menu.dashboardId, chartid: me.getLastActiveChartId() });
     },
     loadBaseCriteriaPanel: function (store) {
 
