@@ -273,37 +273,22 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             foundRecord,
             criteriaPanel = me.getDashboardCriteriaPanel();
 
-
-        store.on('datachanged', function (store) {
-            if (store.getCount() > 0) {
-                me.loadDashboardConfigComps(criteriaPanel, store);
-            } else {
-                Ext.Msg.show({
-                    title: 'Dashboard Error',
-                    msg: 'We could not find your default dashboard. Would you like us to reset to system default. Click no to chose another dashboard from menu',
-                    buttons: Ext.Msg.YESNO,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            //Restore dashboard to system default and load
-                            /*
-                            foundRecord = dashboardDefaultStore.first();
-
-                            if (foundRecord) {
-                                me.currentDashboardId = foundRecord.getData().id; //Set the default as current dashboard
-                            }
-                            
-                            dashboardConfigStore.getProxy().extraParams = { dashboardId: me.currentDashboardId, chartid: me.getLastActiveChartId() };
-                            dashboardConfigStore.load({ callback: callbackFn });
-                            */
-                        }
-                        //Allow user to pick another dashboard to load
-                    },
-                    icon: Ext.Msg.QUESTION
-                });
-            }
-        }, me, { single: true });
-
-        store.loadRawData(Ext.state.Manager.get('dashboards'));
+        if (store.getCount() > 0) {
+            me.loadDashboardConfigComps(criteriaPanel, store);
+        } else {
+            Ext.Msg.show({
+                title: 'Dashboard Error',
+                msg: 'We could not find your default dashboard. Would you like us to reset to system default. Click no to chose another dashboard from menu',
+                buttons: Ext.Msg.YESNO,
+                fn: function (btn) {
+                    if (btn === 'yes') {
+                        //Restore dashboard to system default and load
+                    }
+                    //Allow user to pick another dashboard to load
+                },
+                icon: Ext.Msg.QUESTION
+            });
+        }
     },
 
     onDashboardChange: function () {
@@ -353,8 +338,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         title = Ext.String.format('Dashboards: <span style="cursor:pointer;" data-qtip="{0}">{1}</span>', Ext.String.htmlEncode(me.buildDashboardInfoTpl(chartInfo)), chartInfo.title);
 
         dashboardChartResultsContainer.setTitle(title);
-
-        //var userCriteriaData = (dashboardConfig.type === 'Connected') ? dashboardConfig.userCriteriaData : me.getActiveChart(dashboardConfigStore.first()).get('userCriteriaData');
 
         me.loadCriteriaCombosData(chartConfig, chartInfo, dashboardConfig);
         me.loadChartData(queries, chartConfig, chartInfo, dashboardConfig);

@@ -155,9 +155,8 @@ Ext.application({
         ];
 
         Ext.state.Manager.set('dashboards', dashboards);
-        //store = Ext.getStore('DashboardConfigStore');
-        //store.loadRawData(dashboards);
-        //store.load();
+        store = Ext.getStore('DashboardConfigStore');
+        store.loadRawData(Ext.state.Manager.get('dashboards'));
     },
     stores: [
         'settingManager.SolrIndexesStore',
