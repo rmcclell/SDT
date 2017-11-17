@@ -20,7 +20,6 @@
         'defaultFields',
         'resultsPanel',
         'userCriteriaFields',
-        'userCriteriaData',
         'baseCriteria'
     ],
     associations: [

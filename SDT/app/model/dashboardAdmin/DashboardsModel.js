@@ -22,7 +22,6 @@ Ext.define('SDT.model.dashboardAdmin.DashboardsModel', {
         },
         'modifiedDate',
         'title',
-        'userCriteriaData',
         'userCriteriaFields'
     ],
     associations: [

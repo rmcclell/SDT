@@ -38,7 +38,6 @@ Ext.define('SDT.model.dashboard.DashboardConfigModel', {
         'active',
         'charts',
         'userCriteriaFields',
-        'userCriteriaData',
         'baseCriteria'
 	],
     associations: [

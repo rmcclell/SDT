@@ -87,15 +87,6 @@ Ext.application({
             "solrIndexId": 1,
             "dataIndex": "http://localhost:8983/solr/cats/",
             "defaultDashboard": true,
-            "userCriteriaData": {
-                "id": [],
-                "breed": [],
-                "country": [],
-                "origin": [],
-                "bodyType": [],
-                "coat": [],
-                "pattern": []
-            },
             "active": true,
             "createDate": "2013-09-09T13:24:59Z",
             "modifiedDate": "2013-09-09T13:24:59Z",
