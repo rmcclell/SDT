@@ -386,7 +386,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     },
 
     loadResultsPanel: function (queries, dashboardConfig) {
-        debugger;
         var me = this,
             query = {},
             dashboardsView = me.getDashboardsView(),

@@ -146,6 +146,7 @@
         data.createDate = createDtStr; //Preserve create time
         data.modifiedDate = dtStr; //Update modified date
 
+        data.baseCriteria = Ext.Array.pluck(record.baseCriteria().getRange(), 'data');
         data.userCriteriaFields = Ext.Array.pluck(record.userCriteriaFields().getRange(), 'data');
         data.charts = Ext.Array.pluck(record.charts().getRange(), 'data');
 
