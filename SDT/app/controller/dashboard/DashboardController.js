@@ -328,7 +328,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             dataIndex = indexesStore.getById(dashboardConfig.get('solrIndexId')).get('baseUrl'),
             proxy = dashboardConfigStore.getProxy(),
             dashboardsView = me.getDashboardsView(),
-            queries = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig.baseCriteria().getRange(), 'data'), 'criteria').join(' AND '),
+            queries = dashboardConfig.get('criteria'),
             dashboardChartResultsContainer = dashboardsView.down('dashboardChartResultsContainer'),
             callbackFn,
             title;

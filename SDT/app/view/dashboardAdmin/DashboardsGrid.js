@@ -53,10 +53,6 @@
         falseText: 'No',
         width: 50
     }, {
-        text: 'Type',
-        dataIndex: 'type',
-        width: 80
-    }, {
         text: 'Title',
         dataIndex: 'title',
         flex: 1

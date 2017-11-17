@@ -88,6 +88,7 @@ Ext.application({
             "dataIndex": "http://localhost:8983/solr/cats/",
             "defaultDashboard": true,
             "active": true,
+            "criteria": "country%3A(%5B%22United%20States%22%20TO%20%22United%20States%22%5D)",
             "createDate": "2013-09-09T13:24:59Z",
             "modifiedDate": "2013-09-09T13:24:59Z",
             "charts": [

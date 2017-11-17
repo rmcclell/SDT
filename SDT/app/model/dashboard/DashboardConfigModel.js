@@ -37,6 +37,7 @@ Ext.define('SDT.model.dashboard.DashboardConfigModel', {
         },
         'active',
         'charts',
+        'criteria',
         'userCriteriaFields',
         'baseCriteria'
 	],

@@ -43,7 +43,7 @@
             queryMode: 'local',
             forceSelection: true,
             value: 'AND',
-            store: [['OR', 'ANY of the conditions above are met'], ['AND', 'ALL of the conditions above are met'], ['custom', 'Custom']],
+            store: [['OR', 'ANY of the conditions above are met'], ['AND', 'ALL of the conditions above are met']/*, ['custom', 'Custom']*/],
             allowBlank: false
         }, {
             xtype: 'textfield',

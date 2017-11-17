@@ -43,12 +43,6 @@
         allowBlank: false
     }, {
         xtype: 'textfield',
-        fieldLabel: 'Dashboard Type',
-        name: 'type',
-        value: 'Connected',
-        hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD
-    }, {
-        xtype: 'textfield',
         fieldLabel: 'Id',
         name: 'id',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD
