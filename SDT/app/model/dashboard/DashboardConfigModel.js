@@ -17,7 +17,6 @@ Ext.define('SDT.model.dashboard.DashboardConfigModel', {
         'id',
         'title',
         'description',
-        { name: 'type', defualtValue: 'Connected' },
         'solrIndexId',
         'dataIndex',
         {
@@ -37,14 +36,12 @@ Ext.define('SDT.model.dashboard.DashboardConfigModel', {
             } 
         },
         'active',
-        'query',
         'charts',
         'userCriteriaFields',
         'userCriteriaData',
         'baseCriteria'
 	],
     associations: [
-        { type: 'hasOne', model: 'SDT.model.dashboard.DashboardQueryConfigModel', name: 'query' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardChartConfigModel', name: 'charts' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardUserCriteriaFieldConfigModel', name: 'userCriteriaFields' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardBaseCriteriaConfigModel', name: 'baseCriteria' }

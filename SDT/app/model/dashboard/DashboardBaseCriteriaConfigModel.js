@@ -1,9 +1,15 @@
 ﻿Ext.define('SDT.model.dashboard.DashboardBaseCriteriaConfigModel', {
     extend: 'Ext.data.Model',
     fields: [
-        'fieldLabel',
         'name',
+        'fieldName',
+        'from',
+        'to',
         'operator',
-        'value'
+        'type',
+        'condition',
+        'value',
+        'criteria',
+        'fieldLabel'
     ]
 });

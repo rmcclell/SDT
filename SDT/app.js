@@ -86,7 +86,6 @@ Ext.application({
             "description": "Cats Description",
             "solrIndexId": 1,
             "dataIndex": "http://localhost:8983/solr/cats/",
-            "type": "Connected",
             "defaultDashboard": true,
             "userCriteriaData": {
                 "id": [],
@@ -100,14 +99,6 @@ Ext.application({
             "active": true,
             "createDate": "2013-09-09T13:24:59Z",
             "modifiedDate": "2013-09-09T13:24:59Z",
-            "query": {
-                "criteria": "",
-                "criteriaGrouping": "1",
-                "filterGroupingType": "AND",
-                "facet": "",
-                "filters": "",
-                "sorting": ""
-            },
             "charts": [
                 { "title": "Coat", "dataSource": "FacetField", "fieldName": "coat", "fieldLabel": "Coat", "type": "columnChart", "facetQuery": "", "seriesData": "", "facetField": "coat", "chartid": "3d2c8ed2-aa75-4333-a8d3-6fa4a196c343" },
                 { "title": "Coat", "dataSource": "FacetField", "fieldName": "coat", "fieldLabel": "Coat", "type": "pieChart", "facetQuery": "", "seriesData": "", "facetField": "coat", "chartid": "3d2c8ed2-aa75-4333-a8d3-6fa4a196c342" },
@@ -150,7 +141,18 @@ Ext.application({
                     "operatorType": "equals"
                 }
             ],
-            "baseCriteria": []
+            "baseCriteria": [{
+                "name": "country",
+                "fieldName": "country",
+                "from": "",
+                "to": "",
+                "operator": "=",
+                "type": "Text",
+                "condition": 1,
+                "value": "United States",
+                "criteria": "country%3A(%5B%22United%20States%22%20TO%20%22United%20States%22%5D)",
+                "fieldLabel": "Country"
+            }]
         }
         ];
 

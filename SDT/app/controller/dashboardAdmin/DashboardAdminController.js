@@ -93,7 +93,6 @@
 
         callbackFn = function (record, operation) {
             if (operation.success) {
-                record.data.query = Ext.decode(record.data.query.slice(0, record.data.query.length));
                 store.add(record);
             }
             window.close();
@@ -153,11 +152,7 @@
         console.log(data);
 
         Ext.Object.each(data, function (item, itemValue) {
-            if (item === 'query') {
-                Ext.Object.each(itemValue, function (queryItem, queryValue) {
-                    dataObj[queryItem] = queryValue;
-                });
-            } else if (!Ext.isString(itemValue)) {
+            if (!Ext.isString(itemValue)) {
                 dataObj[item] = Ext.encode(itemValue);
             } else {
                 dataObj[item] = itemValue;

@@ -14,7 +14,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         'dashboard.chart.barChart'
     ],
     models: [
-        'dashboard.DashboardQueryConfigModel',
         'dashboard.DashboardFieldValueModel',
         'dashboard.DashboardFieldValuesModel',
         'dashboard.DashboardChartConfigModel',
@@ -296,7 +295,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             dashboardConfigStore = Ext.getStore('DashboardConfigStore');
 
         me.currentDashboardId = Ext.state.Manager.get('defaultDashboardId'); //Set the default dashboard as current dashboard
-        me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: me.currentDashboardId, chartid: me.getLastActiveChartId() });
+        me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: me.currentDashboardId, chartid: null });
 
     },
     buildDashboardMenu: function (store, btnMenu) {
@@ -320,7 +319,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         Ext.resumeLayouts();
     },
 
-    loadDashboard: function (queries, dashboardConfig) {
+    loadDashboard: function (dashboardConfig) {
         var me = this,
             dashboardConfigStore = Ext.getStore('DashboardConfigStore'),
             chartInfo = me.getChartInfo(dashboardConfig.getData()),
@@ -329,6 +328,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             dataIndex = indexesStore.getById(dashboardConfig.get('solrIndexId')).get('baseUrl'),
             proxy = dashboardConfigStore.getProxy(),
             dashboardsView = me.getDashboardsView(),
+            queries = Ext.Array.pluck(Ext.Array.pluck(dashboardConfig.baseCriteria().getRange(), 'data'), 'criteria'),
             dashboardChartResultsContainer = dashboardsView.down('dashboardChartResultsContainer'),
             callbackFn,
             title;
@@ -376,7 +376,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         fieldNames = (fieldNames.length) ? '&facet.field=' + fieldNames.join('&facet.field=') : '';
 
         proxy.url = dataIndex + 'select';
-        proxy.url += '?q=*:*&omitHeader=true&facet=true&json.nl=arrarr&facet.missing=true&rows=0' + fieldNames;
+        proxy.url += '?q=' + queries + '&omitHeader=true&facet=true&json.nl=arrarr&facet.missing=true&rows=0' + fieldNames;
 
         var callbackFn = function () {
             me.loadPanelConfig(chartConfig, store, dashboardConfig, chartInfo);
@@ -386,6 +386,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
     },
 
     loadResultsPanel: function (queries, dashboardConfig) {
+        debugger;
         var me = this,
             query = {},
             dashboardsView = me.getDashboardsView(),
@@ -394,8 +395,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             dashboardChartResultsContainer = dashboardsView.down('dashboardChartResultsContainer'),
             currentContainer = dashboardChartResultsContainer.down('container'),
             grid = dashboardsView.down('dashboardRowResultsGrid'),
-            activepanel = (dashboardConfig.type === 'Connected') ? null : Ext.ComponentQuery.query('#' + this.getLastActiveChartId() + '-panel', currentContainer)[0],
-            activeChartTitle = (activepanel) ? activepanel.title + ': ' : '',
             fields,
             fieldNames = Ext.Array.pluck(indexesStore.getById(dashboardConfig.get('solrIndexId')).get('solrFields'), 'key'), //TODO: add filter to use showGrid property
             store = grid.getStore(),
@@ -404,10 +403,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         grid.hide(); //hide to avoid autoLoad from triggering
 
         proxy.url = dataIndex + 'select';
-        proxy.url += '?q=*:*&omitHeader=true&facet=false&fl=' + fieldNames.join(',') + Ext.Array.pluck(queries, 'filters').join('');
-
-
-
+        proxy.url += '?q=' + queries + '&omitHeader=true&facet=false&fl=' + fieldNames.join(',');
+        
         store.on('beforeload', function () {
             grid.show(); //Used to supress autoLoad bug issue
         });
@@ -415,17 +412,17 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         store.load({
             scope: me,
             callback: function (records, operation, success) {
-                grid.setTitle(activeChartTitle + ' Results - ' + store.getTotalCount());
+                grid.setTitle('Results - ' + store.getTotalCount());
             }
         });
 
     },
     loadPanelConfig: function (chartConfig, chartDataStore, dashboardConfig, chartInfo) {
         var me = this,
-            records,
+            records = chartConfig.getRange(),
             i,
             defaultContentObj = {},
-            lastActiveChartId,
+            lastActiveChartId = (!Ext.isEmpty(records)) ? records[0].getData().chartid : null,
             dashboardsView = me.getDashboardsView(),
             panel = dashboardsView.down('dashboardChartResultsContainer'),
             val;
@@ -433,13 +430,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         Ext.suspendLayouts();
 
         //Remove previous charts
-
-        records = chartConfig.getRange();
-
-        if (!Ext.isEmpty(records)) {
-            //Find last active chartid
-            lastActiveChartId = (!Ext.isEmpty(me.getLastActiveChartId())) ? me.getLastActiveChartId() : records[0].getData().chartid;
-        }
 
         var dashboardConfigObj = {
             reference: 'dashboard',
@@ -534,17 +524,10 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         me.loadBaseCriteriaPanel(firstConfigRecord.baseCriteria());
     },
 
-    getLastActiveChartId: function () {
-        return Ext.state.Manager.get(Ext.String.format('activeChart-{0}', this.currentDashboardId));
-    },
-
     getActiveChart: function (dashboardConfig) {
         //State code to retrieve state from user prefs will go here
 
-        //Get last active chart
-        var lastActiveChartId = this.getLastActiveChartId();
-
-        return (!Ext.isEmpty(lastActiveChartId)) ? dashboardConfig.charts().getById(lastActiveChartId) : dashboardConfig.charts().getAt(0); //For now first chart is active by default;
+        return dashboardConfig.charts().getAt(0); //For now first chart is active by default;
     },
 
     onDashboardMenuClick: function (menu) {
@@ -558,7 +541,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
 
         me.currentDashboardId = menu.dashboardId;
         Ext.state.Manager.set('defaultDashboardId', menu.dashboardId);
-        me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: menu.dashboardId, chartid: me.getLastActiveChartId() });
+        me.initDashboardConfigStore(dashboardConfigStore, { dashboardId: menu.dashboardId, chartid: null });
     },
     loadBaseCriteriaPanel: function (store) {
 
@@ -616,7 +599,6 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         //Parse range data to check for spaces on string values wrap to and from values that have spaces with double qoutes
 
         rangeParts = range.split(':');
-        rangeField = rangeParts[0];
         rangeValue = rangeParts[1];
         rangeValue = rangeValue.slice(rangeValue.indexOf('[') + 1, rangeValue.length - 1);
         rangeValueParts = rangeValue.split(' TO ');
@@ -653,15 +635,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             criteriaPanel = me.getDashboardCriteriaPanel();
 
         callback = function () {
-
             firstConfigRecord = dashboardConfigStore.getById(me.currentDashboardId);
-
-            if (firstConfigRecord.get('type') === 'Connected') {
-                queries.push(firstConfigRecord.getQuery().getData());
-                queries[0].filters = criteriaFilters;
-                me.loadDashboard(queries, firstConfigRecord);
-            }
-
+            me.loadDashboard(firstConfigRecord);
         };
 
         if (criteriaPanel && obj.getValue()) {
@@ -797,9 +772,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         }
     },
     createPortlet: function (chart, type, title, lastActiveChartId) {
-        var tools = (type !== 'Connected')
-            ? [ { type: 'pin', hidden: chart.itemId === lastActiveChartId ? false : true, tooltip: 'Currently Active' }, { type: 'unpin', hidden: true, tooltip: 'Currently Inactive, click to make this dashboard active' } ]
-            : [ ];
+        var tools = [ ];
 
         var c = {
             viewTemplate: {

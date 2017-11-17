@@ -8,7 +8,6 @@
     idProperty: 'chartid',
     identifier: 'uuid',
     fields: [
-        'type',
         'title',
         'fieldName',
         'dataIndex',
@@ -19,14 +18,12 @@
         'dataSource',
         'facetField',
         'defaultFields',
-        'query',
         'resultsPanel',
         'userCriteriaFields',
         'userCriteriaData',
         'baseCriteria'
     ],
     associations: [
-        { type: 'hasOne', model: 'SDT.model.dashboard.DashboardQueryConfigModel', name: 'query' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardUserCriteriaFieldConfigModel', name: 'userCriteriaFields' },
         { type: 'hasMany', model: 'SDT.model.dashboard.DashboardBaseCriteriaConfigModel', name: 'baseCriteria' }
     ]

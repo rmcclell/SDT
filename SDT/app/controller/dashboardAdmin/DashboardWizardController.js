@@ -72,13 +72,7 @@
         Ext.Object.each(data, function (card, cardValue) {
             Ext.Object.each(cardValue, function (field, fieldValue) {
                 fieldValue = (Ext.isFunction(fieldValue.charAt) && (fieldValue.charAt(0) === '{' || fieldValue.charAt(0) === '[')) ? Ext.decode(fieldValue) : fieldValue; //Only decode json data
-                if (field === 'criteria' || field === 'facet' || field === 'filters' || field === 'sorting' || field === 'criteriaGrouping' || field === 'filterGroupingType') {
-                    if (data.detailsCard.type === 'Connected') {
-                        dataObj.query[field] = fieldValue;
-                    }
-                } else {
-                    dataObj[field] = fieldValue;
-                }
+                dataObj[field] = fieldValue;
             });
         });
 
