@@ -134,7 +134,7 @@
                     field = record.get('fieldName'),
                     title = record.get('title'),
                     chart,
-                    store = dataSource === 'FacetQuery' ? dashboardController.buildFacetQueryStore(this.first().get('facet_queries'), chartid) : dashboardController.buildFacetFieldStore(this.first().get('facet_fields')[field], field),
+                    store = dataSource === 'FacetQuery' ? dashboardController.buildFacetQueryStore(this.first().get('facet_queries'), chartid, chartConfig.seriesData ) : dashboardController.buildFacetFieldStore(this.first().get('facet_fields')[field], field),
                     panel;
 
                 chart = dashboardController.buildChart(chartConfig, store);
@@ -159,42 +159,22 @@
             dataIndex = record.get('dataIndex');
         }
 
-        if (Ext.isEmpty(record.get('query'))) {
-            chartParams.q = '*:*';
-            chartParams.facet = true;
-            chartParams['facet.missing'] = true;
-            chartParams['json.nl'] = 'arrarr';
-            chartParams.rows = 0;
-            chartParams['facet.query'] = record.get('facetQuery');
-            chartParams['facet.field'] = record.get('facetField');
-        } else {
-            var query = record.get('query');
-            debugger;
-            chartParams.chartid = chartid;
-            chartParams.criteria = query.criteria;
-            chartParams.filters = query.filters;
-            chartParams.sorting = query.sorting;
-            chartParams.facet = query.facet;
-            chartParams.criteriaGrouping = query.criteriaGrouping;
-            chartParams.filterGroupingType = query.filterGroupingType;
-        }
+        var chartParamsStr = '';
+        var query = Ext.isEmpty(record.get('query')) ?  '*:*' : record.get('query');
 
-        previewChartProxy.setParamsAsJson(chartParams);
-
-        previewChartProxy.actionMethods = {
-            create: 'POST',
-            read: 'POST',
-            update: 'PUT',
-            destroy: 'DELETE'
-        };
+        var facetQuery = Ext.isEmpty(record.get('facetQuery')) ? '' : chartParams['facet.query'] = 'facet.query=' + decodeURIComponent(record.get('facetQuery'));
+        var facetField = Ext.isEmpty(record.get('facetField')) ? '' : chartParams['facet.field'] = 'facet.field=' + decodeURIComponent(record.get('facetField'));
+        var facetValue = facetQuery || facetField;
+        
+        chartParamsStr = '?q=*:*&facet=true&facet.missing=true&json.nl=arrarr&rows=0&' + facetValue; 
 
         previewChartProxy.setReader({
             type: 'json',
             rootProperty: 'facet_counts'
         });
 
-        previewChartProxy.url = 'http://localhost:8983/solr/cats/select';
-        previewChartProxy.extraParams = chartParams;
+        previewChartProxy.url = 'http://localhost:8983/solr/cats/select' + chartParamsStr;
+        //previewChartProxy.extraParams = chartParams;
 
         previewChartStore.load({
             callback: callbackFn
