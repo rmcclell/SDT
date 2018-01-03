@@ -162,11 +162,11 @@
         var chartParamsStr = '';
         var query = Ext.isEmpty(record.get('query')) ?  '*:*' : record.get('query');
 
-        var facetQuery = Ext.isEmpty(record.get('facetQuery')) ? '' : chartParams['facet.query'] = 'facet.query=' + decodeURIComponent(record.get('facetQuery'));
-        var facetField = Ext.isEmpty(record.get('facetField')) ? '' : chartParams['facet.field'] = 'facet.field=' + decodeURIComponent(record.get('facetField'));
+        var facetQuery = Ext.isEmpty(record.get('facetQuery')) ? '' : chartParams['facet.query'] =  decodeURIComponent(record.get('facetQuery'));
+        var facetField = Ext.isEmpty(record.get('facetField')) ? '' : chartParams['facet.field'] = '&facet.field=' + decodeURIComponent(record.get('facetField'));
         var facetValue = facetQuery || facetField;
         
-        chartParamsStr = '?q=*:*&facet=true&facet.missing=true&json.nl=arrarr&rows=0&' + facetValue; 
+        chartParamsStr = '?q=*:*&facet=true&facet.missing=true&json.nl=arrarr&rows=0' + facetValue; 
 
         previewChartProxy.setReader({
             type: 'json',

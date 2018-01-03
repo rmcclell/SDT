@@ -80,7 +80,7 @@
             store.each(function (record, index, len) {
                 data = record.getData();
 
-                facetQueryValue = Ext.String.format('{!group={0} label={1}}{2}', data.group, encodeURIComponent(Ext.String.format('"{0}"', data.label)), data.criteria);
+                facetQueryValue = Ext.String.format('&facet.query={!group={0} label={1}}{2}', data.group, encodeURIComponent(Ext.String.format('"{0}"', data.label)), data.criteria);
                 facetQueryArray.push(facetQueryValue);
 
                 seriesObj = {};
