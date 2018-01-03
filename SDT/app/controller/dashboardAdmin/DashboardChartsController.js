@@ -181,13 +181,20 @@
 
         previewChartProxy.setParamsAsJson(chartParams);
 
+        previewChartProxy.actionMethods = {
+            create: 'POST',
+            read: 'POST',
+            update: 'PUT',
+            destroy: 'DELETE'
+        };
+
         previewChartProxy.setReader({
             type: 'json',
             rootProperty: 'facet_counts'
         });
 
         previewChartProxy.url = 'http://localhost:8983/solr/cats/select';
-        //previewChartProxy.extraParams = chartParams;
+        previewChartProxy.extraParams = chartParams;
 
         previewChartStore.load({
             callback: callbackFn
