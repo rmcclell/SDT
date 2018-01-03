@@ -24,6 +24,12 @@ Ext.define('SDT.store.dashboard.DashboardResultStore', {
     model: 'SDT.model.dashboard.DashboardResultModel',
     proxy: {
         type: 'ajax',
+        actionMethods: {
+            create: 'POST',
+            read: 'POST',
+            update: 'PUT',
+            destroy: 'DELETE'
+        },
         limitParam: 'rows',
         sortParam: 'sort',
         startParam: 'start',

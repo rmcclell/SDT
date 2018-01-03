@@ -169,6 +169,7 @@
             chartParams['facet.field'] = record.get('facetField');
         } else {
             var query = record.get('query');
+            debugger;
             chartParams.chartid = chartid;
             chartParams.criteria = query.criteria;
             chartParams.filters = query.filters;
@@ -178,13 +179,15 @@
             chartParams.filterGroupingType = query.filterGroupingType;
         }
 
+        previewChartProxy.setParamsAsJson(chartParams);
+
         previewChartProxy.setReader({
             type: 'json',
             rootProperty: 'facet_counts'
         });
 
         previewChartProxy.url = 'http://localhost:8983/solr/cats/select';
-        previewChartProxy.extraParams = chartParams;
+        //previewChartProxy.extraParams = chartParams;
 
         previewChartStore.load({
             callback: callbackFn
@@ -233,12 +236,14 @@
                 Ext.Array.include(facets, data.facetField);
                 Ext.Array.include(facets, data.facetQuery);
 
-                Ext.Array.include(chartArray, Ext.encode(data));
+                Ext.Array.include(chartArray, data);
             });
 
             field.setValue(facetQuery.join('') + facetField.join(''));
             facet.setValue(facets.join(''));
-            charts.setValue('[' + chartArray.join(',') + ']');
+
+            
+            charts.setValue(JSON.stringify(chartArray, null, 4));
         });
     },
     updateChartQueryField: function (button) {
@@ -254,7 +259,7 @@
         query.facet = chartForm.findField('facetField').getValue() + chartForm.findField('facetQuery').getValue();
         query.filters = chartForm.findField('filters').getValue();
         query.sorting = chartForm.findField('sorting').getValue();
-        queryField.setValue(Ext.encode(query));
+        queryField.setValue(JSON.stringify(query, null, 4));
     },
     applyChartItem: function (btn) {
         var me = this,
@@ -304,7 +309,7 @@
             seriesData = rec.getData().seriesData,
             form = formPanel.getForm();
 
-        seriesData = Ext.encode(seriesData);
+        seriesData = Ext.encode(JSON.stringify(seriesData, null, 4));
         rec.set('seriesData', seriesData); //Encode to allow loading in form field
 
         formPanel.on('beforerender', function () {

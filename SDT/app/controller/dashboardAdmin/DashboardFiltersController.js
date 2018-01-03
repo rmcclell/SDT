@@ -295,8 +295,7 @@
 
             grid = me.toggleColumnVisbility(grid, Ext.Array.pluck(baseCriteriaArray, 'fieldName'));
 
-            baseCriteria.setValue(Ext.encode(baseCriteriaArray));
-
+            baseCriteria.setValue(JSON.stringify(baseCriteriaArray, null, 4) );
             field.setValue(me.buildFilterFromcriteriaGrouping(criteriaGrouping.getValue(), baseCriteriaArray));
 
             me.excuteGridPreview(grid);
@@ -328,7 +327,7 @@
 
             me.buildcriteriaGrouping(store, filterGroupingType, criteriaGrouping);
             me.toggleFilterGroupingVisibility(store, filterGroupingFieldset);
-            seriesCriteria.setValue(Ext.encode(seriesCriteriaArray));
+            seriesCriteria.setValue(JSON.stringify(seriesCriteriaArray, null, 4));
             criteria.setValue(me.buildFilterFromcriteriaGrouping(criteriaGrouping.getValue(), seriesCriteriaArray));
         });
     },

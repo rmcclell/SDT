@@ -80,7 +80,7 @@
             store.each(function (record, index, len) {
                 data = record.getData();
 
-                facetQueryValue = Ext.String.format('&facet.query={0}!group={1} label={2}{3}{4}', '{', data.group, encodeURIComponent(Ext.String.format('"{0}"', data.label)), '}', data.criteria);
+                facetQueryValue = Ext.String.format('{!group={0} label={1}{2}', data.group, encodeURIComponent(Ext.String.format('"{0}"', data.label)), data.criteria);
                 facetQueryArray.push(facetQueryValue);
 
                 seriesObj = {};
@@ -99,15 +99,14 @@
 
                 seriesDataArray.push(seriesObj);
             });
-            seriesData.setValue(Ext.encode(seriesDataArray));
+            seriesData.setValue(JSON.stringify(seriesDataArray, null, 4));
             facetQuery.setValue(facetQueryArray.join(''));
             seriesGrid.validate();
         });
     },
 
     applySeriesItem: function (btn) {
-        var window = btn.up('window'),
-            store = window.store,
+        var store = btn.up('form').store,
             formPanel = btn.up('form'),
             form = formPanel.getForm(),
             filter,
@@ -123,7 +122,7 @@
 
             filter = Ext.create('SDT.model.dashboardAdmin.SeriesModel', formValues);
 
-            if (window.type === 'Add') {
+            if (formPanel.type === 'Add') {
                 filter.phantom = true;
                 store.add(filter);
                 form.reset();
@@ -138,7 +137,7 @@
                 foundRecord.commit();
                 store.sync(); //Sync is technically suppose to fire the datachange event on store but appears to be broken in framework
                 store.fireEvent('datachanged', store);
-                window.close();
+                formPanel.close();
             }
         } else {
             Ext.Msg.alert('', 'Please ensure all required fields are populated.');
