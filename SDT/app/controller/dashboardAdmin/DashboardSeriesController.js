@@ -116,7 +116,7 @@
 
             formValues = form.getValues();
 
-            formValues.seriesCriteria = (Ext.isEmpty(formValues.seriesCriteria)) ? [] : Ext.decode(formValues.seriesCriteria);
+            formValues.seriesCriteria = Ext.isEmpty(formValues.seriesCriteria) ? [] : Ext.decode(formValues.seriesCriteria);
             formValues.label = Ext.String.trim(formValues.label);
             formValues.criteria = this.buildFilterFromcriteriaGrouping(formValues.criteriaGrouping, formValues.seriesCriteria);
 

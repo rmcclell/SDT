@@ -25,7 +25,7 @@
         field.validator = function (text) {
             var me = this,
                 trimText = Ext.util.Format.trim(text),
-                foundRecord = (Ext.isEmpty(me.originalValue) || me.originalValue !== trimText) ? store.findRecord('title', trimText, 0, false, false, true) : null;
+                foundRecord = Ext.isEmpty(me.originalValue) || me.originalValue !== trimText ? store.findRecord('title', trimText, 0, false, false, true) : null;
 
             me.setActiveErrors(Ext.Array.unique(me.getActiveErrors()));
 

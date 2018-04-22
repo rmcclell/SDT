@@ -232,7 +232,7 @@ Ext.define('Ext.ux.panel.Wizard', {
     * and the values are objects containing key/value pairs in the form of
     * fieldName : fieldValue.
     *
-    * @return {Array}
+    * @returns {Array} array of all the various sections of the wizard
     */
     getWizardData: function () {
         var formValues = {},

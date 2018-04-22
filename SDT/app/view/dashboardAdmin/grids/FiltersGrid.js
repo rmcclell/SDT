@@ -57,7 +57,7 @@
         flex: 1,
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         menuDisabled: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
-        hideable: (!SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD),
+        hideable: !SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         renderer: function (val) {
             return decodeURIComponent(val);
         }

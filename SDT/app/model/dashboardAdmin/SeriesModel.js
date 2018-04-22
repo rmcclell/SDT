@@ -8,7 +8,7 @@
         'label',
         'rangeCriteria',
         { name: 'seriesCriteria', convert: function (val, record) {
-            return (Ext.isEmpty(val)) ? record.data.rangeCriteria : val; //Temp till legacy dashboards migrated
+            return Ext.isEmpty(val) ? record.data.rangeCriteria : val; //Temp till legacy dashboards migrated
         } },
         'criteria',
         'criteriaGrouping',

@@ -70,28 +70,28 @@
         dataIndex: 'facetQuery',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         menuDisabled: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
-        hideable: (!SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD),
+        hideable: !SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         flex: 1
     }, {
         text: 'Facet Field',
         dataIndex: 'facetField',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         menuDisabled: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
-        hideable: (!SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD),
+        hideable: !SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         flex: 1
     }, {
         text: 'Chart Id',
         dataIndex: 'chartid',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         menuDisabled: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
-        hideable: (!SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD),
+        hideable: !SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         flex: 1
     }, {
         text: 'Series Data',
         dataIndex: 'seriesData',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         menuDisabled: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
-        hideable: (!SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD),
+        hideable: !SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         flex: 1,
         renderer: function (val) {
             return Ext.isEmpty(val) ? '' : Ext.encode(val);

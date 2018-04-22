@@ -247,7 +247,7 @@
             store = grid.getStore(),
             currentExtraParams = store.getProxy().extraParams;
 
-        currentExtraParams.fq = (criteria === '%3A%22%22') ? '' : decodeURIComponent(criteria);
+        currentExtraParams.fq = criteria === '%3A%22%22' ? '' : decodeURIComponent(criteria);
         //currentExtraParams.dataIndex = dataIndexValue;
         //currentExtraParams.filters = '';
 

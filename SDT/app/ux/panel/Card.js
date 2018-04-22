@@ -220,6 +220,7 @@ Ext.define('Ext.ux.panel.Card', {
     // -------- listener
     /**
     * Checks wether the beforecardhide-event may be triggered.
+    * @returns { boolean } returns whether event has been triggered
     */
     bubbleBeforeHideEvent: function () {
         var me = this,

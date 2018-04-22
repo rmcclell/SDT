@@ -169,7 +169,7 @@
 
         //Load data into individual forms on each card
 
-        console.log(dataObj)
+        console.log(dataObj);
 
         Ext.Array.each(dashboardWizard.cards, function (card) {
             card.getForm().setValues(dataObj);

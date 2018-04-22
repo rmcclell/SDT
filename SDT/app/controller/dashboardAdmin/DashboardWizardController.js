@@ -79,7 +79,7 @@
         dataObj.title = Ext.String.trim(dataObj.title);
         dataObj.description = Ext.String.trim(dataObj.description);
 
-        dataObj.active = (dataObj.active === null || dataObj.active === undefined) ? false : dataObj.active; //Unchecked checked checked boxes posting null instead of false
+        dataObj.active = dataObj.active === null || dataObj.active === undefined ? false : dataObj.active; //Unchecked checked checked boxes posting null instead of false
 
         if (panel.type === 'Add') {
             dashboard = Ext.create('SDT.model.dashboard.DashboardConfigModel', dataObj);

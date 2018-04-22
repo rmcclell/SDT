@@ -23,9 +23,9 @@
                 description: wizardData.detailsCard.description,
                 active: wizardData.detailsCard.active,
                 dataIndex: wizardData.detailsCard.dataIndex,
-                charts: (!Ext.isEmpty(wizardData.chartsCard.charts)) ? Ext.decode(wizardData.chartsCard.charts) : [],
-                criteria: (!Ext.isEmpty(wizardData.criteriaSelectionCard.userCriteriaFields)) ? Ext.decode(wizardData.criteriaSelectionCard.userCriteriaFields) : [],
-                filters: (!Ext.isEmpty(wizardData.filterCard.baseCriteria)) ? Ext.decode(wizardData.filterCard.baseCriteria) : []
+                charts: !Ext.isEmpty(wizardData.chartsCard.charts) ? Ext.decode(wizardData.chartsCard.charts) : [],
+                criteria: !Ext.isEmpty(wizardData.criteriaSelectionCard.userCriteriaFields) ? Ext.decode(wizardData.criteriaSelectionCard.userCriteriaFields) : [],
+                filters: !Ext.isEmpty(wizardData.filterCard.baseCriteria) ? Ext.decode(wizardData.filterCard.baseCriteria) : []
             };
 
         panel.down('dataview').store.loadRawData(data);

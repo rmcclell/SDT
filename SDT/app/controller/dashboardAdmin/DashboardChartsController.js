@@ -142,9 +142,14 @@
 
                 console.log(chart);
 
-                panel = grid.up('charts');
+                panel = grid.up('panel');
 
-                //panel.removeA();
+                charts = panel.query('chart');
+
+                for (var c = 0; c < charts.length; c++) {
+                    charts[c].remove();
+                }
+                //panel.removeAll();
                 panel.insert(1, chart);
                 //panel.show();
                 

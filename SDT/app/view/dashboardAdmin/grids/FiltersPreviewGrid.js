@@ -52,7 +52,7 @@
         flex: 1,
         renderer: function (val, metaData, record) {
 
-            var value = (Ext.isArray(val)) ? Ext.Array.clone(val) : val; //Clone the array to avoid altering orignal
+            var value = Ext.isArray(val) ? Ext.Array.clone(val) : val; //Clone the array to avoid altering orignal
 
             value = (Ext.isString(value) && !Ext.isEmpty(value)) ? value.split(',') : value;
 

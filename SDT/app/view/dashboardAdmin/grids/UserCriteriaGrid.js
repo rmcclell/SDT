@@ -43,7 +43,7 @@
         text: 'Operator',
         hidden: true,
         menuDisabled: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
-        hideable: (!SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD),
+        hideable: !SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         dataIndex: 'operatorType',
         flex: 1
     }]

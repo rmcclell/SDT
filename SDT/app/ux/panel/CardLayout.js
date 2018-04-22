@@ -36,7 +36,7 @@ Ext.define('Ext.ux.panel.CardLayout', {
         var me = this,
             item = this.container.getComponent(activeItem);
 
-        if (me.activeItem != item) {
+        if (me.activeItem !== item) {
             if (me.activeItem) {
                 me.activeItem.hide();
             }

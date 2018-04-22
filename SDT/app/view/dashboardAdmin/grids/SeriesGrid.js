@@ -37,7 +37,7 @@
         dataIndex: 'group',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         menuDisabled: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
-        hideable: (!SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD),
+        hideable: !SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         width: 60
     }, {
         text: 'Color',
@@ -45,7 +45,7 @@
         sortable: false,
         width: 40,
         renderer: function (val) {
-            return (!val || val === 'false') ? 'AUTO' : Ext.String.format('<div style="width:auto;height:15px;background-color:{0}"><!----></div>', val);
+            return !val || val === 'false' ? 'AUTO' : Ext.String.format('<div style="width:auto;height:15px;background-color:{0}"><!----></div>', val);
         }
     }, {
         text: 'Criteria',
@@ -69,7 +69,7 @@
         flex: 1,
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         menuDisabled: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
-        hideable: (!SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD),
+        hideable: !SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         renderer: function (val) {
             return decodeURIComponent(val);
         }
@@ -78,7 +78,7 @@
         dataIndex: 'seriesCriteria',
         hidden: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         menuDisabled: SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
-        hideable: (!SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD),
+        hideable: !SDT.util.GLOBALS.DEBUG_DASHBOARD_WIZARD,
         flex: 1,
         renderer: function (val) {
             return Ext.encode(val);

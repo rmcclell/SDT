@@ -1,6 +1,5 @@
 ﻿Ext.define('SDT.view.dashboardAdmin.forms.AddEditSeriesForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.addEditSeriesForm',
     layout: 'anchor',
     requires: [
         'SDT.view.dashboardAdmin.fields.ColorCombo'

@@ -105,7 +105,7 @@ Ext.define('SDT.view.dashboardAdmin.forms.AddEditChartForm', {
         flex: 1,
         allowBlank: false,
         isValid: function () {
-            return (!this.isHidden() && this.getStore().getCount() <= 0) ? false : true;
+            return !this.isHidden() && this.getStore().getCount() <= 0 ? false : true;
         },
         hidden: true
     }],

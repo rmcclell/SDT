@@ -603,8 +603,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         rangeValueParts = rangeValue.split(' TO ');
         fromRangeValue = rangeValueParts[0];
         toRangeValue = rangeValueParts[1];
-        containsSpace = (fromRangeValue.search(/\s/) !== -1) ? true : false;
-        range = (containsSpace) ? Ext.String.format('{0}:["{1}" TO "{2}"]', rangeField, fromRangeValue, toRangeValue) : Ext.String.format('{0}:[{1} TO {2}]', rangeField, fromRangeValue, toRangeValue);
+        containsSpace = fromRangeValue.search(/\s/) !== -1 ? true : false;
+        range = containsSpace ? Ext.String.format('{0}:["{1}" TO "{2}"]', rangeField, fromRangeValue, toRangeValue) : Ext.String.format('{0}:[{1} TO {2}]', rangeField, fromRangeValue, toRangeValue);
         encodedRange = encodeURIComponent(range);
 
         filter = Ext.create('SDT.model.dashboard.DashboardSelectedFilterModel', {
@@ -674,7 +674,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
         if (criteriaPanel) {
             searchParams = criteriaPanel.getValues();
             Ext.Object.each(searchParams, function (param) {
-                searchParams[param] = (Ext.isString(searchParams[param])) ? Ext.String.trim(searchParams[param]) : searchParams[param];
+                searchParams[param] = Ext.isString(searchParams[param]) ? Ext.String.trim(searchParams[param]) : searchParams[param];
                 if (Ext.isEmpty(searchParams[param])) {
                     searchParams[param] = null;
                     delete searchParams[param];
@@ -687,8 +687,8 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                         operator = field.up('container').down('operatorCombo');
                     }
 
-                    operatorValue = (operator !== null) ? operator.getValue() : '=';
-                    operatorValue = (operatorValue === '=') ? '' : '-';
+                    operatorValue = operator !== null ? operator.getValue() : '=';
+                    operatorValue = operatorValue === '=' ? '' : '-';
 
                     if (field.getXType() !== 'operatorCombo' && field.name !== 'dashboardSelectedChartFilters' && field.name !== 'dashboardSavedUserCriteriaFilters') {
                         fqArray.push(operatorValue);
@@ -699,7 +699,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
                     Ext.Array.each(field.getValue(), function (fieldItem, index, fieldItems) {
                         if (field.getXType() !== 'operatorCombo') {
                             seperator = encodeURIComponent(' OR ');
-                            seperator = (fieldItems[index + 1]) ? seperator : '';
+                            seperator = fieldItems[index + 1] ? seperator : '';
 
                             if (field.name !== 'dashboardSelectedChartFilters' && field.name !== 'dashboardSavedUserCriteriaFilters') {
 
@@ -843,7 +843,7 @@ Ext.define('SDT.controller.dashboard.DashboardController', {
             extend: 'Ext.data.JsonStore',
             fields: ['label', 'count', 'legend', 'range', 'color'],
             alias: 'store.' + chartId,
-            data: (recs) ? recs : [] //Insure undefined doesnt get passed to store
+            data: recs ? recs : [] //Insure undefined doesnt get passed to store
         });
 
         return Ext.create('store.' + chartId);
